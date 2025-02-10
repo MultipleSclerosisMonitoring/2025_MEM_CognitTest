@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "app_title": "My First Application",
+  "test_instructions": "Match the symbol on the screen with its corresponding number using the keyboard on the bottom. Click on the button below to start the test.",
+  "start_test": "Start Test",
+  "result_test": "Go to Result"
+}

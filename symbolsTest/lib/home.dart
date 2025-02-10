@@ -1,32 +1,55 @@
 import 'package:flutter/material.dart';
-import 'providers.dart';
 import 'package:provider/provider.dart';
-
+import 'providers.dart';
+import 'package:symbols/l10n/generated/l10n.dart';
+import 'locale_provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-
   Widget build(BuildContext context) {
+    final localeProvider = Provider.of<LocaleProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.teal,
-        title: const Text('Mi primera aplicacion'),
+        title: Text(AppLocalizations.of(context)!.app_title),
+        actions: [
+          DropdownButton<Locale>(
+            value: localeProvider.locale,
+            icon: const Icon(Icons.language, color: Colors.white),
+            dropdownColor: Colors.teal,
+            onChanged: (Locale? newLocale) {
+              if (newLocale != null) {
+                localeProvider.setLocale(newLocale);
+              }
+            },
+            items: const [
+              DropdownMenuItem(
+                value: Locale('en'),
+                child: Text('🇺🇸 English', style: TextStyle(color: Colors.white)),
+              ),
+              DropdownMenuItem(
+                value: Locale('es'),
+                child: Text('🇪🇸 Español', style: TextStyle(color: Colors.white)),
+              ),
+            ],
+          ),
+        ],
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Padding(
-              padding:  EdgeInsets.all(40.0),
-              child:  Text(
-                    'TEST INSTRUCTIONS: Match the symbol on the screen with its corresponding number using the keyboard on the bottom.'
-                    ' Click on the botton below to start the test.',
-                    style: TextStyle(color: Colors.teal, fontSize: 30, ),
+            Padding(
+              padding: const EdgeInsets.all(40.0),
+              child: Text(
+                AppLocalizations.of(context)!.test_instructions,
+                style: const TextStyle(
+                  color: Colors.teal,
+                  fontSize: 30,
+                ),
               ),
             ),
             ElevatedButton(
@@ -34,14 +57,15 @@ class HomePage extends StatelessWidget {
                 context.read<TimeProvider>().setStartTime();
                 context.read<TimeProvider>().startTimer();
                 Navigator.pushNamed(context, '/testScreen');
-
               },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.teal,),
-              child: const Padding(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.teal,
+              ),
+              child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Text(
-                    'START TEST',
-                     style: TextStyle(color: Colors.white, fontSize: 20),
+                  AppLocalizations.of(context)!.start_test,
+                  style: const TextStyle(color: Colors.white, fontSize: 20),
                 ),
               ),
             ),
@@ -51,12 +75,14 @@ class HomePage extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, '/resultsScreen');
                 },
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.teal,),
-                child: const Padding(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.teal,
+                ),
+                child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    'Go to results',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
+                    AppLocalizations.of(context)!.result_test,
+                    style: const TextStyle(color: Colors.white, fontSize: 20),
                   ),
                 ),
               ),
@@ -64,7 +90,6 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

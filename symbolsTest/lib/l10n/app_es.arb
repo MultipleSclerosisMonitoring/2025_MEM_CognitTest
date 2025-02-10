@@ -1,0 +1,7 @@
+{
+  "@@locale": "es",
+  "app_title": "Mi primera aplicación",
+  "test_instructions": "Empareja el símbolo en la pantalla con su número correspondiente usando el teclado de abajo. Haz clic en el botón de abajo para comenzar la prueba.",
+  "start_test": "Iniciar Prueba",
+  "result_test": "Ir al Resultado"
+}
