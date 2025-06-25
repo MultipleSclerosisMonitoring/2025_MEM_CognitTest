@@ -111,7 +111,6 @@ class ResultsScreen extends StatelessWidget {
                 ),
               ),
             ),
-            Flexible(child: Text('diagonal y modelo' + '${deviceProvider.diagonalInches}' + '${deviceProvider.deviceModel}')),
             Flexible(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),

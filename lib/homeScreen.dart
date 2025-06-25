@@ -449,6 +449,7 @@ class HomeScreen extends StatelessWidget {
                                                       break;
                                                     default:
                                                         buttonsProvider.setIsReadOnly(false);
+                                                        break;
                                                   }
                                                 } else{
                                                   buttonsProvider.setIsReadOnly(false);

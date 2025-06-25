@@ -635,8 +635,8 @@ Future<int> enviarDatosSDMT({
     'Number_Errors_1': number_Errors_1,
     'Number_Errors_2': number_Errors_2,
     'Number_Errors_3': number_Errors_3,
-   // 'Device': device,
-   // 'DiagInch': diagInch,
+    'Device': device,
+    'DiagInch': diagInch,
   },
   );
 
