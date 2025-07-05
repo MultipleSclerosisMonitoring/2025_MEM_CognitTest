@@ -14,9 +14,10 @@ class AppColors{
 }
 
 class GeneralConstants{
-  static const int trialDuration = 20000;
+  static const int trialDuration = 40000;
   static const int testDuration = 90000;
   static const int countDownDuration = 1;
+  static const int toolbarHeightRatio = 8;
 
 }
 

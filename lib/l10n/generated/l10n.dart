@@ -401,7 +401,7 @@ abstract class AppLocalizations {
   /// No description provided for @trial_completed.
   ///
   /// In en, this message translates to:
-  /// **'You have completed the trial test. You will now attempt the official test twice, once with each hand. Which hand do you want to start with?'**
+  /// **'You have completed the trial test. You will now attempt the official test. Which hand will you take the test with?'**
   String get trial_completed;
 
   /// No description provided for @well_done.
@@ -410,22 +410,10 @@ abstract class AppLocalizations {
   /// **'Well done!'**
   String get well_done;
 
-  /// No description provided for @halfway_left.
-  ///
-  /// In en, this message translates to:
-  /// **'You have completed the test with your left hand. Please, now attempt the test with your right hand'**
-  String get halfway_left;
-
-  /// No description provided for @halfway_right.
-  ///
-  /// In en, this message translates to:
-  /// **'You have completed the test with your right hand. Please, now attempt the test with your left hand'**
-  String get halfway_right;
-
   /// No description provided for @test_explanation.
   ///
   /// In en, this message translates to:
-  /// **'Welcome to the symbols test. During the test, a symbol will appear in the middle of the screen. Your task is to find that symbol in the guide on the top of the screen and press the key with the number that matches the symbol. Once you press a key, regardless if it is the correct one or not, a new symbol will appear. Don\'t worry, before starting the official test you will attempt a 20 seconds test to get familiar with the test. After the trial, you will attempt two 90 second tests: it is important that you do each one with a different hand. Good luck!'**
+  /// **'Welcome to the symbols test. During the test, a symbol will appear in the middle of the screen. Your task is to find that symbol in the guide on the top of the screen and press the key with the number that matches the symbol. Once you press a key, regardless if it is the correct one or not, a new symbol will appear. Don\'t worry, before starting the official test you will attempt a 40 seconds test to get familiar with the test. After the trial, you will attempt the official 90 second test. Good luck!'**
   String get test_explanation;
 
   /// No description provided for @code_used.
@@ -433,18 +421,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This code has already been used to attempt the test. Please, ask your doctor for a new code'**
   String get code_used;
-
-  /// No description provided for @left_registered.
-  ///
-  /// In en, this message translates to:
-  /// **'You have already attempted the test with this code, but only with your left hand. Please attempt it now with your right hand to complete the results'**
-  String get left_registered;
-
-  /// No description provided for @right_registered.
-  ///
-  /// In en, this message translates to:
-  /// **'You have already attempted the test with this code, but only with your right hand. Please attempt it now with your right hand to complete the results'**
-  String get right_registered;
 
   /// No description provided for @unfinished_test.
   ///
@@ -463,6 +439,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'R'**
   String get r;
+
+  /// No description provided for @answers.
+  ///
+  /// In en, this message translates to:
+  /// **'Answers'**
+  String get answers;
+
+  /// No description provided for @mistakes.
+  ///
+  /// In en, this message translates to:
+  /// **'Mistakes'**
+  String get mistakes;
 }
 
 class _AppLocalizationsDelegate

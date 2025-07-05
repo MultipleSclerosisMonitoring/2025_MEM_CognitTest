@@ -1,6 +1,4 @@
-import 'dart:math';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,9 +18,10 @@ class HomeScreen extends StatelessWidget {
     final localeProvider = Provider.of<LocaleProvider>(context);
     final personalDataProvider = Provider.of<PersonalDataProvider>(context);
     final parametersProvider = Provider.of<ParametersProvider>(context);
-    final timeProvider = Provider.of<TimeProvider>(context);
+    final symbolsProvider = Provider.of<SymbolsProvider>(context);
     final buttonsProvider = Provider.of<ButtonsProvider>(context);
     final progressProvider = Provider.of<ProgressProvider>(context);
+    final timeProvider = Provider.of<TimeProvider>(context);
     double screenHeight = MediaQuery.of(context).size.height;
 
 
@@ -34,7 +33,7 @@ class HomeScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          toolbarHeight: screenHeight / 8,
+          toolbarHeight: screenHeight / GeneralConstants.toolbarHeightRatio,
           backgroundColor: Colors.white,
           //leading: Image.asset('assets/images/saludmadrid.jpg'),
           actions:[ Expanded(
@@ -266,7 +265,7 @@ class HomeScreen extends StatelessWidget {
                                                       codeid: parametersProvider
                                                           .codeid ?? 'c');
                                                   switch (answer) {
-                                                    case 2:
+                                                    case 2: //Codigo erroneo
                                                         buttonsProvider.setIsCodeValidated(false);
                                                         buttonsProvider.setWrongCodeid(true);
                                                         buttonsProvider.setIsReadOnly(false);
@@ -299,7 +298,7 @@ class HomeScreen extends StatelessWidget {
                                                               ),
                                                         );
                                                         break;
-                                                    case 3:
+                                                    case 3: //Codigo ya utilizado
                                                         buttonsProvider.setIsCodeValidated(false);
                                                         buttonsProvider.setWrongCodeid(true);
                                                         buttonsProvider.setIsReadOnly(false);
@@ -332,117 +331,7 @@ class HomeScreen extends StatelessWidget {
                                                               ),
                                                         );
                                                         break;
-                                                    case 4:
-                                                      buttonsProvider.setWrongCodeid(false);
-                                                      buttonsProvider.setIsCodeValidated(true);
-                                                      buttonsProvider.setIsReadOnly(true);
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            AlertDialog(
-                                                              title: Text(
-                                                                AppLocalizations.of(context)!.unfinished_test,
-                                                                style: TextStyle(
-                                                                    fontWeight: FontWeight.bold,
-                                                                    color: Colors.red
-                                                                ),
-                                                              ),
-                                                              content: Text(
-                                                                AppLocalizations.of(context)!.left_registered,
-                                                                style: TextStyle(
-                                                                    fontSize: 20,
-                                                                    color: AppColors().getBlueText()
-                                                                ),
-                                                              ),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () {
-                                                                    parametersProvider.setHand('R');
-                                                                    progressProvider.resetThirdsCounter();
-                                                                    progressProvider.resetMistakesCounter();
-                                                                    progressProvider.resetProgressCounter();
-                                                                    progressProvider.resetSymbolsDisplayed();
-                                                                    parametersProvider.setDataSent(false);
-                                                                    Navigator.pushNamed(context, '/countdownScreen',
-                                                                        arguments: () {
-                                                                          parametersProvider.setIsTimeStarted(false);
-                                                                          parametersProvider.setSequenceCounter(2);
-                                                                          timeProvider.startTimer(timeLimit: GeneralConstants.testDuration, onFinish: () => finishSecondTest(context), pp: progressProvider);
-                                                                          Navigator.pushNamed(context, '/testScreen');
-                                                                        });
-                                                                  },
-                                                                  child: Text(AppLocalizations.of(context)!.start,
-                                                                      style: TextStyle(fontSize: 20)
-                                                                  ),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.of(context).pop(),
-                                                                  child: Text(AppLocalizations.of(context)!.back,
-                                                                      style: TextStyle(
-                                                                          fontSize: 20)
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                      );
-                                                      break;
-                                                    case 5:
-                                                      buttonsProvider.setWrongCodeid(false);
-                                                      buttonsProvider.setIsCodeValidated(true);
-                                                      buttonsProvider.setIsReadOnly(true);
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            AlertDialog(
-                                                              title: Text(
-                                                                AppLocalizations.of(context)!.unfinished_test,
-                                                                style: TextStyle(
-                                                                    fontWeight: FontWeight.bold,
-                                                                    color: Colors.red
-                                                                ),
-                                                              ),
-                                                              content: Text(
-                                                                AppLocalizations.of(context)!.right_registered,
-                                                                style: TextStyle(
-                                                                    fontSize: 20,
-                                                                    color: AppColors().getBlueText()
-                                                                ),
-                                                              ),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () {
-                                                                    parametersProvider.setHand('L');
-                                                                    progressProvider.resetThirdsCounter();
-                                                                    progressProvider.resetMistakesCounter();
-                                                                    progressProvider.resetProgressCounter();
-                                                                    progressProvider.resetSymbolsDisplayed();
-                                                                    parametersProvider.setDataSent(false);
-                                                                    Navigator.pushNamed(context, '/countdownScreen',
-                                                                        arguments: () {
-                                                                          parametersProvider.setIsTimeStarted(false);
-                                                                          parametersProvider.setSequenceCounter(2);
-                                                                          timeProvider.startTimer(timeLimit: GeneralConstants.testDuration, onFinish: () => finishSecondTest(context), pp: progressProvider);
-                                                                          Navigator.pushNamed(context, '/testScreen');
-                                                                        });
-                                                                  },
-                                                                  child: Text(AppLocalizations.of(context)!.start,
-                                                                      style: TextStyle(fontSize: 20)
-                                                                  ),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.of(context).pop(),
-                                                                  child: Text(AppLocalizations.of(context)!.back,
-                                                                      style: TextStyle(
-                                                                          fontSize: 20)
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                      );
-                                                      break;
-                                                    case 1:
+                                                    case 1: //Codigo correcto y no usado
                                                       buttonsProvider.setWrongCodeid(false);
                                                       buttonsProvider.setIsCodeValidated(true);
                                                       buttonsProvider.setIsReadOnly(true);
@@ -547,7 +436,7 @@ class HomeScreen extends StatelessWidget {
                                                 Expanded(child: FittedBox(
                                                   fit: BoxFit.scaleDown,
                                                   child: Text(
-                                                      AppLocalizations.of(context)!.score,
+                                                      '${AppLocalizations.of(context)!.answers} / ${AppLocalizations.of(context)!.mistakes}',
                                                       style: TextStyle(fontWeight: FontWeight.bold, color: AppColors().getBlueText()),
                                                   ),
                                                 )),
@@ -563,7 +452,7 @@ class HomeScreen extends StatelessWidget {
                                                     children: personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.map((d) => FittedBox(
                                                       fit: BoxFit.scaleDown,
                                                       child: Text(
-                                                        '${d.date!.day}/${d.date!.month}/${(d.date!.year)%100}',
+                                                        '${d.date!.day}/${d.date!.month}/${(d.date!.year)%100} | ${d.date!.hour}:${d.date!.minute.toString().padLeft(2,'0')}',
                                                         style: TextStyle(fontSize: 16),
                                                       ),
                                                     )).toList(),
@@ -591,7 +480,7 @@ class HomeScreen extends StatelessWidget {
                                                     children: personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.map((d) => FittedBox(
                                                       fit: BoxFit.scaleDown,
                                                       child: Text(
-                                                        d.score.toString(),
+                                                        '${d.displayed} / ${d.mistakes}',
                                                         style: TextStyle(fontSize: 16),
                                                       ),
                                                     )).toList(),
@@ -661,9 +550,12 @@ class HomeScreen extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.pushNamed(context, '/countdownScreen', arguments: (){
                                         parametersProvider.setIsTimeStarted(false);
-                                        parametersProvider.setSequenceCounter(0);
+                                        parametersProvider.setIsTrialTest(true);
                                         progressProvider.resetThirdsCounter();
                                         parametersProvider.setStartButtonPressed(false);
+                                        symbolsProvider.generateNewOrder();
+                                        symbolsProvider.resetTrialCounter();
+                                        timeProvider.resetPartialTimes();
                                         timeProvider.startTimer(timeLimit: GeneralConstants.trialDuration, onFinish: () => finishTrialTest(context), pp: progressProvider);
                                         Navigator.pushNamed(context, '/testScreen');
                                       });

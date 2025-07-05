@@ -27,7 +27,7 @@ class NewProfileScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          toolbarHeight: MediaQuery.of(context).size.height / 8,
+          toolbarHeight: MediaQuery.of(context).size.height / GeneralConstants.toolbarHeightRatio,
           backgroundColor: Colors.white,
           //leading: Image.asset('assets/images/saludmadrid.jpg'),
           actions:[ Expanded(

@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'dart:async';
+import 'dart:math';
+import 'package:symbols/providers.dart';
+import 'package:provider/provider.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,6 +19,10 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _loadVersion();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      double diagInches = printScreenDiagonalInInches(context);
+      context.read<DeviceProvider>().setDiagonalInches(diagInches);
+    });
     Timer(const Duration(seconds: 2), () { //Duración de la permanencia en la pantalla de splash
       Navigator.pushReplacementNamed(context, '/'); // Aquí va a la pantalla principal
     });
@@ -45,4 +53,25 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
     );
   }
+}
+
+
+double printScreenDiagonalInInches(BuildContext context) {
+  //// tamaño lógico
+  final logicalWidth = MediaQuery.of(context).size.width;
+  final logicalHeight = MediaQuery.of(context).size.height;
+  final pixelRatio = MediaQuery.of(context).devicePixelRatio;
+
+  /// tamaño real en píxeles
+  final widthPx = logicalWidth * pixelRatio;
+  final heightPx = logicalHeight * pixelRatio;
+
+  // ppi aproximado(Android base es 160dpi)
+  final ppi = 160 * pixelRatio;
+
+  //// calcular la diagonal
+  final diagonalInches = sqrt(widthPx * widthPx + heightPx * heightPx) / ppi;
+
+  debugPrint("la Diagonal aproximada de este dispositivo es: ${diagonalInches.toStringAsFixed(2)} pulgadas");
+  return diagonalInches;
 }

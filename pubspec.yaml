@@ -83,7 +83,7 @@ flutter:
   
 
 flutter_native_splash:
-  color: "#FF0000"
+  color: "#FFFFFF"
   image: assets/images/upm.png
   #branding: assets/brand.png
   #branding_mode: bottom

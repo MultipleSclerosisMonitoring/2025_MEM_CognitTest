@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
 class IdProvider extends ChangeNotifier{
-  int id = 1;
+  int id = Random().nextInt(9);
 
   void changeActiveId({required int newId}) /*async*/ {
     id = newId;
@@ -30,6 +30,7 @@ class ProgressProvider extends ChangeNotifier{
 
   void resetProgressCounter(){
     progressCounter = 0;
+    notifyListeners();
   }
 
 
@@ -55,6 +56,7 @@ class ProgressProvider extends ChangeNotifier{
   void resetMistakesCounter(){
     mistakesCounter = List.filled(3, 0);
     totalMistakes = 0;
+    notifyListeners();
   }
 
   void incrementSymbolsDisplayed(int index){
@@ -66,6 +68,7 @@ class ProgressProvider extends ChangeNotifier{
   void resetSymbolsDisplayed(){
     symbolsDisplayed = List.filled(3, 0);
     totalDisplayed = 0;
+    notifyListeners();
   }
 
 }
@@ -97,6 +100,7 @@ class TimeProvider extends ChangeNotifier{
   int limitMilliseconds = 0;
   bool isTestRunning = false;
   late DateTime startTime;
+  List <int> partialTimes = [];
 
   int get elapsedMilliseconds => DateTime.now().difference(startTime).inMilliseconds;
   int get remaining => (limitMilliseconds - elapsedMilliseconds).clamp(0, limitMilliseconds);
@@ -133,15 +137,30 @@ class TimeProvider extends ChangeNotifier{
       notifyListeners(); });
   }
 
+  void addPartialTime(int i){
+    partialTimes.add(i);
+  }
 
+  void resetPartialTimes(){
+    partialTimes = [];
+  }
 
-
+  //Aqui se obtienen los tiempos parciales de verdad y se hace la media. No se hace antes por no añadir logica y entorpecer el reloj
+  double getAveragedDuration(){
+    for (int i = partialTimes.length - 1; i > 0; i--) {
+      partialTimes[i] = partialTimes[i] - partialTimes[i - 1];
+    }
+    double result = partialTimes.reduce((a, b) => a + b) / partialTimes.length; //Media aritmetica
+    return result;
+  }
 
 }
 
 class SymbolsProvider extends ChangeNotifier{
   bool shuffled = false;
-  List <String> symbols =  ['×', '○', '+', '☆', '△', '□', '≡', '∞', '⊞',];
+  List <String> symbols =  ['⊂','⨪','⊢','ᒥ','⊣','>','+','⊃','∸'];
+  int trialCounter = 0;
+  List <int> trialOrder = [];
 
   //Con esta funcion nos aseguramos que se reordenen los simbolos solo una vez y se queden asi
   List <String> getSymbols(){
@@ -156,6 +175,22 @@ class SymbolsProvider extends ChangeNotifier{
     shuffled = b;
     notifyListeners();
   }
+
+  void incrementTrialCounter(){
+    trialCounter++;
+    notifyListeners();
+  }
+
+  void resetTrialCounter(){
+    trialCounter = 0;
+    notifyListeners();
+  }
+
+  void generateNewOrder(){
+    trialOrder = List<int>.generate(9, (i) => i)..shuffle(Random());
+    print(trialOrder);
+    notifyListeners();
+  }
 }
 
 class ParametersProvider extends ChangeNotifier{
@@ -168,15 +203,15 @@ class ParametersProvider extends ChangeNotifier{
   bool dataSentCorrectly = false;
   bool editingMode = false;
   bool isTimeStarted = false;
-  int sequenceCounter = 0;
+  bool isTrialTest = true;
 
   void setIsTimeStarted(bool b){
     isTimeStarted = b;
     notifyListeners();
   }
 
-  void setSequenceCounter(int i){
-    sequenceCounter = i;
+  void setIsTrialTest(bool b){
+    isTrialTest = b;
     notifyListeners();
   }
 
@@ -225,9 +260,10 @@ class ParametersProvider extends ChangeNotifier{
 class Test{
   DateTime? date;
   String? hand; // 'L' o 'R'
-  int? score;
+  int? displayed;
+  int? mistakes;
 
-  Test({this.date, this.hand, this.score});
+  Test({this.date, this.hand, this.displayed, this.mistakes});
 
   void setDate(DateTime d){
     date = d;
@@ -237,20 +273,26 @@ class Test{
     hand = h;
   }
 
-  void setScore(int s){
-    score = s;
+  void setDisplayed(int d){
+    displayed = d;
+  }
+
+  void setMistakes(int m){
+    mistakes = m;
   }
 
   Map<String,dynamic> toJson() => {
     'date': date?.toIso8601String(),
     'hand': hand,
-    'score': score,
+    'displayed': displayed,
+    'mistakes': mistakes,
   };
 
   factory Test.fromJson(Map<String, dynamic> json) => Test(
     date: DateTime.parse(json['date']),
     hand: json['hand'],
-    score: json['score'],
+    displayed: json['displayed'],
+    mistakes: json['mistakes'],
   );
 
 }
@@ -455,14 +497,12 @@ class ButtonsProvider extends ChangeNotifier{
 class DeviceProvider extends ChangeNotifier{
   String? deviceModel;
   double? diagonalInches;
-  bool isDiagonalCalculated = false;
 
   void setDeviceModel(String s){
     deviceModel = s;
     notifyListeners();
   }
   void setDiagonalInches(double d){
-    isDiagonalCalculated = true;
     diagonalInches = d;
     notifyListeners();
   }

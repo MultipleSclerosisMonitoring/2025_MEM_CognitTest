@@ -33,22 +33,16 @@ class CognitionTestScreen extends StatelessWidget {
       if(parametersProvider.isTimeStarted == false){
         parametersProvider.setIsTimeStarted(true);
         symbolsProvider.setShuffled(false);
-        if(parametersProvider.sequenceCounter == 0) {
+        if(parametersProvider.isTrialTest) {
           context.read<TimeProvider>().setStartTime();
           context.read<TimeProvider>().startTimer(timeLimit: GeneralConstants.trialDuration,
               onFinish: () => finishTrialTest(context),
               pp: progressProvider);
         }
-        else if(parametersProvider.sequenceCounter == 1){
+        else if(parametersProvider.isTrialTest == false){
           context.read<TimeProvider>().setStartTime();
           context.read<TimeProvider>().startTimer(timeLimit: GeneralConstants.testDuration,
-              onFinish: () => finishFirstTest(context),
-              pp: progressProvider);
-        }
-        else if(parametersProvider.sequenceCounter == 2){
-          context.read<TimeProvider>().setStartTime();
-          context.read<TimeProvider>().startTimer(timeLimit: GeneralConstants.testDuration,
-              onFinish: () => finishSecondTest(context),
+              onFinish: () => finishTest(context),
               pp: progressProvider);
         }
       }
@@ -58,7 +52,7 @@ class CognitionTestScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        toolbarHeight: MediaQuery.of(context).size.height / 8,
+        toolbarHeight: MediaQuery.of(context).size.height / GeneralConstants.toolbarHeightRatio,
         backgroundColor: Colors.white,
         //leading: Image.asset('assets/images/saludmadrid.jpg'),
         actions:[ Expanded(
@@ -195,8 +189,8 @@ class CognitionTestScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
-                  child: Text(symbols[activeId - 1],
-                      style: TextStyle(fontSize: 130)
+                  child: Text(symbols[activeId],
+                      style: const TextStyle(fontSize: 130)
                   ),
                 ),
               ),
@@ -278,13 +272,19 @@ class CognitionTestScreen extends StatelessWidget {
     );
   }
 
-  int newRandom(int currentId) {
-    final random = Random();
-    int randomNumber;
-    do{
-      randomNumber = random.nextInt(9) + 1;
-    } while(randomNumber == currentId); //Nos aseguramos de que cambie el simbolo
-    return randomNumber;
+  int newRandom(int currentId, bool isTrial, int counter, List<int> order) {
+    if(isTrial && counter < 9){
+      return order[counter];
+    }
+    else {
+      final random = Random();
+      int randomNumber;
+      do {
+        randomNumber = random.nextInt(9);
+      } while (randomNumber ==
+          currentId); //Nos aseguramos de que cambie el simbolo
+      return randomNumber;
+    }
   }
 
 //Funcion que comprueba si se ha presionado una tecla y si es correcta
@@ -293,22 +293,31 @@ class CognitionTestScreen extends StatelessWidget {
       int activeKey) async{
     final progressProvider = Provider.of<ProgressProvider>(context, listen:false);
     final keyboardProvider = Provider.of<KeyboardProvider>(context, listen: false);
+    final parametersProvider = Provider.of<ParametersProvider>(context, listen: false);
+    final symbolsProvider = Provider.of<SymbolsProvider>(context, listen: false);
+    final timeProvider = Provider.of<TimeProvider>(context, listen: false);
 
 
     // Comprobar si se ha presionado el teclado
     if (keyboardProvider.keyFlag) {
       keyboardProvider.setFlag(false);
-
+      timeProvider.addPartialTime(timeProvider.elapsedMilliseconds);
       //Verificar si la tecla presionada coincide con el símbolo activo
-      if (activeId == activeKey) {
+      if (activeId == (activeKey - 1)) {
         progressProvider.incrementProgressCounter();
+        debugPrint('score: ' + '${progressProvider.progressCounter}');
       }
       else{ //Sumamos los errores
         progressProvider.incrementMistakesCounter(progressProvider.thirdsCounter);
+        debugPrint('mistakes: ' + '${progressProvider.totalMistakes}');
       }
 
-      context.read<IdProvider>().changeActiveId(newId: newRandom(activeId)); //Generamos nuevo simbolo
+      context.read<IdProvider>().changeActiveId(newId: newRandom(activeId, parametersProvider.isTrialTest, symbolsProvider.trialCounter, symbolsProvider.trialOrder)); //Generamos nuevo simbolo
+      if(parametersProvider.isTrialTest) {
+        symbolsProvider.incrementTrialCounter();
+      }
       progressProvider.incrementSymbolsDisplayed(progressProvider.thirdsCounter);
+      debugPrint('total: ' + '${progressProvider.totalDisplayed}');
     }
 
 
@@ -318,6 +327,7 @@ class CognitionTestScreen extends StatelessWidget {
 void finishTrialTest(BuildContext context){
   final progressProvider = Provider.of<ProgressProvider>(context, listen:false);
   final parametersProvider = Provider.of<ParametersProvider>(context, listen:false);
+  final timeProvider = Provider.of<TimeProvider>(context, listen: false);
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -343,10 +353,11 @@ void finishTrialTest(BuildContext context){
                 progressProvider.resetMistakesCounter();
                 progressProvider.resetProgressCounter();
                 progressProvider.resetSymbolsDisplayed();
+                timeProvider.resetPartialTimes();
                 parametersProvider.setDataSent(false);
                 Navigator.pushNamed(context, '/countdownScreen', arguments: (){
                   parametersProvider.setIsTimeStarted(false);
-                  parametersProvider.setSequenceCounter(1);
+                  parametersProvider.setIsTrialTest(false);
                   Navigator.pushNamed(context, '/testScreen');
                 });
               },
@@ -361,16 +372,16 @@ void finishTrialTest(BuildContext context){
                 progressProvider.resetMistakesCounter();
                 progressProvider.resetProgressCounter();
                 progressProvider.resetSymbolsDisplayed();
+                timeProvider.resetPartialTimes();
                 parametersProvider.setDataSent(false);
-
                 Navigator.pushNamed(context, '/countdownScreen', arguments: (){
                   parametersProvider.setIsTimeStarted(false);
-                  parametersProvider.setSequenceCounter(1);
+                  parametersProvider.setIsTrialTest(false);
                   Navigator.pushNamed(context, '/testScreen');
                 });
               },
               child: Text(AppLocalizations.of(context)!.right,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 20)),
             ),
           ],
@@ -378,133 +389,19 @@ void finishTrialTest(BuildContext context){
   );
 }
 
-void finishFirstTest(BuildContext context) async{
-  context.read<TimeProvider>().setEndTime();
-  final progressProvider = Provider.of<ProgressProvider>(context, listen:false);
-  final parametersProvider = Provider.of<ParametersProvider>(context, listen:false);
-  final personalDataProvider = Provider.of<PersonalDataProvider>(context, listen:false);
-  final deviceProvider = Provider.of<DeviceProvider>(context, listen: false);
 
-  if(!deviceProvider.isDiagonalCalculated){
-    final mq = MediaQuery.of(context);
-    final anchoPx = mq.size.width;
-    final altoPx = mq.size.height;
-    final densidad = mq.devicePixelRatio;
-
-    // Estimación de DPI
-    // En Android se suele usar 160 como base para mdpi
-    final dpiEstimado = 160 * densidad;
-
-    final anchoPulgadas = anchoPx / dpiEstimado;
-    final altoPulgadas = altoPx / dpiEstimado;
-
-    final diagonalPulgadas = sqrt(anchoPulgadas * anchoPulgadas + altoPulgadas * altoPulgadas);
-
-    deviceProvider.setDiagonalInches(diagonalPulgadas);
-  }
-
-  final score = progressProvider.progressCounter;
-  parametersProvider.setDataSent(true);
-  personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].addTest(Test(date: DateTime.now(), hand: parametersProvider.hand, score: score));
-  final int answer = await enviarDatosSDMT(
-    codeid: parametersProvider.codeid ?? "",
-    fNacimiento: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].dateOfBirth?.toIso8601String().substring(0,10) ?? "",
-    sexo: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].sex ?? "",
-    nivelEduc: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].sex ?? "",
-    mano: parametersProvider.hand ?? "",
-    numSim: progressProvider.totalDisplayed.toString(),
-    tiempo: "90",
-    errores: progressProvider.totalMistakes.toString(),
-    score: progressProvider.progressCounter.toString(),
-    num_Dig_1: progressProvider.symbolsDisplayed[0].toString(),
-    num_Dig_2: progressProvider.symbolsDisplayed[1].toString(),
-    num_Dig_3: progressProvider.symbolsDisplayed[2].toString(),
-    number_Errors: progressProvider.totalMistakes.toString(),
-    number_Errors_1: progressProvider.mistakesCounter[0].toString(),
-    number_Errors_2: progressProvider.mistakesCounter[1].toString(),
-    number_Errors_3: progressProvider.mistakesCounter[2].toString(),
-    device: deviceProvider.deviceModel ?? 'unknownDevice',
-    diagInch: deviceProvider.diagonalInches.toString(),
-  );
-  if(answer == -1){
-    parametersProvider.setDataSentCorrectly(false);
-  } else{
-    parametersProvider.setDataSentCorrectly(true);
-  }
-
-
-  showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (context) =>
-        AlertDialog(
-          title: Text(
-            AppLocalizations.of(
-                context)!.well_done,
-            style: TextStyle(
-                fontWeight: FontWeight
-                    .bold,
-                color: AppColors().getBlueText()),
-          ),
-          content: Text( (parametersProvider.hand == 'L') ?
-          AppLocalizations.of(context)!.halfway_left : AppLocalizations.of(context)!.halfway_right,
-            style: TextStyle(
-                fontSize: 20,
-                color: AppColors()
-                    .getBlueText()),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                (parametersProvider.hand == 'L') ? parametersProvider.setHand('R') : parametersProvider.setHand('L');
-                progressProvider.resetThirdsCounter();
-                progressProvider.resetMistakesCounter();
-                progressProvider.resetProgressCounter();
-                progressProvider.resetSymbolsDisplayed();
-                parametersProvider.setDataSent(false);
-                Navigator.pushNamed(context, '/countdownScreen', arguments: (){
-                  parametersProvider.setIsTimeStarted(false);
-                  parametersProvider.setSequenceCounter(2);
-                  Navigator.pushNamed(context, '/testScreen');
-                });
-              },
-              child: Text(AppLocalizations.of(context)!.start_test,
-                  style: TextStyle(
-                      fontSize: 20)),
-            ),
-          ],
-        ),
-  );
-}
-
-void finishSecondTest(BuildContext context) async{
+void finishTest(BuildContext context) async{
   context.read<TimeProvider>().setEndTime();
   final progressProvider = Provider.of<ProgressProvider>(context, listen:false);
   final parametersProvider = Provider.of<ParametersProvider>(context, listen:false);
   final personalDataProvider = Provider.of<PersonalDataProvider>(context, listen:false);
   final deviceProvider = Provider.of<DeviceProvider>(context, listen:false);
   final buttonsProvider = Provider.of<ButtonsProvider>(context, listen: false);
-
-  if(!deviceProvider.isDiagonalCalculated){
-    final mq = MediaQuery.of(context);
-    final anchoPx = mq.size.width;
-    final altoPx = mq.size.height;
-    final densidad = mq.devicePixelRatio;
-
-    // Estimación de DPI
-    // En Android se suele usar 160 como base para mdpi
-    final dpiEstimado = 160 * densidad;
-
-    final anchoPulgadas = anchoPx / dpiEstimado;
-    final altoPulgadas = altoPx / dpiEstimado;
-
-    final diagonalPulgadas = sqrt(anchoPulgadas * anchoPulgadas + altoPulgadas * altoPulgadas);
-
-    deviceProvider.setDiagonalInches(diagonalPulgadas);
-  }
+  final timeProvider = Provider.of<TimeProvider>(context, listen: false);
 
   parametersProvider.setDataSent(true);
-  personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].addTest(Test(date: DateTime.now(), hand: parametersProvider.hand, score: progressProvider.progressCounter));
+  final double averagedDuration= timeProvider.getAveragedDuration();
+  personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].addTest(Test(date: DateTime.now(), hand: parametersProvider.hand, displayed: progressProvider.totalDisplayed, mistakes: progressProvider.totalMistakes));
   final int answer = await enviarDatosSDMT(
     codeid: parametersProvider.codeid ?? "",
     fNacimiento: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].dateOfBirth?.toIso8601String().substring(0,10) ?? "",
@@ -522,6 +419,7 @@ void finishSecondTest(BuildContext context) async{
     number_Errors_1: progressProvider.mistakesCounter[0].toString(),
     number_Errors_2: progressProvider.mistakesCounter[1].toString(),
     number_Errors_3: progressProvider.mistakesCounter[2].toString(),
+    averaged_duration: averagedDuration.toString(),
     device: deviceProvider.deviceModel ?? 'unknownDevice',
     diagInch: deviceProvider.diagonalInches.toString(),
   );
@@ -538,10 +436,12 @@ void finishSecondTest(BuildContext context) async{
   personalDataProvider.saveProfiles();
   parametersProvider.resetCodeidController1();
   parametersProvider.resetCodeidController2();
+  parametersProvider.setIsTrialTest(true);
+  timeProvider.resetPartialTimes();
   buttonsProvider.setIsCodeValidated(false);
   buttonsProvider.setIsReadOnly(false);
 
-  Future.delayed(Duration(milliseconds: 500),(){
+  Future.delayed(const Duration(milliseconds: 500),(){
     Navigator.pushNamed(context, '/resultsScreen');
   });
 }
@@ -568,13 +468,7 @@ Future<int> checkCodeid ({required String codeid}) async {
       } else{
         final List<dynamic> handsUsed = data['hands'];
         if(handsUsed.isNotEmpty){
-          if(handsUsed.length == 2){
-            return 3;
-          } else if(handsUsed[0] == 'L'){
-            return 4;
-          } else{
-            return 5;
-          }
+          return 3;
         } else {
           return 1;
         }
@@ -586,6 +480,7 @@ Future<int> checkCodeid ({required String codeid}) async {
   }
   print('Error al Enviar datos: ${response.statusCode}');
   return -1;
+
   }
 
 // Devuelve 1 si el codeid es correcto, 2 si es incorrecto
@@ -609,6 +504,7 @@ Future<int> enviarDatosSDMT({
   required String number_Errors_1,
   required String number_Errors_2,
   required String number_Errors_3,
+  required String averaged_duration,
   required String device,
   required String diagInch
 }) async {
@@ -635,6 +531,7 @@ Future<int> enviarDatosSDMT({
     'Number_Errors_1': number_Errors_1,
     'Number_Errors_2': number_Errors_2,
     'Number_Errors_3': number_Errors_3,
+    'Averaged_Duration': averaged_duration,
     'Device': device,
     'DiagInch': diagInch,
   },

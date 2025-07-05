@@ -167,34 +167,18 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get trial_completed =>
-      'Has completado el test de prueba. Ahora harás el test oficial dos veces, una con cada mano. ¿Con cuál quieres empezar?';
+      'Has completado el test de prueba. Ahora harás el test oficial.¿Con qué mano lo vas a realizar?';
 
   @override
   String get well_done => 'Bien hecho';
 
   @override
-  String get halfway_left =>
-      'Has completado el test con tu mano izquierda. Por favor, realiza el test ahora con la mano derecha';
-
-  @override
-  String get halfway_right =>
-      'Has completado el test con tu mano derecha. Por favor, realiza el test ahora con la mano izquierda';
-
-  @override
   String get test_explanation =>
-      'Bienvenido al test de símbolos. Durante la prueba, aparecerá un símbolo en el centro de la pantalla. Tu objetivo es encontrar ese símbolo en la guía que está en la parte superior de la pantalla y presionar la tecla con el número que corresponde al símbolo. Una vez que presiones una tecla, sea correcta o no, aparecerá un nuevo símbolo. No te preocupes, antes de comenzar la prueba oficial harás un test de 20 segundos para familiarizarte. Después de la prueba de práctica, harás dos pruebas de 90 segundos: es importante que hagas cada una con una mano diferente. ¡Buena suerte!';
+      'Bienvenido al test de símbolos. Durante la prueba, aparecerá un símbolo en el centro de la pantalla. Tu objetivo es encontrar ese símbolo en la guía que está en la parte superior de la pantalla y presionar la tecla con el número que corresponde al símbolo. Una vez que presiones una tecla, sea correcta o no, aparecerá un nuevo símbolo. No te preocupes, antes de comenzar la prueba oficial harás un test de 40 segundos para familiarizarte. Después de la prueba de práctica, harás la prueba oficial de 90 segundos. ¡Buena suerte!';
 
   @override
   String get code_used =>
       'Este código ya ha sido utilizado para realizar el test. Por favor, pida un nuevo código a su médico';
-
-  @override
-  String get left_registered =>
-      'Ya has realizado el test con este código, pero solo con la mano izquierda. Por favor, hazlo ahora con la mano derecha para completar los resultados';
-
-  @override
-  String get right_registered =>
-      'Ya has realizado el test con este código, pero solo con la mano derecha. Por favor, hazlo ahora con la mano derecha para completar los resultados';
 
   @override
   String get unfinished_test => '¡Test incompleto!';
@@ -204,4 +188,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get r => 'D';
+
+  @override
+  String get answers => 'Respuestas';
+
+  @override
+  String get mistakes => 'Fallos';
 }
