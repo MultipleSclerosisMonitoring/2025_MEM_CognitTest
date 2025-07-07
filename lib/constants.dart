@@ -7,6 +7,7 @@ class AppColors{
   static const Color secondaryBlue = Color(0xFFE8F1FA);
   static const Color secondaryBlueClear = Color(0xFFF8F9FE);
   static const Color blueText = Color(0xFF0E47A1);
+  static const Color splashBackground = Color(0xFF4090E5);
 
   Color getBlueText(){
     return blueText;

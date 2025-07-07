@@ -18,8 +18,11 @@ import 'dart:io';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  /*
   await Future.delayed(Duration(seconds: 2)); // Simula carga
   FlutterNativeSplash.remove(); // Quita el splash
+
+   */
   final prefs = await SharedPreferences.getInstance();
   final personalDataProvider = PersonalDataProvider();
   final deviceProvider = DeviceProvider();

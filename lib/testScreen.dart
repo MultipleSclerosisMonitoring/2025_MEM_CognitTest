@@ -401,6 +401,7 @@ void finishTest(BuildContext context) async{
 
   parametersProvider.setDataSent(true);
   final double averagedDuration= timeProvider.getAveragedDuration();
+  final double sdev_duration = timeProvider.getStdDeviation();
   personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].addTest(Test(date: DateTime.now(), hand: parametersProvider.hand, displayed: progressProvider.totalDisplayed, mistakes: progressProvider.totalMistakes));
   final int answer = await enviarDatosSDMT(
     codeid: parametersProvider.codeid ?? "",
@@ -420,6 +421,7 @@ void finishTest(BuildContext context) async{
     number_Errors_2: progressProvider.mistakesCounter[1].toString(),
     number_Errors_3: progressProvider.mistakesCounter[2].toString(),
     averaged_duration: averagedDuration.toString(),
+    sdev_duration: sdev_duration.toString(),
     device: deviceProvider.deviceModel ?? 'unknownDevice',
     diagInch: deviceProvider.diagonalInches.toString(),
   );
@@ -459,6 +461,7 @@ Future<int> checkCodeid ({required String codeid}) async {
         'codeid': codeid,
       }
   );
+
   if (response.statusCode == 200) {
     print('Datos enviados Correctamente: ${response.body}');
     final data = jsonDecode(response.body);
@@ -481,12 +484,15 @@ Future<int> checkCodeid ({required String codeid}) async {
   print('Error al Enviar datos: ${response.statusCode}');
   return -1;
 
-  }
 
+
+  }
 // Devuelve 1 si el codeid es correcto, 2 si es incorrecto
-// 3 si ya se ha usado con ambas manos
-// 4 si se ha usado para la izquierda y 5 si se ha usado para la derecha
+// 3 si ya se ha usado
 // y -1 si no se han enviado correctamente
+
+
+
 Future<int> enviarDatosSDMT({
   required String codeid,
   required String fNacimiento,
@@ -505,6 +511,7 @@ Future<int> enviarDatosSDMT({
   required String number_Errors_2,
   required String number_Errors_3,
   required String averaged_duration,
+  required String sdev_duration,
   required String device,
   required String diagInch
 }) async {
@@ -532,6 +539,7 @@ Future<int> enviarDatosSDMT({
     'Number_Errors_2': number_Errors_2,
     'Number_Errors_3': number_Errors_3,
     'Averaged_Duration': averaged_duration,
+    'Sdev_Duration': sdev_duration,
     'Device': device,
     'DiagInch': diagInch,
   },

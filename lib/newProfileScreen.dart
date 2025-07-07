@@ -134,7 +134,7 @@ class NewProfileScreen extends StatelessWidget {
                                     controller: nicknameController,
                                     decoration: InputDecoration(
                                       hintText: parametersProvider.editingMode ? tempUser.nickname : AppLocalizations.of(context)!.nickname,
-                                      hintStyle: TextStyle(color: parametersProvider.editingMode ? AppColors.blueText : (parametersProvider.startButtonPressed ? Colors.red : Colors.black)),
+                                      hintStyle: TextStyle(color: parametersProvider.editingMode ? AppColors.blueText : (parametersProvider.saveButtonPressed ? Colors.red : Colors.black)),
                                       border: const OutlineInputBorder(),
                                       enabledBorder: OutlineInputBorder(
                                         borderSide: const BorderSide(color: Colors.indigo, width: 3),
@@ -185,8 +185,8 @@ class NewProfileScreen extends StatelessWidget {
                                         style: TextStyle(color: AppColors.blueText),
                                         decoration: InputDecoration(
                                           hintText: parametersProvider.editingMode ? "${tempUser.dateOfBirth!.day}/${tempUser.dateOfBirth!.month}/${tempUser.dateOfBirth!.year}" : "DD/MM/YYYY",
-                                          hintStyle: TextStyle(color: parametersProvider.editingMode ? AppColors.blueText : (parametersProvider.startButtonPressed ? Colors.red : Colors.black)),
-                                          labelStyle: TextStyle(color: (parametersProvider.startButtonPressed && tempUser.dateOfBirth == null) ? Colors.red : Colors.black),
+                                          hintStyle: TextStyle(color: parametersProvider.editingMode ? AppColors.blueText : (parametersProvider.saveButtonPressed ? Colors.red : Colors.black)),
+                                          labelStyle: TextStyle(color: (parametersProvider.saveButtonPressed && tempUser.dateOfBirth == null) ? Colors.red : Colors.black),
                                           suffixIcon: Icon(Icons.calendar_today),
                                        ),
                                         onTap: () async {
@@ -249,8 +249,8 @@ class NewProfileScreen extends StatelessWidget {
                                           child: Text(AppLocalizations.of(context)!.value_select,
                                             style: TextStyle(
                                               //Si se ha intentado iniciar el test sin rellenar este campo, el texto sale en rojo y negrita
-                                              color: parametersProvider.startButtonPressed ? Colors.red : Colors.black,
-                                              fontWeight: parametersProvider.startButtonPressed ? FontWeight.bold : null,
+                                              color: parametersProvider.saveButtonPressed ? Colors.red : Colors.black,
+                                              fontWeight: parametersProvider.saveButtonPressed ? FontWeight.bold : null,
                                             ),
                                           ),
                                         ),
@@ -350,8 +350,8 @@ class NewProfileScreen extends StatelessWidget {
                                             child: Text(AppLocalizations.of(context)!.value_select,
                                               style: TextStyle(
                                                 //Si se ha intentado iniciar el test sin rellenar este campo, el texto sale en rojo y negrita
-                                                color: parametersProvider.startButtonPressed ? Colors.red : Colors.black,
-                                                fontWeight: parametersProvider.startButtonPressed ? FontWeight.bold : null,
+                                                color: parametersProvider.saveButtonPressed ? Colors.red : Colors.black,
+                                                fontWeight: parametersProvider.saveButtonPressed ? FontWeight.bold : null,
                                               ),
                                             ),
                                           ),
@@ -456,18 +456,51 @@ class NewProfileScreen extends StatelessWidget {
                               tempUser.levelOfStudies != null &&
                               tempUser.nickname != ""
                           ) {
-                            parametersProvider.setStartButtonPressed(false);
-                            if(parametersProvider.editingMode){
-                              personalDataProvider.updateProfile(personalDataProvider.activeUser ?? 0, tempUser);
+                            bool nicknameRepeated = false;
+                            for(int i = 0; i < personalDataProvider.profilesList.length; i++){
+                              if(tempUser.nickname == personalDataProvider.profilesList[i].nickname){
+                                nicknameRepeated = true;
+                              }
                             }
-                            else {
-                              personalDataProvider.addNewProfile(tempUser);
-                              personalDataProvider.resetTempUser();
+                            if(nicknameRepeated){
+                              showDialog(
+                                context: context,
+                                builder: (context) =>
+                                    AlertDialog(
+                                      content: Text(
+                                        AppLocalizations.of(
+                                            context)!.nickname_used,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: AppColors()
+                                                .getBlueText()),
+                                      ),
+                                        actions: [
+                                        TextButton(
+                                          onPressed: () =>Navigator.of(context).pop(),
+                                          child: Text('OK',
+                                          style: TextStyle(
+                                          fontSize: 20)),
+                                          ),
+                                      ],
+                                    ),
+                              );
+                            } else {
+                              parametersProvider.setSaveButtonPressed(false);
+                              if (parametersProvider.editingMode) {
+                                personalDataProvider.updateProfile(
+                                    personalDataProvider.activeUser ?? 0,
+                                    tempUser);
+                              }
+                              else {
+                                personalDataProvider.addNewProfile(tempUser);
+                                personalDataProvider.resetTempUser();
+                              }
+                              await personalDataProvider.saveProfiles();
+                              Navigator.pushNamed(context, '/');
                             }
-                            await personalDataProvider.saveProfiles();
-                            Navigator.pushNamed(context, '/');
                           } else{
-                            parametersProvider.setStartButtonPressed(true);
+                            parametersProvider.setSaveButtonPressed(true);
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -485,7 +518,7 @@ class NewProfileScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(30.0),
                       child: Text(
-                        parametersProvider.startButtonPressed ? AppLocalizations.of(context)!.data_error : "",
+                        parametersProvider.saveButtonPressed ? AppLocalizations.of(context)!.data_error : "",
                         style: TextStyle(
                           color: Colors.red,
                         ),

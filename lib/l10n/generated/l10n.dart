@@ -451,6 +451,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mistakes'**
   String get mistakes;
+
+  /// No description provided for @nickname_used.
+  ///
+  /// In en, this message translates to:
+  /// **'This nickname is already on use. Please, try with a different one'**
+  String get nickname_used;
 }
 
 class _AppLocalizationsDelegate

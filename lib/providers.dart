@@ -154,6 +154,17 @@ class TimeProvider extends ChangeNotifier{
     return result;
   }
 
+  double getStdDeviation(){
+    for (int i = partialTimes.length - 1; i > 0; i--) {
+    partialTimes[i] = partialTimes[i] - partialTimes[i - 1];
+    }
+    final average = partialTimes.reduce((a, b) => a + b) / partialTimes.length;
+    final sumOfSquares = partialTimes
+        .map((v) => pow(v - average, 2))
+        .reduce((a, b) => a + b);
+    return sumOfSquares/partialTimes.length;
+  }
+
 }
 
 class SymbolsProvider extends ChangeNotifier{
@@ -194,7 +205,7 @@ class SymbolsProvider extends ChangeNotifier{
 }
 
 class ParametersProvider extends ChangeNotifier{
-  bool startButtonPressed = false;
+  bool saveButtonPressed = false;
   String? hand; //'L' o 'R'
   String? codeid;
   TextEditingController codeidController1 = TextEditingController();
@@ -243,8 +254,8 @@ class ParametersProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void setStartButtonPressed(bool x){
-    startButtonPressed = x;
+  void setSaveButtonPressed(bool x){
+    saveButtonPressed = x;
     notifyListeners();
   }
 

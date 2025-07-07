@@ -194,4 +194,8 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get mistakes => 'Fallos';
+
+  @override
+  String get nickname_used =>
+      'El alias ya está en uso, por favor pruebe con otro';
 }

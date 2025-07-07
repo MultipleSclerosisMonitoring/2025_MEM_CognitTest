@@ -369,6 +369,7 @@ class HomeScreen extends StatelessWidget {
                       personalDataProvider.resetNicknameController();
                       personalDataProvider.resetDataController();
                       personalDataProvider.resetTempUser();
+                      parametersProvider.setSaveButtonPressed(false);
                       Navigator.pushNamed(context, '/newProfileScreen');
                     },
                     height: screenHeight / 7,
@@ -552,7 +553,7 @@ class HomeScreen extends StatelessWidget {
                                         parametersProvider.setIsTimeStarted(false);
                                         parametersProvider.setIsTrialTest(true);
                                         progressProvider.resetThirdsCounter();
-                                        parametersProvider.setStartButtonPressed(false);
+                                        parametersProvider.setSaveButtonPressed(false);
                                         symbolsProvider.generateNewOrder();
                                         symbolsProvider.resetTrialCounter();
                                         timeProvider.resetPartialTimes();

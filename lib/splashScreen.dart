@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:symbols/constants.dart';
 import 'dart:async';
 import 'dart:math';
 import 'package:symbols/providers.dart';
@@ -38,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white, // El color que quieras puede ser azul como xiaoYang
+      backgroundColor: AppColors.splashBackground, // El color que quieras puede ser azul como xiaoYang
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -47,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
             const SizedBox(height: 20),
             Image.asset('assets/images/upm.png', width: 120), // imagen del logo de UPM
             const SizedBox(height: 30),
-            Text(_version, style: const TextStyle(color: Colors.grey)),
+            Text(_version, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           ],
         ),
       ),

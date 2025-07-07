@@ -58,5 +58,6 @@
   "l": "I",
   "r": "D",
   "answers": "Respuestas",
-  "mistakes": "Fallos"
+  "mistakes": "Fallos",
+  "nickname_used": "El alias ya está en uso, por favor pruebe con otro"
 }
