@@ -376,7 +376,7 @@ class PersonalDataProvider extends ChangeNotifier{
   Profile tempUser = Profile();
   TextEditingController dataController = TextEditingController();
   TextEditingController nicknameController = TextEditingController();
-
+  
 
   void addNewProfile(Profile newUser){
     profilesList.add(newUser);
