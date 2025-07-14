@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:symbols/constants.dart';
+import 'package:symbols/utils/constants.dart';
 
 class CountdownScreen extends StatefulWidget {
   const CountdownScreen({Key? key}) : super(key : key);

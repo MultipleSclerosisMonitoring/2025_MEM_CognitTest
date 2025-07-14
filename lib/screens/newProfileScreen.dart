@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:symbols/constants.dart';
-import 'locale_provider.dart';
-import 'providers.dart';
+import 'package:symbols/utils/constants.dart';
+import 'package:symbols/state_management/locale_provider.dart';
+import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:symbols/l10n/generated/l10n.dart';
 

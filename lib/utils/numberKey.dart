@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:symbols/constants.dart';
-import 'package:symbols/providers.dart';
+import 'package:symbols/utils/constants.dart';
+import 'package:symbols/state_management/providers.dart';
 
 class NumberKey extends StatelessWidget{
   final int number;

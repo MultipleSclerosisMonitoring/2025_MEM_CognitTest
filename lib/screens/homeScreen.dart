@@ -2,11 +2,11 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:symbols/HomeButton.dart';
-import 'package:symbols/testScreen.dart';
-import 'constants.dart';
-import 'locale_provider.dart';
-import 'providers.dart';
+import 'package:symbols/utils/HomeButton.dart';
+import 'package:symbols/screens/testScreen.dart';
+import 'package:symbols/utils/constants.dart';
+import 'package:symbols/state_management/locale_provider.dart';
+import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:symbols/l10n/generated/l10n.dart';
 

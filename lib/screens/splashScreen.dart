@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:symbols/constants.dart';
+import 'package:symbols/utils/constants.dart';
 import 'dart:async';
 import 'dart:math';
-import 'package:symbols/providers.dart';
+import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
 
 

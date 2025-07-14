@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:symbols/constants.dart';
+import 'package:symbols/utils/constants.dart';
 
 class HomeButton extends StatelessWidget{
   final String text;

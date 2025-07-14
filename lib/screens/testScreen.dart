@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'constants.dart';
-import 'l10n/generated/l10n.dart';
-import 'numberKey.dart';
-import 'providers.dart';
+import 'package:symbols/utils/constants.dart';
+import 'package:symbols/l10n/generated/l10n.dart';
+import 'package:symbols/utils/numberKey.dart';
+import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 
