@@ -44,7 +44,6 @@ class HomeButton extends StatelessWidget{
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Center(
-
                             child: LayoutBuilder(
                               builder: (context, constraints) {
                                 return Text(

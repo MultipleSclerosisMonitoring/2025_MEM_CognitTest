@@ -6,6 +6,8 @@ import 'package:symbols/state_management/locale_provider.dart';
 import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
 
+import '../utils/AppBar.dart';
+
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({super.key});
 
@@ -17,71 +19,7 @@ class ResultsScreen extends StatelessWidget {
     bool dataOK = parametersProvider.dataSentCorrectly;
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        toolbarHeight: MediaQuery.of(context).size.height / GeneralConstants.toolbarHeightRatio,
-        backgroundColor: Colors.white,
-        //leading: Image.asset('assets/images/saludmadrid.jpg'),
-        actions:[ Expanded(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(24.0),
-                  child: Image.asset('assets/images/saludMadridPng.png'),
-                ),
-              ),
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Image.asset('assets/images/upm.png'),
-                ),
-              ),
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    color: Colors.red,
-                    child: DropdownButton<Locale>(
-                      value: localeProvider.locale,
-                      icon: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: const Icon(Icons.language, color: Colors.white),
-                      ),
-                      dropdownColor: Colors.red,
-                      onChanged: (Locale? newLocale) {
-                        if (newLocale != null) {
-                          localeProvider.setLocale(newLocale);
-                        }
-                      },
-                      items: const [
-                        DropdownMenuItem(
-                          value: Locale('en'),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('🇺🇸',
-                                style: TextStyle(color: Colors.white)),
-                          ),
-                        ),
-                        DropdownMenuItem(
-                          value: Locale('es'),
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text('🇪🇸',
-                                style: TextStyle(color: Colors.white)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        ],
-      ),
+      appBar: getGeneralAppBar(context, localeProvider, false),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40.0),
         child: Column(

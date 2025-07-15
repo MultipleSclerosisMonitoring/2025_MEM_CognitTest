@@ -82,6 +82,33 @@ void checkSuccessAndUpdate(BuildContext context,
 
 }
 
+void testCallback(BuildContext context, int activeId, int activeKey){
+  //Si empezamos el tiempo en countdownScreen, en testScreen sale ya empezado
+  final progressProvider = Provider.of<ProgressProvider>(context, listen: false);
+  final parametersProvider = Provider.of<ParametersProvider>(context, listen: false);
+  final symbolsProvider = Provider.of<SymbolsProvider>(context, listen: false);
+  if (parametersProvider.isTimeStarted == false) {
+    parametersProvider.setIsTimeStarted(true);
+    symbolsProvider.setShuffled(false);
+    if (parametersProvider.isTrialTest) {
+      context.read<TimeProvider>().setStartTime();
+      context.read<TimeProvider>().startTimer(
+          timeLimit: GeneralConstants.trialDuration,
+          onFinish: () => finishTrialTest(context),
+          pp: progressProvider);
+    }
+    else if (parametersProvider.isTrialTest == false) {
+      context.read<TimeProvider>().setStartTime();
+      context.read<TimeProvider>().startTimer(
+          timeLimit: GeneralConstants.testDuration,
+          onFinish: () => finishTest(context),
+          pp: progressProvider);
+    }
+  }
+  checkSuccessAndUpdate(context, activeId, activeKey);
+}
+
+
 
 void finishTrialTest(BuildContext context){
   final progressProvider = Provider.of<ProgressProvider>(context, listen:false);

@@ -9,7 +9,8 @@ import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:symbols/l10n/generated/l10n.dart';
 
-import '../utils/testFunctions.dart';
+import '../utils/AppBar.dart';
+import '../utils/homeFunctions.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,10 +20,7 @@ class HomeScreen extends StatelessWidget {
     final localeProvider = Provider.of<LocaleProvider>(context);
     final personalDataProvider = Provider.of<PersonalDataProvider>(context);
     final parametersProvider = Provider.of<ParametersProvider>(context);
-    final symbolsProvider = Provider.of<SymbolsProvider>(context);
     final buttonsProvider = Provider.of<ButtonsProvider>(context);
-    final progressProvider = Provider.of<ProgressProvider>(context);
-    final timeProvider = Provider.of<TimeProvider>(context);
     double screenHeight = MediaQuery.of(context).size.height;
 
 
@@ -32,72 +30,9 @@ class HomeScreen extends StatelessWidget {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          toolbarHeight: screenHeight / GeneralConstants.toolbarHeightRatio,
-          backgroundColor: Colors.white,
-          //leading: Image.asset('assets/images/saludmadrid.jpg'),
-          actions:[ Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(24.0),
-                    child: Image.asset('assets/images/saludMadridPng.png'),
-                  ),
-                ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Image.asset('assets/images/upm.png'),
-                  ),
-                ),
-                Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      color: Colors.red,
-                      child: DropdownButton<Locale>(
-                        value: localeProvider.locale,
-                        icon: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: const Icon(Icons.language, color: Colors.white),
-                        ),
-                        dropdownColor: Colors.red,
-                        onChanged: (Locale? newLocale) {
-                          if (newLocale != null) {
-                            localeProvider.setLocale(newLocale);
-                          }
-                        },
-                        items: const [
-                          DropdownMenuItem(
-                            value: Locale('en'),
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('🇺🇸',
-                                  style: TextStyle(color: Colors.white)),
-                            ),
-                          ),
-                          DropdownMenuItem(
-                            value: Locale('es'),
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text('🇪🇸',
-                                  style: TextStyle(color: Colors.white)),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          ],
-        ),
-        body: Padding(
+        appBar: getGeneralAppBar(context, localeProvider, false),
+
+      body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Center(
             // Center is a layout widget. It takes a single child and positions it
@@ -198,13 +133,11 @@ class HomeScreen extends StatelessWidget {
 
                                               ),
 
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
+                                              style: const TextStyle(color: Colors.white,),
                                             ),
                                           ),
                                         ),
-                                        Flexible(
+                                        const Flexible(
                                             flex: 1,
                                             child: Padding(
                                               padding: const EdgeInsets.all(8.0),
@@ -239,9 +172,7 @@ class HomeScreen extends StatelessWidget {
                                                 FilteringTextInputFormatter.digitsOnly,
                                                 LengthLimitingTextInputFormatter(3),
                                               ],
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                              ),
+                                              style: const TextStyle(color: Colors.white,),
                                             ),
                                           ),
                                         ),
@@ -251,125 +182,28 @@ class HomeScreen extends StatelessWidget {
                                             padding: const EdgeInsets.all(8.0),
                                             child: IconButton(
                                               icon: buttonsProvider.isReadOnly ?
-                                                  Icon(Icons.edit, color: Colors.white)
+                                                  const Icon(Icons.edit, color: Colors.white)
                                                   :
-                                                  Icon(Icons.check, color: Colors.white),
-                                              onPressed: () async{
-                                                if(!buttonsProvider.isReadOnly) {
-                                                  parametersProvider.setCodeid(
-                                                      (parametersProvider.codeidController1.text) + '-' +
-                                                      (parametersProvider.codeidController2.text)
-                                                  );
-                                                  print(parametersProvider
-                                                      .codeid);
-                                                  final int answer = await checkCodeid(
-                                                      codeid: parametersProvider
-                                                          .codeid ?? 'c');
-                                                  switch (answer) {
-                                                    case 2: //Codigo erroneo
-                                                        buttonsProvider.setIsCodeValidated(false);
-                                                        buttonsProvider.setWrongCodeid(true);
-                                                        buttonsProvider.setIsReadOnly(false);
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (context) =>
-                                                              AlertDialog(
-                                                                title: Text(
-                                                                  AppLocalizations.of(context)!.error_title,
-                                                                  style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
-                                                                      color: Colors.red),
-                                                                ),
-                                                                content: Text(
-                                                                  AppLocalizations.of(context)!.error_text,
-                                                                  style: TextStyle(
-                                                                      fontSize: 20,
-                                                                      color: AppColors().getBlueText()),
-                                                                ),
-                                                                actions: [
-                                                                  TextButton(
-                                                                    onPressed: () =>
-                                                                        Navigator.of(context).pop(),
-                                                                    child: Text('OK',
-                                                                        style: TextStyle(
-                                                                            fontSize: 20)
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                        );
-                                                        break;
-                                                    case 3: //Codigo ya utilizado
-                                                        buttonsProvider.setIsCodeValidated(false);
-                                                        buttonsProvider.setWrongCodeid(true);
-                                                        buttonsProvider.setIsReadOnly(false);
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (context) =>
-                                                              AlertDialog(
-                                                                title: Text(
-                                                                  AppLocalizations.of(context)!.error_title,
-                                                                  style: TextStyle(
-                                                                      fontWeight: FontWeight.bold,
-                                                                      color: Colors.red),
-                                                                ),
-                                                                content: Text(
-                                                                  AppLocalizations.of(context)!.code_used,
-                                                                  style: TextStyle(
-                                                                      fontSize: 20,
-                                                                      color: AppColors().getBlueText()),
-                                                                ),
-                                                                actions: [
-                                                                  TextButton(
-                                                                    onPressed: () =>
-                                                                        Navigator.of(context).pop(),
-                                                                    child: Text('OK',
-                                                                        style: TextStyle(
-                                                                            fontSize: 20)
-                                                                    ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                        );
-                                                        break;
-                                                    case 1: //Codigo correcto y no usado
-                                                      buttonsProvider.setWrongCodeid(false);
-                                                      buttonsProvider.setIsCodeValidated(true);
-                                                      buttonsProvider.setIsReadOnly(true);
-                                                      break;
-                                                    default:
-                                                        buttonsProvider.setIsReadOnly(false);
-                                                        break;
-                                                  }
-                                                } else{
-                                                  buttonsProvider.setIsReadOnly(false);
-                                                }
-                                              },
+                                                  const Icon(Icons.check, color: Colors.white),
+                                              onPressed:  () => codeIdButton(context),
                                             ),
                                           ),
                                         ),
                                     ],
-                                        ),
-                                  ),
                                   ),
                                 ),
+                              ),
                             ),
                           ),
-                          if(!buttonsProvider.isUserSelected) Center(child: Icon(Icons.lock, size: 40, color: Colors.red)),
+                        ),
+                        if(!buttonsProvider.isUserSelected) const Center(child: Icon(Icons.lock, size: 40, color: Colors.red)),
                         ],
                       ),
 
                 Expanded(
                   child: HomeButton(
                     text: AppLocalizations.of(context)!.profile_creation,
-                    onPressed: () {
-                      parametersProvider.setEditingMode(false);
-                      personalDataProvider.resetNicknameController();
-                      personalDataProvider.resetDataController();
-                      personalDataProvider.resetTempUser();
-                      parametersProvider.setSaveButtonPressed(false);
-                      Navigator.pushNamed(context, '/newProfileScreen');
-                    },
+                    onPressed: () => createProfile(context),
                     height: screenHeight / 7,
                     isActive: true,
                   ),
@@ -381,11 +215,7 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: HomeButton(
                           text: AppLocalizations.of(context)!.view_profile,
-                          onPressed: () {
-                            personalDataProvider.tempUser = personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0];
-                            parametersProvider.setEditingMode(true);
-                            Navigator.pushNamed(context, '/newProfileScreen');
-                          },
+                          onPressed: () => editProfile(context),
                           height: screenHeight / 7,
                           isActive: buttonsProvider.isUserSelected,
                         )
@@ -519,21 +349,17 @@ class HomeScreen extends StatelessWidget {
                           builder: (context) =>
                               AlertDialog(
                                 title: Text(
-                                  AppLocalizations.of(
-                                      context)!.trial_title,
+                                  AppLocalizations.of(context)!.trial_title,
                                   style: TextStyle(
-                                      fontWeight: FontWeight
-                                          .bold,
+                                      fontWeight: FontWeight.bold,
                                       color: AppColors().getBlueText()),
                                 ),
                                 content: SingleChildScrollView(
                                   child: Text(
-                                    AppLocalizations.of(
-                                        context)!.test_explanation,
+                                    AppLocalizations.of(context)!.test_explanation,
                                     style: TextStyle(
                                         fontSize: 20,
-                                        color: AppColors()
-                                            .getBlueText()),
+                                        color: AppColors().getBlueText()),
                                   ),
                                 ),
                                 actions: [
@@ -546,20 +372,7 @@ class HomeScreen extends StatelessWidget {
                                             fontSize: 20)),
                                   ),
                                   TextButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(context, '/countdownScreen', arguments: (){
-                                        parametersProvider.setIsTimeStarted(false);
-                                        parametersProvider.setIsTrialTest(true);
-                                        progressProvider.resetThirdsCounter();
-                                        parametersProvider.setSaveButtonPressed(false);
-                                        symbolsProvider.setSymbols(personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].isSymbols1 ?? true);
-                                        symbolsProvider.generateNewOrder();
-                                        symbolsProvider.resetTrialCounter();
-                                        timeProvider.resetPartialTimes();
-                                        timeProvider.startTimer(timeLimit: GeneralConstants.trialDuration, onFinish: () => finishTrialTest(context), pp: progressProvider);
-                                        Navigator.pushNamed(context, '/testScreen');
-                                      });
-                                    },
+                                    onPressed: () => startTest(context),
                                     child: Text(AppLocalizations.of(context)!.start_trial,
                                         style: TextStyle(
                                             fontSize: 20)),
