@@ -59,5 +59,6 @@
   "r": "R",
   "answers": "Answers",
   "mistakes": "Mistakes",
-  "nickname_used": "This nickname is already on use. Please, try with a different one"
+  "nickname_used": "This nickname is already on use. Please, try with a different one",
+  "symbols": "Symbols"
 }

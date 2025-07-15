@@ -351,7 +351,6 @@ class HomeScreen extends StatelessWidget {
                                     ],
                                         ),
                                   ),
-
                                   ),
                                 ),
                             ),
@@ -359,8 +358,6 @@ class HomeScreen extends StatelessWidget {
                           if(!buttonsProvider.isUserSelected) Center(child: Icon(Icons.lock, size: 40, color: Colors.red)),
                         ],
                       ),
-
-
 
                 Expanded(
                   child: HomeButton(
@@ -555,6 +552,7 @@ class HomeScreen extends StatelessWidget {
                                         parametersProvider.setIsTrialTest(true);
                                         progressProvider.resetThirdsCounter();
                                         parametersProvider.setSaveButtonPressed(false);
+                                        symbolsProvider.setSymbols(personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].isSymbols1 ?? true);
                                         symbolsProvider.generateNewOrder();
                                         symbolsProvider.resetTrialCounter();
                                         timeProvider.resetPartialTimes();

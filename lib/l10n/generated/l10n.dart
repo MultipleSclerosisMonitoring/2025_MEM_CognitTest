@@ -457,6 +457,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This nickname is already on use. Please, try with a different one'**
   String get nickname_used;
+
+  /// No description provided for @symbols.
+  ///
+  /// In en, this message translates to:
+  /// **'Symbols'**
+  String get symbols;
 }
 
 class _AppLocalizationsDelegate

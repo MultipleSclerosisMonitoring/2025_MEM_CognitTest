@@ -19,7 +19,10 @@ class GeneralConstants{
   static const int testDuration = 90000;
   static const int countDownDuration = 1;
   static const int toolbarHeightRatio = 8;
-
+  static const List <String> symbols1 =  ['⊂','⨪','⊢','ᒥ','⊣','>','+','⊃','∸'];
+  static const String symbols1String = '⊂ ⨪ ⊢ ᒥ ⊣ > + ⊃ ∸';
+  static const List <String> symbols2 =  ['△','+','☆','○','□','⊞','≡','∞','×'];
+  static const String symbols2String = '△ + ☆ ○ □ ⊞ ≡ ∞ ×';
 }
 
 

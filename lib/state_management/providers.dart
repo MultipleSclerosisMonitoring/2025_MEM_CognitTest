@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 
+import 'package:symbols/utils/constants.dart';
+
 class IdProvider extends ChangeNotifier{
   int id = Random().nextInt(9);
 
@@ -169,9 +171,15 @@ class TimeProvider extends ChangeNotifier{
 
 class SymbolsProvider extends ChangeNotifier{
   bool shuffled = false;
-  List <String> symbols =  ['⊂','⨪','⊢','ᒥ','⊣','>','+','⊃','∸'];
+  List <String> symbols =  [];
   int trialCounter = 0;
   List <int> trialOrder = [];
+
+  void setSymbols(bool isSymbols1){
+    //De esta manera (List<String>.from), se permite modificar la lista
+    symbols = List<String>.from(isSymbols1 ? GeneralConstants.symbols1 : GeneralConstants.symbols2);
+    notifyListeners();
+  }
 
   //Con esta funcion nos aseguramos que se reordenen los simbolos solo una vez y se queden asi
   List <String> getSymbols(){
@@ -315,6 +323,7 @@ class Profile{
   int? id;
   DateTime? dateOfBirth;
   List<Test>? testList;
+  bool? isSymbols1;
 
   Profile({
      this.nickname,
@@ -322,9 +331,13 @@ class Profile{
      this.levelOfStudies,
      this.dateOfBirth,
      this.testList,
+     this.isSymbols1,
   });
 
 
+  void setIsSymbols1(bool b){
+    isSymbols1 = b;
+  }
 
   void setSex(String s){
     sex = s;
@@ -354,6 +367,7 @@ class Profile{
       'sex': sex,
       'levelOfStudies': levelOfStudies,
       'testList': testList?.map((test) => test.toJson()).toList(),
+      'isSymbols1': isSymbols1,
     };
   }
   factory Profile.fromJson(Map<String, dynamic> json) {
@@ -363,6 +377,7 @@ class Profile{
       sex: json['sex'].toString() ?? '',
       levelOfStudies: json['levelOfStudies'].toString() ?? '',
       testList: json['testList'] != null ? (json['testList'] as List<dynamic>).map((test) => Test.fromJson(test)).toList() : [],
+      isSymbols1: json['isSymbols1'] ?? true,
     );
   }
 
@@ -386,6 +401,7 @@ class PersonalDataProvider extends ChangeNotifier{
 
   void updateProfile(int index, Profile u){
     profilesList[index] = u;
+    notifyListeners();
   }
 
   void setActiveUser(int? a){
@@ -406,10 +422,17 @@ class PersonalDataProvider extends ChangeNotifier{
 
   void setTempNickname(String n){
     tempUser.nickname = n;
+    notifyListeners();
+  }
+
+  void setTempIsSymbols1(bool b){
+    tempUser.isSymbols1 = b;
+    notifyListeners();
   }
 
   void resetTempUser(){
     tempUser = Profile();
+    notifyListeners();
   }
 
   void resetProfilesProvider(){

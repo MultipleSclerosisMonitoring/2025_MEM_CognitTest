@@ -257,8 +257,6 @@ class CognitionTestScreen extends StatelessWidget {
                 ),
               ),
             ),
-
-
           ],
         ),
       ),

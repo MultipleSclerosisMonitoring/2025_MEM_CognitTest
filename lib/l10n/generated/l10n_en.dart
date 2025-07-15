@@ -198,4 +198,7 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get nickname_used =>
       'This nickname is already on use. Please, try with a different one';
+
+  @override
+  String get symbols => 'Symbols';
 }

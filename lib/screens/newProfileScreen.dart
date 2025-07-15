@@ -389,6 +389,83 @@ class NewProfileScreen extends StatelessWidget {
                               ),
                             ),
                           ),
+
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(16.0, 30.0, 16.0 ,4.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children:[
+                                Text(
+                                  AppLocalizations.of(context)!.symbols.toUpperCase(),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.indigo,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: Colors.indigo, width: 3),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: Container(decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(color: AppColors().getBlueText(), width: 1),
+                                    ),
+                                      child: DropdownButton<bool>(
+                                          hint: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Text(AppLocalizations.of(context)!.value_select,
+                                              style: TextStyle(
+                                                //Si se ha intentado iniciar el test sin rellenar este campo, el texto sale en rojo y negrita
+                                                color: parametersProvider.saveButtonPressed ? Colors.red : Colors.black,
+                                                fontWeight: parametersProvider.saveButtonPressed ? FontWeight.bold : null,
+                                              ),
+                                            ),
+                                          ),
+                                          underline: SizedBox(),
+                                          style: TextStyle(color: AppColors.blueText),
+                                          iconEnabledColor: Colors.blue,
+                                          value: tempUser.isSymbols1,
+                                          items: const[
+                                            DropdownMenuItem<bool>(
+                                              value: true,
+                                              child:
+                                              Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text(GeneralConstants.symbols1String),
+                                              ),
+                                            ),
+                                            DropdownMenuItem<bool>(
+                                              value: false,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Text(GeneralConstants.symbols2String ),
+                                              ),
+                                            ),
+                                          ],
+                                          onChanged: (bool? value) {
+                                            if (value != null) {
+                                              personalDataProvider.setTempIsSymbols1(value);
+                                            }
+                                          }),
+                                    ),
+                                  ),
+                                ],
+
+                              ),
+                            ),
+                          ),
                       
 
 
@@ -454,51 +531,57 @@ class NewProfileScreen extends StatelessWidget {
                           if( tempUser.dateOfBirth != null &&
                               tempUser.sex != null &&
                               tempUser.levelOfStudies != null &&
-                              tempUser.nickname != ""
+                              tempUser.nickname != "" &&
+                              tempUser.isSymbols1 != null
                           ) {
-                            bool nicknameRepeated = false;
-                            for(int i = 0; i < personalDataProvider.profilesList.length; i++){
-                              if(tempUser.nickname == personalDataProvider.profilesList[i].nickname){
-                                nicknameRepeated = true;
-                              }
-                            }
-                            if(nicknameRepeated){
-                              showDialog(
-                                context: context,
-                                builder: (context) =>
-                                    AlertDialog(
-                                      content: Text(
-                                        AppLocalizations.of(
-                                            context)!.nickname_used,
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: AppColors()
-                                                .getBlueText()),
-                                      ),
-                                        actions: [
-                                        TextButton(
-                                          onPressed: () =>Navigator.of(context).pop(),
-                                          child: Text('OK',
-                                          style: TextStyle(
-                                          fontSize: 20)),
-                                          ),
-                                      ],
-                                    ),
-                              );
-                            } else {
                               parametersProvider.setSaveButtonPressed(false);
                               if (parametersProvider.editingMode) {
                                 personalDataProvider.updateProfile(
-                                    personalDataProvider.activeUser ?? 0,
-                                    tempUser);
+                                    personalDataProvider.activeUser ?? 0, tempUser);
                               }
                               else {
-                                personalDataProvider.addNewProfile(tempUser);
-                                personalDataProvider.resetTempUser();
+                                bool nicknameRepeated = false;
+                                for (int i = 0; i <
+                                    personalDataProvider.profilesList
+                                        .length; i++) {
+                                  if (tempUser.nickname ==
+                                      personalDataProvider.profilesList[i]
+                                          .nickname) {
+                                    nicknameRepeated = true;
+                                  }
+                                }
+                                if (nicknameRepeated) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        AlertDialog(
+                                          content: Text(
+                                            AppLocalizations.of(context)!
+                                                .nickname_used,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: AppColors()
+                                                    .getBlueText()),
+                                          ),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                              child: Text('OK',
+                                                  style: TextStyle(
+                                                      fontSize: 20)),
+                                            ),
+                                          ],
+                                        ),
+                                  );
+                                } else {
+                                  personalDataProvider.addNewProfile(tempUser);
+                                  personalDataProvider.resetTempUser();
+                                }
                               }
                               await personalDataProvider.saveProfiles();
                               Navigator.pushNamed(context, '/');
-                            }
+
                           } else{
                             parametersProvider.setSaveButtonPressed(true);
                           }

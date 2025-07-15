@@ -198,4 +198,7 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get nickname_used =>
       'El alias ya está en uso, por favor pruebe con otro';
+
+  @override
+  String get symbols => 'Símbolos';
 }
