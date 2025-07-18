@@ -137,7 +137,7 @@ The general endpoint to which the data is sent is http://apii01.etsii.upm.es/App
                 "codeid": "reference_code_string"
             } 
             ```
-        - **Response:**
+    - **Response:**
             ```json
             {
                 "exists": 1,
@@ -153,35 +153,35 @@ The general endpoint to which the data is sent is http://apii01.etsii.upm.es/App
 2. **`/reportarSDMT`** - Submit SDMT test results
     - **Method:** POST
     - **Request Body:** Includes profile data and metrics registered during the test
-            ```
-            codeid: 1234-35,
-            fNacimiento: 01-01-2000,
-            sexo: M,
-            nivelEduc: M,
-            mano: L,
-            numSim: 57,
-            tiempo: 90,
-            errores: 8,
-            score: 48,
-            num_Dig_1: 20,
-            num_Dig_2: 21,
-            num_Dig_3: 16,
-            number_Errors: 8,
-            number_Errors_1: 1,
-            number_Errors_2: 3,
-            number_Errors_3: 4,
-            averaged_duration: 1.67,
-            sdev_duration: 1.21,
-            device: Android Pixel 9 Pro,
-            diagInch: 10.5,
-            ```
-    - **Response¨** 
-            ```json
-            {
-                "status": "OK",
-                "message": "Result saved succesfully"
-            }
-            ```
+        ```
+        codeid: 1234-35,
+        fNacimiento: 01-01-2000,
+        sexo: M,
+        nivelEduc: M,
+        mano: L,
+        numSim: 57,
+        tiempo: 90,
+        errores: 8,
+        score: 48,
+        num_Dig_1: 20,
+        num_Dig_2: 21,
+        num_Dig_3: 16,
+        number_Errors: 8,
+        number_Errors_1: 1,
+        number_Errors_2: 3,
+        number_Errors_3: 4,
+        averaged_duration: 1.67,
+        sdev_duration: 1.21,
+        device: Android Pixel 9 Pro,
+        diagInch: 10.5,
+        ```
+    - **Response:** 
+        ```json
+        {
+            "status": "OK",
+            "message": "Result saved succesfully"
+        }
+        ```
     - **Description:** This service is used to submit the results so the test performance can be assessed
 
 All responses include a `status` field that indicates success (`"OK"`) or failure (`"error"`). In case of errors, a `message` field provides error details.
