@@ -16,7 +16,7 @@ void startTest(BuildContext context){
   final personalDataProvider = Provider.of<PersonalDataProvider>(context, listen: false);
 
     Navigator.pushNamed(context, '/countdownScreen', arguments: (){
-      parametersProvider.setIsTimeStarted(false);
+      timeProvider.setIsTimeStarted(false);
       parametersProvider.setIsTrialTest(true);
       progressProvider.resetThirdsCounter();
       parametersProvider.setSaveButtonPressed(false);
@@ -33,7 +33,7 @@ void createProfile(BuildContext context){
   final parametersProvider = Provider.of<ParametersProvider>(context, listen: false);
   final personalDataProvider = Provider.of<PersonalDataProvider>(context, listen: false);
 
-  parametersProvider.setEditingMode(false);
+  personalDataProvider.setEditingMode(false);
   personalDataProvider.resetNicknameController();
   personalDataProvider.resetDataController();
   personalDataProvider.resetTempUser();
@@ -46,7 +46,7 @@ void editProfile(BuildContext context){
   final personalDataProvider = Provider.of<PersonalDataProvider>(context, listen: false);
 
   personalDataProvider.tempUser = personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0];
-  parametersProvider.setEditingMode(true);
+  personalDataProvider.setEditingMode(true);
   Navigator.pushNamed(context, '/newProfileScreen');
 }
 
@@ -168,7 +168,7 @@ void saveProfile(BuildContext context) async {
       tempUser.isSymbols1 != null
   ) {
     parametersProvider.setSaveButtonPressed(false);
-    if (parametersProvider.editingMode) {
+    if (personalDataProvider.editingMode) {
       personalDataProvider.updateProfile(
           personalDataProvider.activeUser ?? 0, tempUser);
     }

@@ -48,9 +48,6 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => IdProvider(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => ProgressProvider(),
         ),
         ChangeNotifierProvider(
@@ -78,7 +75,7 @@ class MyApp extends StatelessWidget {
           value: deviceProvider,
         ),
 
-        //DeviceProvider y PersonalDataPRovider son distintos porque se usan ya en el main al iniciar la app
+        //DeviceProvider y PersonalDataProvider son distintos porque se usan ya en el main al iniciar la app
 
       ],
       child: Builder(builder: (context) {

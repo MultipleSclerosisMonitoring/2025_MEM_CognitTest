@@ -24,25 +24,24 @@ class HomeButton extends StatelessWidget{
           elevation: 0,
           color: AppColors.secondaryBlueClear,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(HomeConstants.buttonRadius),
           ),
           child: Opacity(
-            opacity: isActive ? 1 : 0.2,
+            opacity: isActive ? 1 : HomeConstants.opacity,
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(HomeConstants.buttonPadding),
               child: SizedBox(
                 height: height,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(HomeConstants.buttonRadius),
                   child: Material(
                     color: AppColors.secondaryBlue,
                     child: InkWell(
                       splashColor: Colors.indigo,
                       highlightColor: Colors.indigo[200],
-                     // onTap: isActive ? onPressed : null,
                       onTap: isActive ? onPressed : null,
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(HomeConstants.buttonTextPadding),
                         child: Center(
                             child: LayoutBuilder(
                               builder: (context, constraints) {
@@ -53,13 +52,12 @@ class HomeButton extends StatelessWidget{
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(color: AppColors.blueText,
                                       fontWeight: FontWeight.bold,
-                                      fontSize: constraints.maxHeight*0.3),
+                                      fontSize: constraints.maxHeight * HomeConstants.buttonTextHeightRatio),
                                 );
                               }
                             ),
                         ),
                       ),
-
                     )
                   )
                 )
@@ -67,7 +65,7 @@ class HomeButton extends StatelessWidget{
             )
           )
         ),
-       if(!isActive) Center(child: Icon(Icons.lock, size: 40, color: Colors.red)),
+       if(!isActive) Center(child: Icon(Icons.lock, size: HomeConstants.lockSize, color: Colors.red)),
       ]
     );
   }

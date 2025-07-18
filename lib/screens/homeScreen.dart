@@ -31,366 +31,363 @@ class HomeScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: getGeneralAppBar(context, localeProvider, false),
-
-      body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            // Center is a layout widget. It takes a single child and positions it
-            // in the middle of the parent.
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Flexible(
-                  child:Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                      FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          AppLocalizations.of(context)!.user.toUpperCase() + ":\t",
-                          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
+        body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Center(
+              // Center is a layout widget. It takes a single child and positions it
+              // in the middle of the parent.
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Flexible(
+                    child:Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                        FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            AppLocalizations.of(context)!.user.toUpperCase() + ":\t",
+                            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22),
+                          ),
                         ),
-                      ),
 
-                        DropdownButton2<int?>(
-                            hint: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Text(AppLocalizations.of(context)!.value_select,
-                                  style: TextStyle(
-                                    //Si se ha intentado iniciar el test sin rellenar este campo, el texto sale en rojo y negrita
-                                      color: Colors.grey,
-                                     // fontWeight: parametersProvider.startButtonPressed ? FontWeight.bold : null,
-                                      fontSize: 20
+                          DropdownButton2<int?>(
+                              hint: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(AppLocalizations.of(context)!.value_select,
+                                    style: const TextStyle(
+                                      //Si se ha intentado iniciar el test sin rellenar este campo, el texto sale en rojo y negrita
+                                        color: Colors.grey,
+                                       // fontWeight: parametersProvider.startButtonPressed ? FontWeight.bold : null,
+                                        fontSize: 20
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            style: TextStyle(color: Colors.blue, fontSize: 20),
-                            isExpanded: false,
-                            underline: SizedBox(),
-                            //iconEnabledColor: Colors.blue,
-                            value: personalDataProvider.activeUser,
-                            items: List.generate(personalDataProvider.profileCounter, (index) {
-                              return DropdownMenuItem(
-                                value: index,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(personalDataProvider.profilesList[index].nickname ?? ""),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (int? value) {
-                              if (value != null) {
-                                personalDataProvider.setActiveUser(value);
-                                buttonsProvider.setIsUserSelected(true);
+                              style: TextStyle(color: Colors.blue, fontSize: 20),
+                              isExpanded: false,
+                              underline: SizedBox(),
+                              //iconEnabledColor: Colors.blue,
+                              value: personalDataProvider.activeUser,
+                              items: List.generate(personalDataProvider.profileCounter, (index) {
+                                return DropdownMenuItem(
+                                  value: index,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(personalDataProvider.profilesList[index].nickname ?? ""),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (int? value) {
+                                if (value != null) {
+                                  personalDataProvider.setActiveUser(value);
+                                  buttonsProvider.setIsUserSelected(true);
+                                }
                               }
-                            }
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                      Stack(
-                        children: [
-                          Center(
-                            child: Opacity(
-                              opacity: buttonsProvider.isUserSelected ? 1: 0.2,
-                              child: Padding(
-                                padding: const EdgeInsets.fromLTRB(16,0,16,8),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primaryBlue,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(color: AppColors.primaryBlue, width: 3),
-                                  ),
-                                  child: Center(
-                                    child: Row(
-                                      children: [
-                                        Flexible(
-                                          flex: 5,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: TextField(
-                                              controller: parametersProvider.codeidController1,
-                                              readOnly: buttonsProvider.isReadOnly,
-                                              decoration: InputDecoration(
-                                                labelText: AppLocalizations.of(context)!.code_message,
-                                                labelStyle: TextStyle(color: Colors.white,),
-                                                border: const OutlineInputBorder(),
-                                                enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: buttonsProvider.wrongCodeId ? Colors.red : Colors.white,),
-                                                  borderRadius: BorderRadius.circular(7),
-                                                ),
-                                                focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: buttonsProvider.wrongCodeId ? Colors.red : Colors.white,),
-                                                  borderRadius: BorderRadius.circular(7),
+                        Stack(
+                          children: [
+                            Center(
+                              child: Opacity(
+                                opacity: buttonsProvider.isUserSelected ? 1: HomeConstants.opacity,
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(16,0,16,8),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: AppColors.primaryBlue,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(color: AppColors.primaryBlue, width: 3),
+                                    ),
+                                    child: Center(
+                                      child: Row(
+                                        children: [
+                                          Flexible(
+                                            flex: 5,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: TextField(
+                                                controller: parametersProvider.codeidController1,
+                                                readOnly: buttonsProvider.isReadOnly,
+                                                decoration: InputDecoration(
+                                                  labelText: AppLocalizations.of(context)!.code_message,
+                                                  labelStyle: TextStyle(color: Colors.white,),
+                                                  border: const OutlineInputBorder(),
+                                                  enabledBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(color: buttonsProvider.wrongCodeId ? Colors.red : Colors.white,),
+                                                    borderRadius: BorderRadius.circular(HomeConstants.codeIdRadius),
+                                                  ),
+                                                  focusedBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(color: buttonsProvider.wrongCodeId ? Colors.red : Colors.white,),
+                                                    borderRadius: BorderRadius.circular(HomeConstants.codeIdRadius),
+                                                  ),
+
                                                 ),
 
+                                                style: const TextStyle(color: Colors.white,),
                                               ),
-
-                                              style: const TextStyle(color: Colors.white,),
                                             ),
                                           ),
-                                        ),
-                                        const Flexible(
+                                          const Flexible(
+                                              flex: 1,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: FittedBox(
+                                                  fit: BoxFit.scaleDown,
+                                                  child: Text(
+                                                    "-",
+                                                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 30),
+                                                  ),
+                                                ),
+                                              )
+                                          ),
+                                          Flexible(
+                                            flex: 2,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: TextField(
+                                                controller: parametersProvider.codeidController2,
+                                                readOnly: buttonsProvider.isReadOnly,
+                                                decoration: InputDecoration(
+                                                  border: const OutlineInputBorder(),
+                                                  enabledBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(color: buttonsProvider.wrongCodeId ? Colors.red : Colors.white,),
+                                                    borderRadius: BorderRadius.circular(HomeConstants.codeIdRadius),
+                                                  ),
+                                                  focusedBorder: OutlineInputBorder(
+                                                    borderSide: BorderSide(color: buttonsProvider.wrongCodeId ? Colors.red : Colors.white,),
+                                                    borderRadius: BorderRadius.circular(HomeConstants.codeIdRadius),
+                                                  ),
+                                                ),
+                                                inputFormatters: [
+                                                  FilteringTextInputFormatter.digitsOnly,
+                                                  LengthLimitingTextInputFormatter(3),
+                                                ],
+                                                style: const TextStyle(color: Colors.white,),
+                                              ),
+                                            ),
+                                          ),
+                                          Flexible(
                                             flex: 1,
                                             child: Padding(
                                               padding: const EdgeInsets.all(8.0),
-                                              child: FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text(
-                                                  "-",
-                                                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold, fontSize: 30),
-                                                ),
+                                              child: IconButton(
+                                                icon: buttonsProvider.isReadOnly ?
+                                                    const Icon(Icons.edit, color: Colors.white)
+                                                    :
+                                                    const Icon(Icons.check, color: Colors.white),
+                                                onPressed:  () => codeIdButton(context),
                                               ),
-                                            )
-                                        ),
-                                        Flexible(
-                                          flex: 2,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: TextField(
-                                              controller: parametersProvider.codeidController2,
-                                              readOnly: buttonsProvider.isReadOnly,
-                                              decoration: InputDecoration(
-                                                border: const OutlineInputBorder(),
-                                                enabledBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: buttonsProvider.wrongCodeId ? Colors.red : Colors.white,),
-                                                  borderRadius: BorderRadius.circular(7),
-                                                ),
-                                                focusedBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: buttonsProvider.wrongCodeId ? Colors.red : Colors.white,),
-                                                  borderRadius: BorderRadius.circular(7),
-                                                ),
-                                              ),
-                                              inputFormatters: [
-                                                FilteringTextInputFormatter.digitsOnly,
-                                                LengthLimitingTextInputFormatter(3),
-                                              ],
-                                              style: const TextStyle(color: Colors.white,),
                                             ),
                                           ),
-                                        ),
-                                        Flexible(
-                                          flex: 1,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: IconButton(
-                                              icon: buttonsProvider.isReadOnly ?
-                                                  const Icon(Icons.edit, color: Colors.white)
-                                                  :
-                                                  const Icon(Icons.check, color: Colors.white),
-                                              onPressed:  () => codeIdButton(context),
-                                            ),
-                                          ),
-                                        ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
+                          if(!buttonsProvider.isUserSelected) const Center(child: Icon(Icons.lock, size: HomeConstants.lockSize, color: Colors.red)),
+                          ],
                         ),
-                        if(!buttonsProvider.isUserSelected) const Center(child: Icon(Icons.lock, size: 40, color: Colors.red)),
-                        ],
-                      ),
 
-                Expanded(
-                  child: HomeButton(
-                    text: AppLocalizations.of(context)!.profile_creation,
-                    onPressed: () => createProfile(context),
-                    height: screenHeight / 7,
-                    isActive: true,
+                  Expanded(
+                    child: HomeButton(
+                      text: AppLocalizations.of(context)!.profile_creation,
+                      onPressed: () => createProfile(context),
+                      height: screenHeight / HomeConstants.buttonHeightRatio,
+                      isActive: true,
+                    ),
                   ),
-                ),
-                Flexible(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: HomeButton(
-                          text: AppLocalizations.of(context)!.view_profile,
-                          onPressed: () => editProfile(context),
-                          height: screenHeight / 7,
-                          isActive: buttonsProvider.isUserSelected,
-                        )
-                      ),
-                      Expanded(
+                  Flexible(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
                           child: HomeButton(
-                              text: AppLocalizations.of(context)!.view_tests,
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) =>
-                                      AlertDialog(
-                                        title: Text(
-                                          //Se comprueba si la lista existe y está llena. En el caso de no existir, no evalua el testList!.isNotEmpty
-                                          ((personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList != null) &&
-                                          (personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.isNotEmpty)) ?
-                                          AppLocalizations.of(context)!.my_tests : AppLocalizations.of(context)!.no_tests ,
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight
-                                                  .bold,
-                                              color: Colors.red),
-                                        ),
-                                        content:
-                                        ((personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList != null) &&
+                            text: AppLocalizations.of(context)!.view_profile,
+                            onPressed: () => editProfile(context),
+                            height: screenHeight / HomeConstants.buttonHeightRatio,
+                            isActive: buttonsProvider.isUserSelected,
+                          )
+                        ),
+                        Expanded(
+                            child: HomeButton(
+                                text: AppLocalizations.of(context)!.view_tests,
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) =>
+                                        AlertDialog(
+                                          title: Text(
+                                            //Se comprueba si la lista existe y está llena. En el caso de no existir, no evalua el testList!.isNotEmpty
+                                            ((personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList != null) &&
                                             (personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.isNotEmpty)) ?
-                                            //Aqui empieza el contenido si existe y no esta vacia la lista de tests
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              children: [
-                                                Expanded(child: FittedBox(
-                                                  fit: BoxFit.scaleDown,
-                                                  child: Text(
-                                                      AppLocalizations.of(context)!.date,
-                                                      style: TextStyle(fontWeight: FontWeight.bold, color: AppColors().getBlueText()),
+                                            AppLocalizations.of(context)!.my_tests : AppLocalizations.of(context)!.no_tests ,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight
+                                                    .bold,
+                                                color: Colors.red),
+                                          ),
+                                          content:
+                                          ((personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList != null) &&
+                                              (personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.isNotEmpty)) ?
+                                              //Aqui empieza el contenido si existe y no esta vacia la lista de tests
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                children: [
+                                                  Expanded(child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        AppLocalizations.of(context)!.date,
+                                                        style: TextStyle(fontWeight: FontWeight.bold, color: AppColors().getBlueText()),
+                                                    ),
+                                                  )),
+                                                  Expanded(child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        AppLocalizations.of(context)!.hand,
+                                                        style: TextStyle(fontWeight: FontWeight.bold, color: AppColors().getBlueText()),
+                                                    ),
+                                                  )),
+                                                  Expanded(child: FittedBox(
+                                                    fit: BoxFit.scaleDown,
+                                                    child: Text(
+                                                        '${AppLocalizations.of(context)!.answers} / ${AppLocalizations.of(context)!.mistakes}',
+                                                        style: TextStyle(fontWeight: FontWeight.bold, color: AppColors().getBlueText()),
+                                                    ),
+                                                  )),
+                                                ],
+                                              ),
+                                              Row(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  // Columna de fechas
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.map((d) => FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: Text(
+                                                          '${d.date!.day}/${d.date!.month}/${(d.date!.year)%100} | ${d.date!.hour}:${d.date!.minute.toString().padLeft(2,'0')}',
+                                                          style: const TextStyle(fontSize: HomeConstants.viewMyTestsFont),
+                                                        ),
+                                                      )).toList(),
+                                                    ),
                                                   ),
-                                                )),
-                                                Expanded(child: FittedBox(
-                                                  fit: BoxFit.scaleDown,
-                                                  child: Text(
-                                                      AppLocalizations.of(context)!.hand,
-                                                      style: TextStyle(fontWeight: FontWeight.bold, color: AppColors().getBlueText()),
-                                                  ),
-                                                )),
-                                                Expanded(child: FittedBox(
-                                                  fit: BoxFit.scaleDown,
-                                                  child: Text(
-                                                      '${AppLocalizations.of(context)!.answers} / ${AppLocalizations.of(context)!.mistakes}',
-                                                      style: TextStyle(fontWeight: FontWeight.bold, color: AppColors().getBlueText()),
-                                                  ),
-                                                )),
-                                              ],
-                                            ),
-                                            Row(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                // Columna de fechas
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.map((d) => FittedBox(
-                                                      fit: BoxFit.scaleDown,
-                                                      child: Text(
-                                                        '${d.date!.day}/${d.date!.month}/${(d.date!.year)%100} | ${d.date!.hour}:${d.date!.minute.toString().padLeft(2,'0')}',
-                                                        style: TextStyle(fontSize: 16),
-                                                      ),
-                                                    )).toList(),
-                                                  ),
-                                                ),
 
-                                                // Columna de nombres
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.map((d) => FittedBox(
-                                                      fit: BoxFit.scaleDown,
-                                                      child: Text(
-                                                        (d.hand == "L") ? AppLocalizations.of(context)!.l : AppLocalizations.of(context)!.r,
-                                                        style: TextStyle(fontSize: 16),
-                                                      ),
-                                                    )).toList(),
+                                                  // Columna de nombres
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.map((d) => FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: Text(
+                                                          (d.hand == "L") ? AppLocalizations.of(context)!.l : AppLocalizations.of(context)!.r,
+                                                          style: const TextStyle(fontSize: HomeConstants.viewMyTestsFont),
+                                                        ),
+                                                      )).toList(),
+                                                    ),
                                                   ),
-                                                ),
 
-                                                // Columna de valores
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    children: personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.map((d) => FittedBox(
-                                                      fit: BoxFit.scaleDown,
-                                                      child: Text(
-                                                        '${d.displayed} / ${d.mistakes}',
-                                                        style: TextStyle(fontSize: 16),
-                                                      ),
-                                                    )).toList(),
+                                                  // Columna de valores
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].testList!.map((d) => FittedBox(
+                                                        fit: BoxFit.scaleDown,
+                                                        child: Text(
+                                                          '${d.displayed} / ${d.mistakes}',
+                                                          style: const TextStyle(fontSize: HomeConstants.viewMyTestsFont),
+                                                        ),
+                                                      )).toList(),
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                          //Aqui acaba el contenido si la lista de test existe y no esta vacia
+                                            :
+                                            Text(""),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Navigator.of(context).pop(),
+                                              child: const Text('OK',
+                                                  style: TextStyle(fontSize: 20)),
                                             ),
                                           ],
-                                        )
-                                        //Aqui acaba el contenido si la lista de test existe y no esta vacia
-                                          :
-                                          Text(""),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () => Navigator.of(context).pop(),
-                                            child: Text('OK',
-                                                style: TextStyle(
-                                                    fontSize: 20)),
-                                          ),
-                                        ],
-                                      ),
-                                );
-                              },
-                              height: screenHeight / 7,
-                              isActive: buttonsProvider.isUserSelected
-                          )
-                      ),
-                    ],
+                                        ),
+                                  );
+                                },
+                                height: screenHeight / HomeConstants.buttonHeightRatio,
+                                isActive: buttonsProvider.isUserSelected
+                            )
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: HomeButton(
-                      text: AppLocalizations.of(context)!.start,
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) =>
-                              AlertDialog(
-                                title: Text(
-                                  AppLocalizations.of(context)!.trial_title,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: AppColors().getBlueText()),
-                                ),
-                                content: SingleChildScrollView(
-                                  child: Text(
-                                    AppLocalizations.of(context)!.test_explanation,
+                  Expanded(
+                    child: HomeButton(
+                        text: AppLocalizations.of(context)!.start,
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) =>
+                                AlertDialog(
+                                  title: Text(
+                                    AppLocalizations.of(context)!.trial_title,
                                     style: TextStyle(
-                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
                                         color: AppColors().getBlueText()),
                                   ),
+                                  content: SingleChildScrollView(
+                                    child: Text(
+                                      AppLocalizations.of(context)!.test_explanation,
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: AppColors().getBlueText()),
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () =>
+                                          Navigator.of(context)
+                                              .pop(),
+                                      child: Text(AppLocalizations.of(context)!.back,
+                                          style: TextStyle(
+                                              fontSize: 20)),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => startTest(context),
+                                      child: Text(AppLocalizations.of(context)!.start_trial,
+                                          style: TextStyle(
+                                              fontSize: 20)),
+                                    ),
+                                  ],
                                 ),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () =>
-                                        Navigator.of(context)
-                                            .pop(),
-                                    child: Text(AppLocalizations.of(context)!.back,
-                                        style: TextStyle(
-                                            fontSize: 20)),
-                                  ),
-                                  TextButton(
-                                    onPressed: () => startTest(context),
-                                    child: Text(AppLocalizations.of(context)!.start_trial,
-                                        style: TextStyle(
-                                            fontSize: 20)),
-                                  ),
-                                ],
-                              ),
-                        );
-                      },
-                      height: screenHeight / 7,
-                      isActive: buttonsProvider.isCodeValidated,
+                          );
+                        },
+                        height: screenHeight / HomeConstants.buttonHeightRatio,
+                        isActive: buttonsProvider.isCodeValidated,
+                    ),
                   ),
-                ),
 
-
-              ],
+                ],
+              ),
             ),
           ),
-        ),
       ),
     );
   }

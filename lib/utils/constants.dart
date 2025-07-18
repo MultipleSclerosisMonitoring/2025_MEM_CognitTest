@@ -19,17 +19,17 @@ class GeneralConstants{
   static const int testDuration = 90000;
   static const int countDownDuration = 1;
   static const int toolbarHeightRatio = 8;
-  static const int numberKeyHeightRatio = 12;
-  static const double keyHorizontalPadding = 40.0;
-  static const double keyboardHorizontalPadding = 160;
-  static const double centralSymbolSize = 130;
-
   static const List <String> symbols1 =  ['⊂','⨪','⊢','ᒥ','⊣','>','+','⊃','∸'];
   static const String symbols1String = '⊂ ⨪ ⊢ ᒥ ⊣ > + ⊃ ∸';
   static const List <String> symbols2 =  ['△','+','☆','○','□','⊞','≡','∞','×'];
   static const String symbols2String = '△ + ☆ ○ □ ⊞ ≡ ∞ ×';
+}
 
-
+class TestConstants{
+  static const int numberKeyHeightRatio = 12;
+  static const double keyHorizontalPadding = 40.0;
+  static const double keyboardHorizontalPadding = 16.0;
+  static const double centralSymbolSize = 130;
 }
 
 class NewProfileConstants{
@@ -51,6 +51,18 @@ class NewProfileConstants{
   EdgeInsets get buttonsPadding => _buttonsPadding;
   EdgeInsets get buttonsTextPadding => _buttonsTextPadding;
   EdgeInsets get innerPadding => _innerPadding;
+}
+
+class HomeConstants{
+  static const double buttonRadius = 15;
+  static const double lockSize = 40;
+  static const double opacity = 0.2;
+  static const double buttonTextHeightRatio = 0.3;
+  static const double buttonPadding = 12;
+  static const double buttonTextPadding = 8;
+  static const double buttonHeightRatio = 7;
+  static const double viewMyTestsFont = 16;
+  static const double codeIdRadius = 7;
 }
 
 

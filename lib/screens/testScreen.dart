@@ -12,9 +12,9 @@ class CognitionTestScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int activeId = context.watch<IdProvider>().id;
     int activeKey = context.watch<KeyboardProvider>().keyPressed;
     final symbolsProvider = Provider.of<SymbolsProvider>(context);
+    int activeId = symbolsProvider.id;
     double screenHeight = MediaQuery.of(context).size.height;
     List <String> symbols = symbolsProvider.getSymbols();
     final remaining = context.watch<TimeProvider>().remaining;
@@ -37,7 +37,7 @@ class CognitionTestScreen extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: GeneralConstants.keyHorizontalPadding),
+                padding: const EdgeInsets.symmetric(horizontal: TestConstants.keyHorizontalPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -51,7 +51,7 @@ class CognitionTestScreen extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: GeneralConstants.keyHorizontalPadding),
+                padding: const EdgeInsets.symmetric(horizontal: TestConstants.keyHorizontalPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -65,7 +65,7 @@ class CognitionTestScreen extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: GeneralConstants.keyHorizontalPadding),
+                padding: const EdgeInsets.symmetric(horizontal: TestConstants.keyHorizontalPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -80,7 +80,7 @@ class CognitionTestScreen extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: GeneralConstants.keyHorizontalPadding),
+                padding: const EdgeInsets.symmetric(horizontal: TestConstants.keyHorizontalPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -94,7 +94,7 @@ class CognitionTestScreen extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: GeneralConstants.keyHorizontalPadding),
+                padding: const EdgeInsets.symmetric(horizontal: TestConstants.keyHorizontalPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -108,7 +108,7 @@ class CognitionTestScreen extends StatelessWidget {
             Flexible(
               flex: 1,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: GeneralConstants.keyHorizontalPadding),
+                padding: const EdgeInsets.symmetric(horizontal: TestConstants.keyHorizontalPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -131,7 +131,7 @@ class CognitionTestScreen extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(symbols[activeId],
-                      style: const TextStyle(fontSize: GeneralConstants.centralSymbolSize)
+                      style: const TextStyle(fontSize: TestConstants.centralSymbolSize)
                   ),
                 ),
               ),
@@ -139,16 +139,16 @@ class CognitionTestScreen extends StatelessWidget {
             Flexible(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: GeneralConstants.keyboardHorizontalPadding),
+                padding: const EdgeInsets.symmetric(horizontal: TestConstants.keyboardHorizontalPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                        child: NumberKey(number: 1, height: screenHeight / GeneralConstants.numberKeyHeightRatio)),
+                        child: NumberKey(number: 1, height: screenHeight / TestConstants.numberKeyHeightRatio)),
                     Expanded(
-                        child: NumberKey(number: 2, height: screenHeight / GeneralConstants.numberKeyHeightRatio)),
+                        child: NumberKey(number: 2, height: screenHeight / TestConstants.numberKeyHeightRatio)),
                     Expanded(
-                        child: NumberKey(number: 3, height: screenHeight / GeneralConstants.numberKeyHeightRatio)),
+                        child: NumberKey(number: 3, height: screenHeight / TestConstants.numberKeyHeightRatio)),
                   ],
                 ),
               ),
@@ -157,16 +157,16 @@ class CognitionTestScreen extends StatelessWidget {
             Flexible(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: GeneralConstants.keyboardHorizontalPadding),
+                padding: const EdgeInsets.symmetric(horizontal: TestConstants.keyboardHorizontalPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                        child: NumberKey(number: 4, height: screenHeight / GeneralConstants.numberKeyHeightRatio)),
+                        child: NumberKey(number: 4, height: screenHeight / TestConstants.numberKeyHeightRatio)),
                     Expanded(
-                        child: NumberKey(number: 5, height: screenHeight / GeneralConstants.numberKeyHeightRatio)),
+                        child: NumberKey(number: 5, height: screenHeight / TestConstants.numberKeyHeightRatio)),
                     Expanded(
-                        child: NumberKey(number: 6, height: screenHeight / GeneralConstants.numberKeyHeightRatio)),
+                        child: NumberKey(number: 6, height: screenHeight / TestConstants.numberKeyHeightRatio)),
                   ],
                 ),
               ),
@@ -174,16 +174,16 @@ class CognitionTestScreen extends StatelessWidget {
             Flexible(
               flex: 2,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: GeneralConstants.keyboardHorizontalPadding),
+                padding: const EdgeInsets.symmetric(horizontal: TestConstants.keyboardHorizontalPadding),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Expanded(
-                        child: NumberKey(number: 7, height: screenHeight / GeneralConstants.numberKeyHeightRatio)),
+                        child: NumberKey(number: 7, height: screenHeight / TestConstants.numberKeyHeightRatio)),
                     Expanded(
-                        child: NumberKey(number: 8, height: screenHeight / GeneralConstants.numberKeyHeightRatio)),
+                        child: NumberKey(number: 8, height: screenHeight / TestConstants.numberKeyHeightRatio)),
                     Expanded(
-                        child: NumberKey(number: 9, height: screenHeight / GeneralConstants.numberKeyHeightRatio)),
+                        child: NumberKey(number: 9, height: screenHeight / TestConstants.numberKeyHeightRatio)),
                   ],
                 ),
               ),

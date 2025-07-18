@@ -7,14 +7,7 @@ import 'dart:convert';
 
 import 'package:symbols/utils/constants.dart';
 
-class IdProvider extends ChangeNotifier{
-  int id = Random().nextInt(9);
-
-  void changeActiveId({required int newId}) /*async*/ {
-    id = newId;
-    notifyListeners();
-  }
-}
+import '../utils/profile.dart';
 
 class ProgressProvider extends ChangeNotifier{
   int progressCounter = 0;
@@ -84,10 +77,6 @@ class KeyboardProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void toggleFlag() /*async*/{
-    keyFlag = !keyFlag;
-    notifyListeners();
-  }
 
   void setFlag(bool f){
     keyFlag = f;
@@ -103,6 +92,7 @@ class TimeProvider extends ChangeNotifier{
   bool isTestRunning = false;
   late DateTime startTime;
   List <int> partialTimes = [];
+  bool isTimeStarted = false;
 
   int get elapsedMilliseconds => DateTime.now().difference(startTime).inMilliseconds;
   int get remaining => (limitMilliseconds - elapsedMilliseconds).clamp(0, limitMilliseconds);
@@ -167,6 +157,11 @@ class TimeProvider extends ChangeNotifier{
     return sumOfSquares/partialTimes.length;
   }
 
+  void setIsTimeStarted(bool b){
+    isTimeStarted = b;
+    notifyListeners();
+  }
+
 }
 
 class SymbolsProvider extends ChangeNotifier{
@@ -174,6 +169,12 @@ class SymbolsProvider extends ChangeNotifier{
   List <String> symbols =  [];
   int trialCounter = 0;
   List <int> trialOrder = [];
+  int id = Random().nextInt(9); //Del 0 al 8
+
+  void changeActiveId({required int newId}) /*async*/ {
+    id = newId;
+    notifyListeners();
+  }
 
   void setSymbols(bool isSymbols1){
     //De esta manera (List<String>.from), se permite modificar la lista
@@ -220,14 +221,9 @@ class ParametersProvider extends ChangeNotifier{
   TextEditingController codeidController2 = TextEditingController();
   bool dataSent = false;
   bool dataSentCorrectly = false;
-  bool editingMode = false;
-  bool isTimeStarted = false;
   bool isTrialTest = true;
 
-  void setIsTimeStarted(bool b){
-    isTimeStarted = b;
-    notifyListeners();
-  }
+
 
   void setIsTrialTest(bool b){
     isTrialTest = b;
@@ -240,10 +236,7 @@ class ParametersProvider extends ChangeNotifier{
     notifyListeners();
   }
 
-  void setEditingMode(bool e){
-    editingMode = e;
-    notifyListeners();
-  }
+
 
   void setDataSent(bool d){
     dataSent = d;
@@ -276,115 +269,8 @@ class ParametersProvider extends ChangeNotifier{
 
 }
 
-class Test{
-  DateTime? date;
-  String? hand; // 'L' o 'R'
-  int? displayed;
-  int? mistakes;
-
-  Test({this.date, this.hand, this.displayed, this.mistakes});
-
-  void setDate(DateTime d){
-    date = d;
-  }
-
-  void setHand(String h){
-    hand = h;
-  }
-
-  void setDisplayed(int d){
-    displayed = d;
-  }
-
-  void setMistakes(int m){
-    mistakes = m;
-  }
-
-  Map<String,dynamic> toJson() => {
-    'date': date?.toIso8601String(),
-    'hand': hand,
-    'displayed': displayed,
-    'mistakes': mistakes,
-  };
-
-  factory Test.fromJson(Map<String, dynamic> json) => Test(
-    date: DateTime.parse(json['date']),
-    hand: json['hand'],
-    displayed: json['displayed'],
-    mistakes: json['mistakes'],
-  );
-
-}
-
-class Profile{
-  String? nickname;
-  String? sex; //'H' o 'M'
-  String? levelOfStudies; // '1' '2' 'G' 'M' 'D'
-  int? id;
-  DateTime? dateOfBirth;
-  List<Test>? testList;
-  bool? isSymbols1;
-
-  Profile({
-     this.nickname,
-     this.sex,
-     this.levelOfStudies,
-     this.dateOfBirth,
-     this.testList,
-     this.isSymbols1,
-  });
-
-
-  void setIsSymbols1(bool b){
-    isSymbols1 = b;
-  }
-
-  void setSex(String s){
-    sex = s;
-  }
-
-  void setLevelOfStudies (String l){
-    levelOfStudies = l;
-  }
-
-  void setNickname(String n){
-    nickname = n;
-  }
-
-  void addTest(Test t){
-    if(testList != null)
-    testList!.add(t);
-    else{
-      testList = [];
-      testList!.add(t);
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'nickname': nickname,
-      'dateOfBirth': dateOfBirth?.toIso8601String(),
-      'sex': sex,
-      'levelOfStudies': levelOfStudies,
-      'testList': testList?.map((test) => test.toJson()).toList(),
-      'isSymbols1': isSymbols1,
-    };
-  }
-  factory Profile.fromJson(Map<String, dynamic> json) {
-    return Profile(
-      nickname: json['nickname'] ?? '',
-      dateOfBirth: json['dateOfBirth'] != null ? DateTime.parse(json['dateOfBirth']) : DateTime(2000,1,1),
-      sex: json['sex'].toString() ?? '',
-      levelOfStudies: json['levelOfStudies'].toString() ?? '',
-      testList: json['testList'] != null ? (json['testList'] as List<dynamic>).map((test) => Test.fromJson(test)).toList() : [],
-      isSymbols1: json['isSymbols1'] ?? true,
-    );
-  }
-
-}
-
 class PersonalDataProvider extends ChangeNotifier{
-
+  bool editingMode = false;
   int profileCounter = 0;
   int? activeUser;
   List<Profile> profilesList = [];
@@ -447,6 +333,11 @@ class PersonalDataProvider extends ChangeNotifier{
 
   void resetDataController(){
     dataController = TextEditingController();
+    notifyListeners();
+  }
+
+  void setEditingMode(bool e){
+    editingMode = e;
     notifyListeners();
   }
 

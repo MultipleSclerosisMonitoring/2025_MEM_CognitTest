@@ -7,6 +7,7 @@ import 'package:symbols/utils/constants.dart';
 import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:symbols/l10n/generated/l10n.dart';
+import 'package:symbols/utils/test.dart';
 
 
 // Widget para los símbolos
@@ -71,7 +72,7 @@ void checkSuccessAndUpdate(BuildContext context,
       debugPrint('mistakes: ' + '${progressProvider.totalMistakes}');
     }
 
-    context.read<IdProvider>().changeActiveId(newId: newRandom(activeId, parametersProvider.isTrialTest, symbolsProvider.trialCounter, symbolsProvider.trialOrder)); //Generamos nuevo simbolo
+    symbolsProvider.changeActiveId(newId: newRandom(activeId, parametersProvider.isTrialTest, symbolsProvider.trialCounter, symbolsProvider.trialOrder)); //Generamos nuevo simbolo
     if(parametersProvider.isTrialTest) {
       symbolsProvider.incrementTrialCounter();
     }
@@ -87,8 +88,9 @@ void testCallback(BuildContext context, int activeId, int activeKey){
   final progressProvider = Provider.of<ProgressProvider>(context, listen: false);
   final parametersProvider = Provider.of<ParametersProvider>(context, listen: false);
   final symbolsProvider = Provider.of<SymbolsProvider>(context, listen: false);
-  if (parametersProvider.isTimeStarted == false) {
-    parametersProvider.setIsTimeStarted(true);
+  final timeProvider = Provider.of<TimeProvider>(context, listen: false);
+  if (timeProvider.isTimeStarted == false) {
+    timeProvider.setIsTimeStarted(true);
     symbolsProvider.setShuffled(false);
     if (parametersProvider.isTrialTest) {
       context.read<TimeProvider>().setStartTime();
@@ -142,7 +144,7 @@ void finishTrialTest(BuildContext context){
                 timeProvider.resetPartialTimes();
                 parametersProvider.setDataSent(false);
                 Navigator.pushNamed(context, '/countdownScreen', arguments: (){
-                  parametersProvider.setIsTimeStarted(false);
+                  timeProvider.setIsTimeStarted(false);
                   parametersProvider.setIsTrialTest(false);
                   Navigator.pushNamed(context, '/testScreen');
                 });
@@ -161,7 +163,7 @@ void finishTrialTest(BuildContext context){
                 timeProvider.resetPartialTimes();
                 parametersProvider.setDataSent(false);
                 Navigator.pushNamed(context, '/countdownScreen', arguments: (){
-                  parametersProvider.setIsTimeStarted(false);
+                  timeProvider.setIsTimeStarted(false);
                   parametersProvider.setIsTrialTest(false);
                   Navigator.pushNamed(context, '/testScreen');
                 });

@@ -7,6 +7,7 @@ import 'package:symbols/l10n/generated/l10n.dart';
 
 import '../utils/AppBar.dart';
 import '../utils/homeFunctions.dart';
+import '../utils/profile.dart';
 
 class NewProfileScreen extends StatelessWidget {
   const NewProfileScreen({super.key});
@@ -69,8 +70,8 @@ class NewProfileScreen extends StatelessWidget {
                                   onChanged: (value) => personalDataProvider.setTempNickname(value),
                                   controller: nicknameController,
                                   decoration: InputDecoration(
-                                    hintText: parametersProvider.editingMode ? tempUser.nickname : AppLocalizations.of(context)!.nickname,
-                                    hintStyle: TextStyle(color: parametersProvider.editingMode ? AppColors.blueText : (parametersProvider.saveButtonPressed ? Colors.red : Colors.black)),
+                                    hintText: personalDataProvider.editingMode ? tempUser.nickname : AppLocalizations.of(context)!.nickname,
+                                    hintStyle: TextStyle(color: personalDataProvider.editingMode ? AppColors.blueText : (parametersProvider.saveButtonPressed ? Colors.red : Colors.black)),
                                     border: const OutlineInputBorder(),
                                     enabledBorder: OutlineInputBorder(
                                       borderSide: const BorderSide(color: Colors.indigo, width: NewProfileConstants.boxWidth),
@@ -120,8 +121,8 @@ class NewProfileScreen extends StatelessWidget {
                                       readOnly: true,
                                       style: TextStyle(color: AppColors.blueText),
                                       decoration: InputDecoration(
-                                        hintText: parametersProvider.editingMode ? "${tempUser.dateOfBirth!.day}/${tempUser.dateOfBirth!.month}/${tempUser.dateOfBirth!.year}" : "DD/MM/YYYY",
-                                        hintStyle: TextStyle(color: parametersProvider.editingMode ? AppColors.blueText : (parametersProvider.saveButtonPressed ? Colors.red : Colors.black)),
+                                        hintText: personalDataProvider.editingMode ? "${tempUser.dateOfBirth!.day}/${tempUser.dateOfBirth!.month}/${tempUser.dateOfBirth!.year}" : "DD/MM/YYYY",
+                                        hintStyle: TextStyle(color: personalDataProvider.editingMode ? AppColors.blueText : (parametersProvider.saveButtonPressed ? Colors.red : Colors.black)),
                                         labelStyle: TextStyle(color: (parametersProvider.saveButtonPressed && tempUser.dateOfBirth == null) ? Colors.red : Colors.black),
                                         suffixIcon: Icon(Icons.calendar_today),
                                      ),
@@ -405,7 +406,7 @@ class NewProfileScreen extends StatelessWidget {
 
 
 
-                  if (parametersProvider.editingMode)  Padding(
+                  if (personalDataProvider.editingMode)  Padding(
                     padding: NewProfileConstants().buttonsPadding,
                     child: ElevatedButton(
                       onPressed: () { showDialog(
