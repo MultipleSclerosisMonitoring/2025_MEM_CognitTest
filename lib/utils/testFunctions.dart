@@ -123,15 +123,17 @@ void finishTrialTest(BuildContext context){
         AlertDialog(
           title: Text(
             AppLocalizations.of(context)!.well_done,
-            style: TextStyle(
+            style: const TextStyle(
                 fontWeight: FontWeight.bold,
-                color: AppColors().getBlueText()),
+                color: AppColors.blueText
+            ),
           ),
           content: Text(AppLocalizations.of(
               context)!.trial_completed,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 20,
-                color: AppColors().getBlueText()),
+                color: AppColors.blueText
+            ),
           ),
           actions: [
             TextButton(

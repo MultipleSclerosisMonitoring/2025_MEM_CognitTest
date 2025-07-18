@@ -123,9 +123,7 @@ In the Personal Data Provider, there is a function to save the profiles in Share
 
 ## Documentation
 
-## Running the Project
-
-### API Endpoints
+## API Endpoints
 The general endpoint to which the data is sent is http://apii01.etsii.upm.es/AppCognit/, and it implements two services that are used in the app:
 
 
@@ -187,6 +185,5 @@ The general endpoint to which the data is sent is http://apii01.etsii.upm.es/App
 All responses include a `status` field that indicates success (`"OK"`) or failure (`"error"`). In case of errors, a `message` field provides error details.
 
 
-## Getting Started
-
-In order to launch the app, download the folder named SymbolsTest and execute the file named main.deterioration
+## Running the app
+To run the app, first download it from the App Store (iOS) or the Play Store (Android). When launching the app, after the splash screen, the home screen will pop up. Being the first time opening the app, the first step will be to create a new user by clicking on `Create a new profile`. The app will pop the new profile screen, where all fields must be filled in to save the profile. After clicking `save` the home screen will pop again. The user must select the created profile from the user dropdown menu, and the reference code textfield will activate. After introducing and validating the reference code, the user must press `Start test`. An emerging window will appear explaining the test and the trial test starts after clicking the button. When the trial test finishes, the app will ask the user which hand the test will be attempted with, and when it is selected the official test will begin. Once it finishes, a results page will appear indicating if the data was sent correctly or not. Then the user can click the home button to go back to the home page and view the results.

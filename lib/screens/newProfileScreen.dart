@@ -178,7 +178,7 @@ class NewProfileScreen extends StatelessWidget {
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(NewProfileConstants.radius),
-                                      border: Border.all(color: AppColors().getBlueText(), width: NewProfileConstants.dropdownWidth)
+                                      border: Border.all(color: AppColors.blueText, width: NewProfileConstants.dropdownWidth)
                                     ),
                                     child: DropdownButton<String>(
                                       hint: Padding(
@@ -191,9 +191,9 @@ class NewProfileScreen extends StatelessWidget {
                                           ),
                                         ),
                                       ),
-                                      underline: SizedBox(),
-                                      style: TextStyle(color: AppColors.blueText),
-                                      iconEnabledColor: AppColors().getBlueText(),
+                                      underline: const SizedBox(),
+                                      style: const TextStyle(color: AppColors.blueText),
+                                      iconEnabledColor: AppColors.blueText,
                                       value: tempUser.levelOfStudies,
                                       onChanged: (newValue) {
                                         if (newValue != null) {
@@ -279,7 +279,7 @@ class NewProfileScreen extends StatelessWidget {
                                   child: Container(decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(NewProfileConstants.radius),
-                                    border: Border.all(color: AppColors().getBlueText(), width: NewProfileConstants.dropdownWidth),
+                                    border: Border.all(color: AppColors.blueText, width: NewProfileConstants.dropdownWidth),
                                   ),
                                     child: DropdownButton<String>(
                                         hint: Padding(
@@ -357,7 +357,7 @@ class NewProfileScreen extends StatelessWidget {
                                   child: Container(decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(NewProfileConstants.radius),
-                                    border: Border.all(color: AppColors().getBlueText(), width: NewProfileConstants.dropdownWidth),
+                                    border: Border.all(color: AppColors.blueText, width: NewProfileConstants.dropdownWidth),
                                   ),
                                     child: DropdownButton<bool>(
                                         hint: Padding(
@@ -370,8 +370,8 @@ class NewProfileScreen extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        underline: SizedBox(),
-                                        style: TextStyle(color: AppColors.blueText),
+                                        underline: const SizedBox(),
+                                        style: const TextStyle(color: AppColors.blueText),
                                         iconEnabledColor: Colors.blue,
                                         value: tempUser.isSymbols1,
                                         items: [
@@ -416,23 +416,21 @@ class NewProfileScreen extends StatelessWidget {
                               content: Text(
                                 AppLocalizations.of(
                                     context)!.delete_message,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 20,
-                                    color: AppColors()
-                                        .getBlueText()),
+                                    color: AppColors.blueText
+                                ),
                               ),
                               actions: [
                                 TextButton(
                                   onPressed: () =>
-                                      Navigator.of(context)
-                                          .pop(),
+                                      Navigator.of(context).pop(),
                                   child: Text(AppLocalizations.of(context)!.back,
-                                      style: TextStyle(
-                                          fontSize: 20)),
+                                      style: const TextStyle(fontSize: 20)),
                                 ),
                                 TextButton(
                                   onPressed: () => codeIdButton(context),
-                                  child: Text('OK',
+                                  child: const Text('OK',
                                       style: TextStyle(
                                           fontSize: 20)),
                                 ),

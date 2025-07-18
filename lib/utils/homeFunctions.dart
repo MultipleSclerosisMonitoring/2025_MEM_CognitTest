@@ -98,9 +98,10 @@ void wrongCodeId(ButtonsProvider bp, BuildContext context){
           ),
           content: Text(
             AppLocalizations.of(context)!.error_text,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 20,
-                color: AppColors().getBlueText()),
+                color: AppColors.blueText
+            ),
           ),
           actions: [
             TextButton(
@@ -132,9 +133,10 @@ void usedCodeId(ButtonsProvider bp, BuildContext context){
           ),
           content: Text(
             AppLocalizations.of(context)!.code_used,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 20,
-                color: AppColors().getBlueText()),
+                color: AppColors.blueText
+            ),
           ),
           actions: [
             TextButton(
@@ -191,18 +193,17 @@ void saveProfile(BuildContext context) async {
                 content: Text(
                   AppLocalizations.of(context)!
                       .nickname_used,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 20,
-                      color: AppColors()
-                          .getBlueText()),
+                      color: AppColors.blueText
+                  ),
                 ),
                 actions: [
                   TextButton(
                     onPressed: () =>
                         Navigator.of(context).pop(),
-                    child: Text('OK',
-                        style: TextStyle(
-                            fontSize: 20)),
+                    child: const Text('OK',
+                        style: TextStyle(fontSize: 20)),
                   ),
                 ],
               ),

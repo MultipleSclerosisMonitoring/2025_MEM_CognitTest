@@ -1,11 +1,18 @@
 import 'package:symbols/utils/test.dart';
 
+/// The different users in the app are instances of this class
 class Profile{
+  /// Nickname used to identify the user
   String? nickname;
-  String? sex; //'H' o 'M'
+  /// Sex ('M' for male 'F' for female)
+  String? sex; //'F' o 'M'
+  /// Level of finished studies (1 for primary, 2 for secondary, G for degree, M for master, D for doctorate)
   String? levelOfStudies; // '1' '2' 'G' 'M' 'D'
+  /// Date of birth
   DateTime? dateOfBirth;
+  /// List of the class [Test] with all the completed tests of the profile
   List<Test>? testList;
+  /// Variable that determines the set of symbols used for the test (true for the set [symbols1] and false for the set [symbols2]
   bool? isSymbols1;
 
   Profile({
@@ -17,23 +24,27 @@ class Profile{
     this.isSymbols1,
   });
 
-
+  /// Assigns the argument [b] to [isSymbols1]
   void setIsSymbols1(bool b){
     isSymbols1 = b;
   }
 
+  /// Assigns the argument [s] to [sex]
   void setSex(String s){
     sex = s;
   }
 
+  /// Assigns the argument [l] to [levelOfStudies]
   void setLevelOfStudies (String l){
     levelOfStudies = l;
   }
 
+  /// Assigns the argument [n] to [nickname]
   void setNickname(String n){
     nickname = n;
   }
 
+  /// Receives a test instance [t] as an argument and adds it to the [testList]. If the list does not exist, it creates one and adds the new test.
   void addTest(Test t){
     if(testList != null)
       testList!.add(t);
@@ -43,6 +54,8 @@ class Profile{
     }
   }
 
+
+  /// Creates a Map in JSon format so data can be saved in SharedPreferences
   Map<String, dynamic> toJson() {
     return {
       'nickname': nickname,
@@ -53,6 +66,9 @@ class Profile{
       'isSymbols1': isSymbols1,
     };
   }
+
+  /// Takes the Map [json] as an argument and assigns values to [nickname], [dateOfBirth], [sex], [levelOfStudies], [testList] and [isSymbols1]
+  /// Used when loading data from SharedPreferences
   factory Profile.fromJson(Map<String, dynamic> json) {
     return Profile(
       nickname: json['nickname'] ?? '',

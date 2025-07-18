@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:symbols/utils/constants.dart';
 import 'package:symbols/state_management/providers.dart';
 
+/// This class is used to create the keys in the numeric keyboard in the test screen
+/// Receives as arguments the [number] of the key
+/// and the [height] that it must occupy in the screen
 class NumberKey extends StatelessWidget{
   final int number;
   final double height;
@@ -37,7 +40,7 @@ class NumberKey extends StatelessWidget{
                           child: InkWell(
                             splashColor: Colors.indigo,
                             highlightColor: Colors.indigo[200],
-                            // onTap: isActive ? onPressed : null,
+                            // When the key is pressed the corresponding functions are executed in the keyboard provider
                             onTap: () {
                               context.read<KeyboardProvider>().changeKeyPressed(newKey: number);
                               context.read<KeyboardProvider>().setFlag(true);

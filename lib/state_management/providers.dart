@@ -262,9 +262,11 @@ class ParametersProvider extends ChangeNotifier{
 
   void resetCodeidController1(){
     codeidController1 = TextEditingController();
+    notifyListeners();
   }
   void resetCodeidController2(){
     codeidController2 = TextEditingController();
+    notifyListeners();
   }
 
 }

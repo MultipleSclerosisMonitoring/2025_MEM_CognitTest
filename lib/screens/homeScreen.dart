@@ -251,21 +251,21 @@ class HomeScreen extends StatelessWidget {
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         AppLocalizations.of(context)!.date,
-                                                        style: TextStyle(fontWeight: FontWeight.bold, color: AppColors().getBlueText()),
+                                                        style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.blueText),
                                                     ),
                                                   )),
                                                   Expanded(child: FittedBox(
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         AppLocalizations.of(context)!.hand,
-                                                        style: TextStyle(fontWeight: FontWeight.bold, color: AppColors().getBlueText()),
+                                                        style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.blueText),
                                                     ),
                                                   )),
                                                   Expanded(child: FittedBox(
                                                     fit: BoxFit.scaleDown,
                                                     child: Text(
                                                         '${AppLocalizations.of(context)!.answers} / ${AppLocalizations.of(context)!.mistakes}',
-                                                        style: TextStyle(fontWeight: FontWeight.bold, color: AppColors().getBlueText()),
+                                                        style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.blueText),
                                                     ),
                                                   )),
                                                 ],
@@ -348,25 +348,24 @@ class HomeScreen extends StatelessWidget {
                                 AlertDialog(
                                   title: Text(
                                     AppLocalizations.of(context)!.trial_title,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: AppColors().getBlueText()),
+                                        color: AppColors.blueText),
                                   ),
                                   content: SingleChildScrollView(
                                     child: Text(
                                       AppLocalizations.of(context)!.test_explanation,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 20,
-                                          color: AppColors().getBlueText()),
+                                          color: AppColors.blueText),
                                     ),
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () =>
-                                          Navigator.of(context)
-                                              .pop(),
+                                          Navigator.of(context).pop(),
                                       child: Text(AppLocalizations.of(context)!.back,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 20)),
                                     ),
                                     TextButton(
