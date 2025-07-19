@@ -7,8 +7,8 @@ import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:symbols/utils/testFunctions.dart';
 
-class CognitionTestScreen extends StatelessWidget {
-  const CognitionTestScreen({super.key});
+class TestScreen extends StatelessWidget {
+  const TestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class CognitionTestScreen extends StatelessWidget {
     int activeId = symbolsProvider.id;
     double screenHeight = MediaQuery.of(context).size.height;
     List <String> symbols = symbolsProvider.getSymbols();
-    final remaining = context.watch<TimeProvider>().remaining;
+    final remaining =  context.watch<TimeProvider>().isTimeStarted ? context.watch<TimeProvider>().remaining : 90000;
     final minutes = (remaining ~/ 60000).toString().padLeft(2, '0');
     final seconds = ((remaining % 60000) ~/ 1000).toString().padLeft(2, '0');
 

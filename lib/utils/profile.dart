@@ -1,18 +1,19 @@
 import 'package:symbols/utils/test.dart';
 
-/// The different users in the app are instances of this class
+/// The different users in the app are instances of this class. Its fields are
+///
+/// [nickname] Nickname used to identify the user
+/// [sex] Sex ('M' for male 'F' for female)
+/// [levelOfStudies] Level of finished studies (1 for primary, 2 for secondary, G for degree, M for master, D for doctorate)
+/// [dateOfBirth] Date of birth
+/// [testList] List of the class [Test] with all the completed tests of the profile
+/// [isSymbols1] Variable that determines the set of symbols used for the test (true for the set [symbols1] and false for the set [symbols2]
 class Profile{
-  /// Nickname used to identify the user
   String? nickname;
-  /// Sex ('M' for male 'F' for female)
   String? sex; //'F' o 'M'
-  /// Level of finished studies (1 for primary, 2 for secondary, G for degree, M for master, D for doctorate)
   String? levelOfStudies; // '1' '2' 'G' 'M' 'D'
-  /// Date of birth
   DateTime? dateOfBirth;
-  /// List of the class [Test] with all the completed tests of the profile
   List<Test>? testList;
-  /// Variable that determines the set of symbols used for the test (true for the set [symbols1] and false for the set [symbols2]
   bool? isSymbols1;
 
   Profile({
@@ -46,16 +47,16 @@ class Profile{
 
   /// Receives a test instance [t] as an argument and adds it to the [testList]. If the list does not exist, it creates one and adds the new test.
   void addTest(Test t){
-    if(testList != null)
+    if(testList != null) {
       testList!.add(t);
-    else{
+    } else{
       testList = [];
       testList!.add(t);
     }
   }
 
 
-  /// Creates a Map in JSon format so data can be saved in SharedPreferences
+  /// Creates a Map in Json format so data can be saved in SharedPreferences
   Map<String, dynamic> toJson() {
     return {
       'nickname': nickname,

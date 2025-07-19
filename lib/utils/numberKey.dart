@@ -40,7 +40,7 @@ class NumberKey extends StatelessWidget{
                           child: InkWell(
                             splashColor: Colors.indigo,
                             highlightColor: Colors.indigo[200],
-                            // When the key is pressed the corresponding functions are executed in the keyboard provider
+                            /// When the key is pressed the corresponding functions are executed in the keyboard provider
                             onTap: () {
                               context.read<KeyboardProvider>().changeKeyPressed(newKey: number);
                               context.read<KeyboardProvider>().setFlag(true);

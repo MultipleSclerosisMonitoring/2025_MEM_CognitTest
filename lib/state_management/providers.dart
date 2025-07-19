@@ -107,6 +107,7 @@ class TimeProvider extends ChangeNotifier{
   }
 
   void startTimer({required int timeLimit, required VoidCallback onFinish, required ProgressProvider pp}) {
+    debugPrint('Time started');
     testTimer?.cancel();
     startTime = DateTime.now();
     limitMilliseconds=  timeLimit;

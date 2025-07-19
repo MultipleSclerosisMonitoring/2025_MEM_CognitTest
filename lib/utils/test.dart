@@ -1,12 +1,13 @@
-/// Contains the test data that is then displayed in "view my tests"
+/// Contains the test data that is then displayed in "view my tests". Its fields are
+///
+/// [date] Date of the test
+/// [hand] Hand the test is done with
+/// [displayed] Number of symbols displayed in total
+/// [mistakes] Number of mistakes made
 class Test{
-  /// Date of the test
   DateTime? date;
-  /// Hand the test is done with
   String? hand; // 'L' o 'R'
-  /// Number of symbols displayed in total
   int? displayed;
-  /// Number of mistakes made
   int? mistakes;
 
   Test({this.date, this.hand, this.displayed, this.mistakes});

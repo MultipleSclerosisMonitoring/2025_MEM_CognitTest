@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
            // '/': (context) => const UserSelectionScreen(),
             '/': (context) => const HomeScreen(),
             '/splashScreen': (context) => const SplashScreen(),
-            '/testScreen': (context) => const CognitionTestScreen(),
+            '/testScreen': (context) => const TestScreen(),
             '/resultsScreen': (context) => const ResultsScreen(),
             '/newProfileScreen': (context) => NewProfileScreen(),
             '/countdownScreen': (context) => CountdownScreen(),

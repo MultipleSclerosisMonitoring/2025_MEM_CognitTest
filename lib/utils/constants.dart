@@ -1,73 +1,80 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
-/// Contains the principal colors whose use is repeated throughout the app
+/// Contains the principal colors whose use is repeated throughout the app. Its fields are
+///
+/// [primaryBlue] Used for the reference code field
+/// [secondaryBlue] The background of buttons in home screen and keys in the numeric keyboard
+/// [secondaryBlueClear] Used for the outside of the home screen buttons
+/// [blueText] For the majority of texts in the app
+/// [splashBackground] The background of the loading screen
 class AppColors{
-  /// Used for the reference code field
   static const Color primaryBlue =  Color(0xFF3086CF);
-  /// Background of buttons in home screen and keys in the numeric keyboard
   static const Color secondaryBlue = Color(0xFFE8F1FA);
-  /// Used for the outside of the home screen buttons
   static const Color secondaryBlueClear = Color(0xFFF8F9FE);
-  /// For the majority of texts in the app
   static const Color blueText = Color(0xFF0E47A1);
-  /// Background of the loading screen
   static const Color splashBackground = Color(0xFF4090E5);
 
 
 }
 
-/// Miscellaneous of parameters used in the app
+/// Miscellaneous of parameters used in the app. Its fields are
+///
+/// [trialDuration] Duration in milliseconds of the trial test
+/// [testDuration] Duration in milliseconds of the official test
+/// [countDownDuration] Seconds each number is on screen in the countdown
+/// [toolbarHeightRatio] Ratio by which the total screen height is divided to obtain the appbar height
+/// [symbols1] Set of symbols number 1
+/// [symbols1String] Symbols1 as an only string
+/// [symbols2] Set of symbols number 2
+/// [symbols2String] Symbols 2 as an only string
 class GeneralConstants{
-  /// Duration in milliseconds of the trial test
   static const int trialDuration = 40000;
-  /// Duration in milliseconds of the official test
   static const int testDuration = 90000;
-  /// Seconds each number is on screen in the countdown
   static const int countDownDuration = 1;
-  /// Ratio by which the total screen height is divided to obtain the appbar height
   static const int toolbarHeightRatio = 8;
-  /// Set of symbols number 1
   static const List <String> symbols1 =  ['⊂','⨪','⊢','ᒥ','⊣','>','+','⊃','∸'];
   static const String symbols1String = '⊂ ⨪ ⊢ ᒥ ⊣ > + ⊃ ∸';
-  /// Set of symbols number 2
   static const List <String> symbols2 =  ['△','+','☆','○','□','⊞','≡','∞','×'];
   static const String symbols2String = '△ + ☆ ○ □ ⊞ ≡ ∞ ×';
 }
 
-/// Parameters used in the test screen
+/// Parameters used in the test screen. Its fields are
+///
+/// [numberKeyHeightRatio] Ratio by which the total screen height is divided to obtain the height of each key in the numeric keyboard
+/// [keyHorizontalPadding] Horizontal padding for the reference key
+/// [keyboardHorizontalPadding] Horizontal padding for the numeric keyboard
+/// [centralSymbolSize] Font size for the central symbol
 class TestConstants{
-  /// Ratio by which the total screen height is divided to obtain the height of each key in the numeric keyboard
   static const int numberKeyHeightRatio = 12;
-  /// Horizontal padding for the reference key
   static const double keyHorizontalPadding = 40.0;
-  /// Horizontal padding for the numeric keyboard
   static const double keyboardHorizontalPadding = 16.0;
-  /// Font size for the central symbol
   static const double centralSymbolSize = 130;
 }
 
-/// Parameters used in the new profile screen
+/// Parameters used in the new profile screen. Its fields are
+///
+/// [_generalPadding] The main column padding
+/// [_titlePadding] Padding for each field's title
+/// [_fieldPadding] Padding for the fields (TextField or Dropdown)
+/// [_dropdownPadding] Padding for the text inside the dropdown
+/// [_buttonsPadding] Padding for the save and delete buttons
+/// [_buttonsTextPadding] Padding for the text inside the save and delete buttons
+/// [_innerPadding] Padding for the text inside the dropdown and text fields
+/// [radius] Corner radius for the boxes that encapsulate fields
+/// [boxWidth] Width of the boxes that encapsulate the fields
+/// [dropdownWidth] Width for the dropdowns
+
 class NewProfileConstants{
-  /// The main column padding
   static const EdgeInsets _generalPadding = EdgeInsets.symmetric(horizontal: 16, vertical: 20);
-  /// Padding for each field's title
   static const EdgeInsets _titlePadding = EdgeInsets.fromLTRB(16.0, 30.0, 16.0 ,4.0);
-  /// Padding for the fields (TextField or Dropdown)
   static const EdgeInsets _fieldPadding = EdgeInsets.symmetric(horizontal: 16);
-  /// Padding for the text inside the dropdown
   static const EdgeInsets _dropdownPadding = EdgeInsets.all(8);
-  /// Padding for the save and delete buttons
   static const EdgeInsets _buttonsPadding = EdgeInsets.fromLTRB(16.0, 16.0, 16.0 ,4.0);
-  /// Padding for the text inside the save and delete buttons
   static const EdgeInsets _buttonsTextPadding = EdgeInsets.all(16);
-  /// Padding for the text inside the dropdown and text fields
   static const EdgeInsets _innerPadding = EdgeInsets.all(4);
-  /// Corner radius for the boxes that encapsulate fields
   static const double radius = 8;
-  /// Width of the boxes that encapsulate the fields
   static const double boxWidth = 3;
-  /// Width for the dropdowns
   static const double dropdownWidth = 1;
 
   EdgeInsets get generalPadding => _generalPadding;
@@ -79,25 +86,27 @@ class NewProfileConstants{
   EdgeInsets get innerPadding => _innerPadding;
 }
 
-/// Parameters used in the home screen
+/// Parameters used in the home screen. Its fields are
+///
+/// [buttonRadius] Corner radius for the buttons
+/// [lockSize] Size of the lock icon when buttons are unavailable
+/// [opacity] Opacity ratio when buttons are unavailable
+/// [buttonTextHeightRatio] Text height (for each line) in relation to the button total height
+/// [buttonPadding] Padding for the buttons
+/// [buttonTextPadding] Padding for the text inside the buttons
+/// [buttonHeightRatio] Ratio by which the total screen height is divided to obtain the button height
+/// [viewMyTestsFont] Font size for the texts in "view my tests"
+/// [codeIdRadius] Corner radius for the reference code field
+
 class HomeConstants{
-  /// Corner radius for the buttons
   static const double buttonRadius = 15;
-  /// Size of the lock icon when buttons are unavailable
   static const double lockSize = 40;
-  /// Opacity ratio when buttons are unavailable
   static const double opacity = 0.2;
-  /// Text height (for each line) in relation to the button total height
   static const double buttonTextHeightRatio = 0.3;
-  /// Padding for the buttons
   static const double buttonPadding = 12;
-  /// Padding for the text inside the buttons
   static const double buttonTextPadding = 8;
-  /// Ratio by which the total screen height is divided to obtain the button height
   static const double buttonHeightRatio = 7;
-  /// Font size for the texts in "view my tests"
   static const double viewMyTestsFont = 16;
-  /// Corner radius for the reference code field
   static const double codeIdRadius = 7;
 }
 

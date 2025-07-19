@@ -2,11 +2,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:symbols/screens/countdownScreen.dart';
 import 'package:symbols/state_management/providers.dart';
 import 'package:symbols/utils/testFunctions.dart';
 
 import '../l10n/generated/l10n.dart';
 import 'constants.dart';
+
+/// This function is called when the trial test is to be started.
+/// The only argument is the [context] so that the function can access the providers.
+/// When the function is executed, it navigates to the [CountdownScreen], to whom it passes
+/// a series of instructions to execute when the countdown finishes.
+/// These instructions reset a series of control variables, shuffle the symbols, start the timer
+/// and pops the [TestScreen].
+///
+/// The providers are instanced with listen:false because the function is outside the widget tree
+/// and it does not need to react to changes in th providers.
 
 void startTest(BuildContext context){
   final parametersProvider = Provider.of<ParametersProvider>(context, listen: false);
@@ -16,19 +27,26 @@ void startTest(BuildContext context){
   final personalDataProvider = Provider.of<PersonalDataProvider>(context, listen: false);
 
     Navigator.pushNamed(context, '/countdownScreen', arguments: (){
+      /// So the test screen knows it has to start the timer
       timeProvider.setIsTimeStarted(false);
+      /// This functions starts the TRIAL test
       parametersProvider.setIsTrialTest(true);
       progressProvider.resetThirdsCounter();
       parametersProvider.setSaveButtonPressed(false);
+      /// Generates the set of symbols the user selected in the profile
       symbolsProvider.setSymbols(personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].isSymbols1 ?? true);
+      /// Generate sequence so all symbols display during trial
       symbolsProvider.generateNewOrder();
       symbolsProvider.resetTrialCounter();
       timeProvider.resetPartialTimes();
-      timeProvider.startTimer(timeLimit: GeneralConstants.trialDuration, onFinish: () => finishTrialTest(context), pp: progressProvider);
       Navigator.pushNamed(context, '/testScreen');
     });
 }
 
+/// This function is executed when the "Create a new profile" button is pressed
+/// Its only argument is [context] in order to access the providers.
+/// The function sets [editingMode] to false and resets the text controllers and [tempUser]
+/// before navigating to the new profile screen
 void createProfile(BuildContext context){
   final parametersProvider = Provider.of<ParametersProvider>(context, listen: false);
   final personalDataProvider = Provider.of<PersonalDataProvider>(context, listen: false);
@@ -41,8 +59,11 @@ void createProfile(BuildContext context){
   Navigator.pushNamed(context, '/newProfileScreen');
 }
 
+/// This function is executed when the "View my profile" button is pressed
+/// Its only argument is [context] in order to access the providers.
+/// The function sets [editingMode] to true and assigns the active user to [tempUser]
+/// before navigating to the new profile screen
 void editProfile(BuildContext context){
-  final parametersProvider = Provider.of<ParametersProvider>(context, listen: false);
   final personalDataProvider = Provider.of<PersonalDataProvider>(context, listen: false);
 
   personalDataProvider.tempUser = personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0];
@@ -50,6 +71,11 @@ void editProfile(BuildContext context){
   Navigator.pushNamed(context, '/newProfileScreen');
 }
 
+/// This function is triggered when the button next to the reference code text field is pressed
+/// This button is used to edit the code (when in read only mode)
+/// or to validate the code (when not in read only mode)
+/// The only argument is [context] to access the providers
+///
 void codeIdButton(context) async {
   final parametersProvider = Provider.of<ParametersProvider>(context, listen: false);
   final buttonsProvider = Provider.of<ButtonsProvider>(context, listen: false);
