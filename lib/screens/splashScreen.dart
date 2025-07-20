@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       double diagInches = printScreenDiagonalInInches(context);
       context.read<DeviceProvider>().setDiagonalInches(diagInches);
     });
-    Timer(const Duration(seconds: 2), () { //Duración de la permanencia en la pantalla de splash
+    Timer(const Duration(seconds: 5), () { //Duración de la permanencia en la pantalla de splash
       Navigator.pushReplacementNamed(context, '/'); // Aquí va a la pantalla principal
     });
   }

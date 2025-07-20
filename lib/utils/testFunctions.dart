@@ -212,6 +212,7 @@ void finishTest(BuildContext context) async{
     number_Errors_3: progressProvider.mistakesCounter[2].toString(),
     averaged_duration: averagedDuration.toString(),
     sdev_duration: sdev_duration.toString(),
+    symbol_set: (personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].isSymbols1 == true) ? "set1" : "set2",
     device: deviceProvider.deviceModel ?? 'unknownDevice',
     diagInch: deviceProvider.diagonalInches.toString(),
   );
@@ -302,6 +303,7 @@ Future<int> enviarDatosSDMT({
   required String number_Errors_3,
   required String averaged_duration,
   required String sdev_duration,
+  required String symbol_set,
   required String device,
   required String diagInch
 }) async {
