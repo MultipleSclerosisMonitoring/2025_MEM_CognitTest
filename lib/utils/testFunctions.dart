@@ -193,6 +193,7 @@ void finishTest(BuildContext context) async{
   final double averagedDuration= timeProvider.getAveragedDuration();
   final double sdev_duration = timeProvider.getStdDeviation();
   personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].addTest(Test(date: DateTime.now(), hand: parametersProvider.hand, displayed: progressProvider.totalDisplayed, mistakes: progressProvider.totalMistakes));
+  final sset = (personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].isSymbols1 == true) ? "set1" : "set2";
   final int answer = await enviarDatosSDMT(
     codeid: parametersProvider.codeid ?? "",
     fNacimiento: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].dateOfBirth?.toIso8601String().substring(0,10) ?? "",
@@ -212,10 +213,11 @@ void finishTest(BuildContext context) async{
     number_Errors_3: progressProvider.mistakesCounter[2].toString(),
     averaged_duration: averagedDuration.toString(),
     sdev_duration: sdev_duration.toString(),
-    symbol_set: (personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].isSymbols1 == true) ? "set1" : "set2",
+    symbol_set:sset,
     device: deviceProvider.deviceModel ?? 'unknownDevice',
     diagInch: deviceProvider.diagonalInches.toString(),
   );
+  debugPrint('sending info');
   if(answer == -1){
     parametersProvider.setDataSentCorrectly(false);
   } else{
@@ -334,6 +336,7 @@ Future<int> enviarDatosSDMT({
       'Sdev_Duration': sdev_duration,
       'Device': device,
       'DiagInch': diagInch,
+      'Symbol_Set': symbol_set,
     },
   );
 

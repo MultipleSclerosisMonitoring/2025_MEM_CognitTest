@@ -28,8 +28,9 @@ class AppColors{
 /// [symbols1String] Symbols1 as an only string
 /// [symbols2] Set of symbols number 2
 /// [symbols2String] Symbols 2 as an only string
+/// [appVersion] Version number of the app
 class GeneralConstants{
-  static const int trialDuration = 40000;
+  static const int trialDuration = 90000;
   static const int testDuration = 90000;
   static const int countDownDuration = 1;
   static const int toolbarHeightRatio = 8;
@@ -37,6 +38,7 @@ class GeneralConstants{
   static const String symbols1String = '⊂ ⨪ ⊢ ᒥ ⊣ > + ⊃ ∸';
   static const List <String> symbols2 =  ['△','+','☆','○','□','⊞','≡','∞','×'];
   static const String symbols2String = '△ + ☆ ○ □ ⊞ ≡ ∞ ×';
+  static const String appVersion = '1.1.2';
 }
 
 /// Parameters used in the test screen. Its fields are

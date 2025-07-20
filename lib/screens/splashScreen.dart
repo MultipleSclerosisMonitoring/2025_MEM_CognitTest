@@ -6,7 +6,10 @@ import 'dart:math';
 import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
 
-
+/// This class is for the splash screen, which displays while the app is launching
+/// It displays the Comunidad de Madrid Salud logo
+/// and the Universidad Politecnica de Madrid,
+/// as well as the app version
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
   @override
@@ -34,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if(!mounted) return;
     final info = await PackageInfo.fromPlatform();
     setState(() {
-      _version = 'v${info.version}+${info.buildNumber}';
+      _version = GeneralConstants.appVersion;
     });
   }
 
