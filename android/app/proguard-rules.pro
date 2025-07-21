@@ -18,3 +18,8 @@
 -keepclassmembers class * {
     public <init>(...);
 }
+
+# Evita que R8 se queje por clases faltantes de componentes diferidos que no usas
+
+-dontwarn com.google.android.play.core.**
+-dontwarn io.flutter.embedding.engine.deferredcomponents.**

@@ -3,7 +3,7 @@
     <application
 	  android:usesCleartextTraffic="true"
         android:label="TestSDMT"
-        android:name="${applicationName}"
+        android:name="$io.flutter.app.FlutterApplication"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
