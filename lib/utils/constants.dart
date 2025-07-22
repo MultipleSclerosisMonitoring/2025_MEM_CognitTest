@@ -38,7 +38,7 @@ class GeneralConstants{
   static const String symbols1String = '⊂ ⨪ ⊢ ᒥ ⊣ > + ⊃ ∸';
   static const List <String> symbols2 =  ['△','+','☆','○','□','⊞','≡','∞','×'];
   static const String symbols2String = '△ + ☆ ○ □ ⊞ ≡ ∞ ×';
-  static const String appVersion = '1.1.2';
+  static const String appVersion = '1.1.4';
 }
 
 /// Parameters used in the test screen. Its fields are

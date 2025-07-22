@@ -33,8 +33,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _loadVersion() async {
+    /*
     await Future.delayed(Duration(seconds : 2));
     if(!mounted) return;
+
+     */
     final info = await PackageInfo.fromPlatform();
     setState(() {
       _version = GeneralConstants.appVersion;
