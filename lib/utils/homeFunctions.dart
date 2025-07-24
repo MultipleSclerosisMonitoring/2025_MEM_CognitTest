@@ -239,6 +239,7 @@ void saveProfile(BuildContext context) async {
           personalDataProvider.activeUser ?? 0, tempUser);
     }
     else {
+      /// Loop to check if the nickname is already taken
       bool nicknameRepeated = false;
       for (int i = 0; i <
           personalDataProvider.profilesList
@@ -284,6 +285,14 @@ void saveProfile(BuildContext context) async {
   }
 }
 
+/// When in editing mode, this function is called to delete the active user.
+///
+/// It removes the [PersonalDataProvider.activeUser] element
+/// of the list [PersonalDataProvider.profilesList], and updates the
+/// [PersonalDataProvider.profileCounter]. Then saves the profiles list
+/// in shared preferences and goes back to the home page
+///
+/// The only argument is [context] to access the providers
 void deleteProfile(BuildContext context) async {
   final personalDataProvider = Provider.of<PersonalDataProvider>(context, listen: false);
   final buttonsProvider = Provider.of<ButtonsProvider>(context, listen: false);

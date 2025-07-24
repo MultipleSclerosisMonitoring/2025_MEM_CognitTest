@@ -1,8 +1,11 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:advance_math/advance_math.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:symbols/screens/countdownScreen.dart';
+import 'package:symbols/screens/resultsScreen.dart';
 import 'package:symbols/utils/constants.dart';
 import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +13,8 @@ import 'package:symbols/l10n/generated/l10n.dart';
 import 'package:symbols/utils/test.dart';
 
 
-// Widget para los símbolos
+/// This function returns a widget that displays the [symbol] passed as an argument.
+/// It is used to create the symbols in the reference key
 Widget buildSymbol(String symbol) {
   return FittedBox(
     fit: BoxFit.scaleDown,
@@ -21,7 +25,8 @@ Widget buildSymbol(String symbol) {
   );
 }
 
-// Widget para los números
+/// This function returns a widget that displays the [number] passed as an argument.
+/// It is used to create the numbers in the reference key
 Widget buildNumber(int number) {
   return FittedBox(
     fit: BoxFit.scaleDown,
@@ -32,6 +37,24 @@ Widget buildNumber(int number) {
   );
 }
 
+/// Generates a new random number from 0 to 8, to determine which of the
+/// symbols in the symbol list is going to display in the middle of the screen.
+///
+/// In the trial test, first all the nine symbols are displayed once each,
+/// and then switches to complete random mode.
+///
+/// The arguments are:
+/// [currentId] is the number of the symbol that is on the screen at the moment.
+/// [isTrial] is a boolean that is true if the running test is the trial.
+/// [counter] counts the number of symbols that have been displayed in the middle
+/// since the start of the test, only in the trial test.
+/// [order] is a list of integers that determines the sequence of the first nine
+/// symbols that are to be displayed in the middle.
+///
+/// First the code checks if it is trial test and not less than nine symbols have
+/// been displayed. If so, it shows the corresponding symbol in the sequence.
+/// IF it is not trial or the nine symbols have already been showed, it generates
+/// a new random symbol with the only condition of being different from the current one.
 int newRandom(int currentId, bool isTrial, int counter, List<int> order) {
   if(isTrial && counter < 9){
     return order[counter];
@@ -48,6 +71,26 @@ int newRandom(int currentId, bool isTrial, int counter, List<int> order) {
 }
 
 //Funcion que comprueba si se ha presionado una tecla y si es correcta
+/// This function is the foundation of the logic behind the test.
+/// When called, it checks if any key has been pressed and if so
+/// it executes the corresponding instructions.
+///
+/// Its arguments are:
+/// [activeId], which is the integer of the symbol currently in the middle of the screen
+/// [activeKey], which is the number of the last key pressed
+/// [context] to access the providers
+///
+/// First it checks the [KeyboardProvider.keyFlag] to see if a key has been pressed.
+/// If true, it sets the flag to false and adds the current time to
+/// [TimeProvider.partialTimes]. Then it checks if the key pressed is the
+/// correct one or not, and adds one to the [ProgressProvider.progressCounter]
+/// which counts the correct symbols, or to the [ProgressProvider.mistakesCounter].
+/// After that, calls [SymbolsProvider.changeActiveId] to update the central symbol
+/// and if it is the trial test increments the [SymbolsProvider.trialCounter].
+/// It also increments the [ProgressProvider.symbolsDisplayed].
+///
+/// The providers are instanced with listen:false because the function is outside the widget tree
+/// and it does not need to react to changes in the providers.
 void checkSuccessAndUpdate(BuildContext context,
     int activeId,
     int activeKey) async{
@@ -83,6 +126,16 @@ void checkSuccessAndUpdate(BuildContext context,
 
 }
 
+/// This function is called every time the test screen widget is reconstructed
+///
+/// Its arguments are [context], [activeId] and [activeKey].
+///
+/// First it checks if the test time has been started [TimeProvider.isTimeStarted]
+/// If it has not, it sets the test start time [TimeProvider.setStartTime]
+/// and starts the test timer [TimeProvider.startTimer]
+/// Then calls [checkSuccessAndUpdate] for the test logic.
+/// The providers are instanced with listen:false because the function is outside the widget tree
+/// and it does not need to react to changes in the providers.
 void testCallback(BuildContext context, int activeId, int activeKey){
   //Si empezamos el tiempo en countdownScreen, en testScreen sale ya empezado
   final progressProvider = Provider.of<ProgressProvider>(context, listen: false);
@@ -111,7 +164,23 @@ void testCallback(BuildContext context, int activeId, int activeKey){
 }
 
 
-
+/// This function is executed when the trial test is finished
+///
+/// First it displays an emerging screen where the user selects
+/// which hand the test will be attempted with,
+/// giving value to [ParametersProvider.hand]. Then the following
+/// test variables are reset:
+/// [ProgressProvider.mistakesCounter], [ProgressProvider.progressCounter]
+/// [ProgressProvider.thirdsCounter], [ProgressProvider.symbolsDisplayed]
+/// and [TimeProvider.partialTimes]
+/// Then it pushes the [CountdownScreen], passing as arguments the
+/// functions to execute after the countdown:
+/// [TimeProvider.setIsTimeStarted], [ParametersProvider.setIsTrialTest]
+/// and pushing the [TestScreen]
+///
+/// The only argument is the [context] to access the providers.
+/// The providers are instanced with listen:false because the function is outside the widget tree
+/// and it does not need to react to changes in the providers.
 void finishTrialTest(BuildContext context){
   final progressProvider = Provider.of<ProgressProvider>(context, listen:false);
   final parametersProvider = Provider.of<ParametersProvider>(context, listen:false);
@@ -179,7 +248,24 @@ void finishTrialTest(BuildContext context){
   );
 }
 
-
+/// This function is called when the official test is finished.
+///
+/// First it calls [TimeProvider.getAveragedDuration] and [TimeProvider.getStdDeviation]
+/// to calculate the average and standard deviation of all the partial times.
+/// Then it calls [Profile.addTest] to add the completed test to the active
+/// user's test list.
+///
+/// After that it sends the information to the backend by calling
+/// [enviarDatosSDMT]. Based on the API feedback, it sets the value
+/// of [ParametersProvider.dataSentCorrectly] to true or false.
+///
+/// To finish, it resets all the control variables involved in the test
+/// and some of the home screen too, like the text controllers.
+/// Waits half a second and pushes to the [ResultsScreen]
+///
+/// The only argument is the [context] to access the providers.
+/// The providers are instanced with listen:false because the function is outside the widget tree
+/// and it does not need to react to changes in the providers.
 void finishTest(BuildContext context) async{
   context.read<TimeProvider>().setEndTime();
   final progressProvider = Provider.of<ProgressProvider>(context, listen:false);
@@ -241,7 +327,12 @@ void finishTest(BuildContext context) async{
   });
 }
 
-
+/// This function receives the String [codeid] and sends it to the
+/// procesarSDMT service in the API to check if it is valid. It returns an integer:
+/// -1 if there was a mistake connecting with the API
+/// 1 if the code is valid and has never been used
+/// 2 if the code is not valid
+/// 3 if the code is valid but has already been used
 Future<int> checkCodeid ({required String codeid}) async {
   final url = Uri.parse('http://apii01.etsii.upm.es/AppCognit/procesarSDMT');
 
@@ -285,7 +376,34 @@ Future<int> checkCodeid ({required String codeid}) async {
 // y -1 si no se han enviado correctamente
 
 
-
+/// This function is called to send the test and profile data to the server
+/// through the reportarSDMT service.
+/// Its arguments are all the strings sent through the API
+/// [codeid] the reference code
+/// [fNacimiento] birth date
+/// [sexo] sex
+/// [nivelEduc] level of finsihed studies
+/// [mano] hand used to attempt the test
+/// [numSim] total number of symbols displayed
+/// [tiempo] duration of the test
+/// [score] total number of symbols guessed correctly
+/// [number_Errors] total number of mistakes
+/// [num_Dig_1] symbols displayed in the first third (1 to 30 seconds)
+/// [num_Dig_2] symbols displayed in the second third (31 to 60 seconds)
+/// [num_Dig_3] symbols displayed in the last third (61 to 90 seconds)
+/// [number_Errors_1] mistakes in the first third (1 to 30 seconds)
+/// [number_Errors_2] mistakes in the second third (31 to 60 seconds)
+/// [number_Errors_3] mistakes in the last third (61 to 90 seconds)
+/// [averaged_duration] average time taken to press a number in the keyboard
+/// [sdev_duration] standard deviation of the times taken to press a number
+/// [symbol_set] 1 or 2 depending on the set of symbols displayed
+/// [device] model of the device used for the test
+/// [diagInch] diagonal of the device measured in inches
+///
+/// The function returns an integer:
+/// -1 if it was not able to connect the server
+/// 1 if the data was sent correctly
+/// 2 if it connected the server but there was a mistake in the data sending
 Future<int> enviarDatosSDMT({
   required String codeid,
   required String fNacimiento,
