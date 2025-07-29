@@ -12,6 +12,23 @@ import 'package:symbols/l10n/generated/l10n.dart';
 import '../utils/AppBar.dart';
 import '../utils/homeFunctions.dart';
 
+/// This class returns the [Scaffold] of the new profile screen's UI when its builder is called.
+///
+/// The [AppBar] is obtained through [getGeneralAppBar].
+///
+/// The body is organised throguh a main [Column] that has four children:
+///
+/// The first one is a [Row] with two children:
+/// The text "USER: " and the name of the active user, if applies
+///
+/// The second child is row with three children:
+/// The first part of the reference code, the hyphen, and the second part.
+/// This row is wrapped in a [Container] to unify the style of the reference code.
+/// The third child is a [HomeButton] to create a new profile
+///
+/// The fourth child is a row with two [HomeButton]: one to view and edit the active profile
+/// and one to view the tests completed with that profile
+/// The fifth and last child is a [HomeButton] to start the test
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

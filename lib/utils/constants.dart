@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 /// Contains the principal colors whose use is repeated throughout the app. Its fields are
 ///
 /// [primaryBlue] Used for the reference code field
+///
 /// [secondaryBlue] The background of buttons in home screen and keys in the numeric keyboard
+///
 /// [secondaryBlueClear] Used for the outside of the home screen buttons
+///
 /// [blueText] For the majority of texts in the app
+///
 /// [splashBackground] The background of the loading screen
 class AppColors{
   static const Color primaryBlue =  Color(0xFF3086CF);
@@ -21,13 +25,21 @@ class AppColors{
 /// Miscellaneous of parameters used in the app. Its fields are
 ///
 /// [trialDuration] Duration in milliseconds of the trial test
+///
 /// [testDuration] Duration in milliseconds of the official test
+///
 /// [countDownDuration] Seconds each number is on screen in the countdown
+///
 /// [toolbarHeightRatio] Ratio by which the total screen height is divided to obtain the appbar height
+///
 /// [symbols1] Set of symbols number 1
+///
 /// [symbols1String] Symbols1 as an only string
+///
 /// [symbols2] Set of symbols number 2
+///
 /// [symbols2String] Symbols 2 as an only string
+///
 /// [appVersion] Version number of the app
 class GeneralConstants{
   static const int trialDuration = 90000;
@@ -44,8 +56,11 @@ class GeneralConstants{
 /// Parameters used in the test screen. Its fields are
 ///
 /// [numberKeyHeightRatio] Ratio by which the total screen height is divided to obtain the height of each key in the numeric keyboard
+///
 /// [keyHorizontalPadding] Horizontal padding for the reference key
+///
 /// [keyboardHorizontalPadding] Horizontal padding for the numeric keyboard
+///
 /// [centralSymbolSize] Font size for the central symbol
 class TestConstants{
   static const int numberKeyHeightRatio = 12;
@@ -57,14 +72,23 @@ class TestConstants{
 /// Parameters used in the new profile screen. Its fields are
 ///
 /// [_generalPadding] The main column padding
+///
 /// [_titlePadding] Padding for each field's title
+///
 /// [_fieldPadding] Padding for the fields (TextField or Dropdown)
+///
 /// [_dropdownPadding] Padding for the text inside the dropdown
+///
 /// [_buttonsPadding] Padding for the save and delete buttons
+///
 /// [_buttonsTextPadding] Padding for the text inside the save and delete buttons
+///
 /// [_innerPadding] Padding for the text inside the dropdown and text fields
+///
 /// [radius] Corner radius for the boxes that encapsulate fields
+///
 /// [boxWidth] Width of the boxes that encapsulate the fields
+///
 /// [dropdownWidth] Width for the dropdowns
 
 class NewProfileConstants{
@@ -91,13 +115,21 @@ class NewProfileConstants{
 /// Parameters used in the home screen. Its fields are
 ///
 /// [buttonRadius] Corner radius for the buttons
+///
 /// [lockSize] Size of the lock icon when buttons are unavailable
+///
 /// [opacity] Opacity ratio when buttons are unavailable
+///
 /// [buttonTextHeightRatio] Text height (for each line) in relation to the button total height
+///
 /// [buttonPadding] Padding for the buttons
+///
 /// [buttonTextPadding] Padding for the text inside the buttons
+///
 /// [buttonHeightRatio] Ratio by which the total screen height is divided to obtain the button height
+///
 /// [viewMyTestsFont] Font size for the texts in "view my tests"
+///
 /// [codeIdRadius] Corner radius for the reference code field
 
 class HomeConstants{

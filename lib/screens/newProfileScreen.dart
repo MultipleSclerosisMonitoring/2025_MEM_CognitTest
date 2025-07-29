@@ -9,6 +9,22 @@ import '../utils/AppBar.dart';
 import '../utils/homeFunctions.dart';
 import '../utils/profile.dart';
 
+/// This class returns the [Scaffold] of the new profile screen's UI when its builder is called.
+///
+/// The [AppBar] is obtained through [getGeneralAppBar].
+///
+/// The body of the app is structured with a main [Column] with thirteen children:
+///
+/// The first ten are for the data the user has to fill in to create or edit a profile:
+/// Each field contains two [Row]: one for the title (description of the field)
+/// and one for the [DropdownButton] or [TextField]
+///
+/// Then there is one child that is only active in editing mode, a button to delete the active profile
+///
+/// The next one is the button to save the changes
+///
+/// And the last child is a text that only displays when the user tries to save the changes but did not fill all the data correctly.
+
 class NewProfileScreen extends StatelessWidget {
   const NewProfileScreen({super.key});
 
@@ -483,13 +499,6 @@ class NewProfileScreen extends StatelessWidget {
               ),
                 ],
               ),
-
-
-
-
-
-
-
         ),
       ),
     );

@@ -73,7 +73,7 @@ void editProfile(BuildContext context){
 
 /// This function is triggered when the button next to the reference code text field is pressed
 /// This button is used to edit the code (when in read only mode)
-/// or to validate the code (when not in read only mode) using [checkCodeId].
+/// or to validate the code (when not in read only mode) using [checkCodeid]
 /// Depending on the result that the check returns, one of the following functions is called:
 /// [correctCodeId], [wrongCodeId], [usedCodeId]
 /// The only argument is [context] to access the providers

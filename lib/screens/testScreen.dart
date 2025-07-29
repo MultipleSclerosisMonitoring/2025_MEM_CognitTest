@@ -7,6 +7,28 @@ import 'package:symbols/state_management/providers.dart';
 import 'package:provider/provider.dart';
 import 'package:symbols/utils/testFunctions.dart';
 
+/// This class returns the [Scaffold] of the test screen's UI when its builder is called
+/// The UI is organised as follows:
+///
+/// The appbar is obtained from [getTestAppBar]
+///
+/// The body is first structured with a main [Column] that divides the screen in 10 [Row].
+/// The sum of the flex factors of every row is 17, so each row occupies a vertical portion of the screen of
+/// its flex factor divided by 17.
+///
+/// The first six rows, each with a flex factor of 1, form the reference key:
+///
+/// First row hosts symbols 1 to 3, and second row symbols 1 to 3.
+///
+/// Third row hosts symbols 4 to 6, and fourth row symbols 4 to 6.
+///
+/// Fifth row hosts symbols 7 to 9, and sixth row symbols 7 to 9.
+///
+/// The reference key occupies, as explained before, 6/17 of the height body of the screen.
+///
+/// The seventh row is for the central symbol and has a flex factor of 5.
+///
+/// The remaining three rows are for the numeric keyboard, each of them having a flex factor of 2.
 class TestScreen extends StatelessWidget {
   const TestScreen({super.key});
 

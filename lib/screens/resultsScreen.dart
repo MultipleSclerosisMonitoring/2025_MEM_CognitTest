@@ -8,6 +8,15 @@ import 'package:provider/provider.dart';
 
 import '../utils/AppBar.dart';
 
+/// This class returns the [Scaffold] of the new profile screen's UI when its builder is called.
+///
+/// The appbar is obtained through [getGeneralAppBar].
+///
+/// The body has a very simple structure, with a single [Column] that has two children:
+///
+/// The first is a box with a text, that lets the user know if the data was sent correctly or not.
+///
+/// The second child is a button with a home icon to return to the home page
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({super.key});
 

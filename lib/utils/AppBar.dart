@@ -6,7 +6,7 @@ import 'constants.dart';
 /// and a boolean [goBack] that indicates if the AppBar should include the arrow icon to go to the previous page.
 ///
 /// The AppBar includes a dropdown menu with English and Spanish language:
-/// when one is selected, it calls the [setLocale] method from [localeProvider] passing the selected language as argument.
+/// when one is selected, it calls [LocaleProvider.setLocale] passing the selected language as argument.
 AppBar getGeneralAppBar(BuildContext context, LocaleProvider localeProvider, bool goBack){
   return AppBar(
     automaticallyImplyLeading: goBack,

@@ -1,8 +1,11 @@
 /// Contains the test data that is then displayed in "view my tests". Its fields are
 ///
 /// [date] Date of the test
+///
 /// [hand] Hand the test is done with
+///
 /// [displayed] Number of symbols displayed in total
+///
 /// [mistakes] Number of mistakes made
 class Test{
   DateTime? date;

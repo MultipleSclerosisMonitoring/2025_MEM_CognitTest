@@ -5,7 +5,7 @@ import 'package:symbols/utils/constants.dart';
 
 /// This class is used to create the buttons in the home screen
 /// Receives as arguments the [text] it displays,
-/// the function [onPressed] to be executed when the user presses it
+/// the function [onPressed] to be executed when the user presses it,
 /// a boolean [isActive] that indicates if the button must be active
 /// and the [height] the button must occupy in the screen
 class HomeButton extends StatelessWidget{

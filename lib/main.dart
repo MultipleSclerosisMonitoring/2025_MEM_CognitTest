@@ -11,18 +11,16 @@ import 'screens/homeScreen.dart';
 import 'state_management/locale_provider.dart';
 import 'screens/testScreen.dart';
 import 'l10n/generated/l10n.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'dart:io';
 
-
+/// This is the main function executed to launch the app.
+/// First it creates a [PersonalDataProvider] and a [DeviceProvider]. The reason only these
+/// providers are instanced before the builder is called is to obtain the model of the device
+/// using [obtenerModelo] and load the profiles stored in [SharedPreferences]
+/// using [PersonalDataProvider.loadProfiles] before displaying the home page.
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  /*
-  await Future.delayed(Duration(seconds: 2)); // Simula carga
-  FlutterNativeSplash.remove(); // Quita el splash
-
-   */
   final prefs = await SharedPreferences.getInstance();
   final personalDataProvider = PersonalDataProvider();
   final deviceProvider = DeviceProvider();
@@ -39,9 +37,14 @@ void main() async {
   runApp( MyApp(personalDataProvider: personalDataProvider, deviceProvider: deviceProvider,));
 }
 
+/// This class is the app itself, and its passed as an argument to [runApp] to launch the app.
+/// Requires as arguments a [PersonalDataProvider] and a [DeviceProvider] since they are
+/// built before running the app.
 class MyApp extends StatelessWidget {
   final PersonalDataProvider personalDataProvider;
   final DeviceProvider deviceProvider;
+  /// App builder. It returns a [MultiProvider], creating all new providers except [DeviceProvider] and [PersonalDataProvider]
+  /// that are already created
   const MyApp({super.key, required this.personalDataProvider, required this.deviceProvider});
   @override
   Widget build(BuildContext context) {
@@ -81,15 +84,12 @@ class MyApp extends StatelessWidget {
       child: Builder(builder: (context) {
         final localeProvider = Provider.of<LocaleProvider>(context);
 
-
-
         return MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           locale: localeProvider.locale,
           initialRoute: '/splashScreen',
           routes: {
-           // '/': (context) => const UserSelectionScreen(),
             '/': (context) => const HomeScreen(),
             '/splashScreen': (context) => const SplashScreen(),
             '/testScreen': (context) => const TestScreen(),
@@ -103,6 +103,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
+/// This function is used to obtain the model of the device the app is being launched in
+/// It requires as an argument the [DeviceProvider] to call [DeviceProvider.setDeviceModel]
 Future<void> obtenerModelo(DeviceProvider dp) async {
   final deviceInfo = DeviceInfoPlugin();
 

@@ -3,6 +3,7 @@ import 'dart:core';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:symbols/screens/homeScreen.dart';
 import 'package:symbols/screens/newProfileScreen.dart';
 import 'dart:convert';
 
@@ -14,13 +15,18 @@ import '../utils/profile.dart';
 /// For some metrics the test is divided in thirds: three parts of 30 seconds each.
 ///
 /// This class fields are:
+///
 /// [progressCounter] measures the correctly guessed symbols
+///
 /// [mistakesCounter] is a list of three integers: each of them contains
 /// the mistakes made in each of the thirds
 /// [totalMistakes] total mistakes made in the whole test
+///
 /// [symbolsDisplayed] is a list of three integers: each of them contains
+///
 /// the symbols displayed in each of the thirds
 /// [totalDisplayed] total symbols displayed in the whole test
+///
 /// [thirdsCounter] measures what third the test is currently in:
 /// 0 for the first third, 1 for the second, and 2 for the last.
 class ProgressProvider extends ChangeNotifier{
@@ -46,9 +52,12 @@ class ProgressProvider extends ChangeNotifier{
 
 
   /// Receives as arguments:
+  ///
   /// [elapsedMs] which is the total milliseconds elapsed since the test started
-  /// [limitMs] the duartion of the test in milliseconds
-  /// and with those two values it determines which third is the test in,
+  ///
+  /// [limitMs] the duartion of the test in milliseconds.
+  ///
+  /// With those two values it determines which third is the test in,
   /// gives value to [thirdsCounter] and calls [notifyListeners]
   void updateThirdsCounter(int elapsedMs, int limitMs){
     final newThird = (elapsedMs ~/ (limitMs / 3)).clamp(0,2);
@@ -101,7 +110,9 @@ class ProgressProvider extends ChangeNotifier{
 /// This provider handles the data related to the numeric keyboard.
 ///
 /// Its fields are
+///
 /// [keyPressed] an integer which marks the number of the key that is pressed
+///
 /// [keyFlag] a boolean that takes the true value if any key has been pressed
 class KeyboardProvider extends ChangeNotifier{
   int keyPressed = 0;
@@ -124,14 +135,21 @@ class KeyboardProvider extends ChangeNotifier{
 /// This provider manages all the time variables in the test. Its fields are:
 ///
 /// [start] time and date the test was started
+///
 /// [end] time and date the test was finished
+///
 /// [testTimer] timer used to measure the test timing
+///
 /// [limitMilliseconds] duration of the test in milliseconds
+///
 /// [isTestRunning] boolean variable that determines if the test is being taken at the moment
+///
 /// [startTime] time and date the test was started. It is used for the timer
 /// and not for saving test data as [start]
+///
 /// [partialTimes] list of integers that saves the time taken every by the user
 /// to press a key for every symbol displayed
+///
 /// [isTimeStarted] boolean that determines if the timer has been started in the test
 class TimeProvider extends ChangeNotifier{
   DateTime start = DateTime.now();
@@ -165,8 +183,11 @@ class TimeProvider extends ChangeNotifier{
   /// This function is called to start the timer when the test starts.
   ///
   /// It requires the following arguments:
+  ///
   /// [timeLimit] duration of the test in milliseconds
+  ///
   /// [onFinish] callback of the function that is to be executed when the time expires
+  ///
   /// [pp] the instance of [ProgressProvider] so that the
   /// [ProgressProvider.thirdsCounter] can be updated
   void startTimer({required int timeLimit, required VoidCallback onFinish, required ProgressProvider pp}) {
@@ -236,15 +257,20 @@ class TimeProvider extends ChangeNotifier{
 /// This provider is used to handle the smybols displayed in the middle of the screen
 ///
 /// Its fields are:
+///
 /// [shuffled] a boolean that determines if the symbols list has been shuffled:
 /// the order the symbols appear in the reference key must change every time a test
 /// (trial or not) starts.
+///
 /// [symbols] a list with 9 elements: one for each symbol
+///
 /// [trialCounter] in the trial test all of the 9 symbols have to be displayed
 /// (in a random order) before passing to total random mode. This variable is a
 /// counter of how many of them have been displayed
+///
 /// [trialOrder] this list of integers sets the order in which the 9 symbols
 /// are to be displayed in the trial test
+///
 /// [id] the position  in the [symbols] list of the symbol to be displayed
 class SymbolsProvider extends ChangeNotifier{
   bool shuffled = false;
@@ -260,7 +286,9 @@ class SymbolsProvider extends ChangeNotifier{
   }
 
   /// Gives value to [symbols]:
+  ///
   /// if [isSymbols1] is true it assigns [GeneralConstants.symbols1]
+  ///
   /// if [isSymbols1] is false it assigns [GeneralConstants.symbols2]
   /// Then it and calls [notifyListeners]
   void setSymbols(bool isSymbols1){
@@ -311,19 +339,27 @@ class SymbolsProvider extends ChangeNotifier{
 /// This provider manages a miscellaneous of variables used in the app.
 ///
 /// Its fields are
+///
 /// [saveButtonPressed] is true when the save button is pressed in the
 /// [NewProfileScreen] but one of the fields is not filled or incorrect.
 /// It is used to determine when the warning text must display and the
 /// fields must be highlighted in red.
+///
 /// [hand] takes the value 'L' or 'R' depending on the hand
 /// chosen by the user to attempt the test
+///
 /// [codeid] is the reference code
+///
 /// [codeidController1] is the controller for the part of the reference code
 /// before the hyphen
+///
 /// [codeidController2] is the controller for the part of the reference code
 /// after the hyphen
+///
 /// [dataSent] is a boolean that determines if the test data has been sent
+///
 /// [dataSentCorrectly] relates to if the test data has been sent successfully
+///
 /// [isTrialTest] is true when the current test is a trial test
 class ParametersProvider extends ChangeNotifier{
   bool saveButtonPressed = false;
@@ -394,14 +430,21 @@ class ParametersProvider extends ChangeNotifier{
 /// This provider handles all the data related to the profiles.
 ///
 /// Its fields are
+///
 /// [editingMode] is true when the current profile is been edited
 /// and false when a new profile is been created
+///
 /// [profileCounter] keeps the count of the profiles in the app
+///
 /// [activeUser] is the position in the list [profilesList] of the currently selected user
+///
 /// [profilesList] a list with all the profiles in the app
+///
 /// [tempUser] an instance of [Profile] used to save the data in the [NewProfileScreen]
 /// before assigning it to a user in [profilesList]
+///
 /// [dataController] to handle the birth date selection
+///
 /// [nicknameController] to handle the nickname textfield
 class PersonalDataProvider extends ChangeNotifier{
   bool editingMode = false;
@@ -527,12 +570,16 @@ class PersonalDataProvider extends ChangeNotifier{
 
 }
 
-/// This provider manages a series of boolean for the buttons in [HomePage]
+/// This provider manages a series of boolean for the buttons in [HomeScreen]
 ///
 /// Its fields are
+///
 /// [isUserSelected] is true when a user has been selected
+///
 /// [isCodeValidated] is true if the reference code has been validated
+///
 /// [isReadOnly] is true when the reference code text field can not be edited
+///
 /// [wrongCodeId] is true when the reference code is incorrect
 class ButtonsProvider extends ChangeNotifier{
   bool isUserSelected = false;
@@ -593,7 +640,9 @@ class ButtonsProvider extends ChangeNotifier{
 /// This provider handles the data related to the device the app is launched in.
 ///
 /// Its fields are
+///
 /// [deviceModel] the model of the device
+///
 /// [diagonalInches] the diagonal of the device measured in inches
 class DeviceProvider extends ChangeNotifier{
   String? deviceModel;

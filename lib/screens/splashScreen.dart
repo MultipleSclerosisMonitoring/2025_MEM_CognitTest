@@ -9,13 +9,19 @@ import 'package:provider/provider.dart';
 /// This class is for the splash screen, which displays while the app is launching
 /// It displays the Comunidad de Madrid Salud logo
 /// and the Universidad Politecnica de Madrid,
-/// as well as the app version
+/// as well as the app version.
+///
+/// This class also collects the screen diagonal size in inches and saves it calling [DeviceProvider.setDiagonalInches]
 class SplashScreen extends StatefulWidget {
+  /// Builder of the class, creates the widget
   const SplashScreen({super.key});
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
 
+/// Associated to [SplashScreen].
+///
+/// Handles the loading of the app version
 class _SplashScreenState extends State<SplashScreen> {
   String _version = '';
 
@@ -23,24 +29,24 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _loadVersion();
+
+    /// After building the widget, gets the diagonal size and saves it in the provider
     WidgetsBinding.instance.addPostFrameCallback((_) {
       double diagInches = printScreenDiagonalInInches(context);
       context.read<DeviceProvider>().setDiagonalInches(diagInches);
     });
+
+    /// Waits 5 seconds and navigates to the main screen
     Timer(const Duration(seconds: 5), () { //Duración de la permanencia en la pantalla de splash
       Navigator.pushReplacementNamed(context, '/'); // Aquí va a la pantalla principal
     });
   }
 
+  /// Loads the app version and updates the version string
   Future<void> _loadVersion() async {
-    /*
-    await Future.delayed(Duration(seconds : 2));
-    if(!mounted) return;
-
-     */
     final info = await PackageInfo.fromPlatform();
     setState(() {
-      _version = GeneralConstants.appVersion;
+      _version = info.toString();
     });
   }
 
@@ -64,21 +70,23 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-
+/// Calculates and returns the screen's diagonal size in inches.
+///
+/// This is an approximation based on the device's logical size, pixel ratio,
+/// and a base DPI assumption (typically 160 for Android).
 double printScreenDiagonalInInches(BuildContext context) {
-  //// tamaño lógico
   final logicalWidth = MediaQuery.of(context).size.width;
   final logicalHeight = MediaQuery.of(context).size.height;
   final pixelRatio = MediaQuery.of(context).devicePixelRatio;
 
-  /// tamaño real en píxeles
+  /// Gets the real size of the screen in pixels
   final widthPx = logicalWidth * pixelRatio;
   final heightPx = logicalHeight * pixelRatio;
 
-  // ppi aproximado(Android base es 160dpi)
+  /// Estimates the PPI (Pixels per inch) using the base of 160 dpi
   final ppi = 160 * pixelRatio;
 
-  //// calcular la diagonal
+  /// Calculates the diagonal
   final diagonalInches = sqrt(widthPx * widthPx + heightPx * heightPx) / ppi;
 
   debugPrint("la Diagonal aproximada de este dispositivo es: ${diagonalInches.toStringAsFixed(2)} pulgadas");

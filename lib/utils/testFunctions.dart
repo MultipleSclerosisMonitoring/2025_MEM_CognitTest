@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:advance_math/advance_math.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:symbols/screens/countdownScreen.dart';
@@ -44,10 +43,14 @@ Widget buildNumber(int number) {
 /// and then switches to complete random mode.
 ///
 /// The arguments are:
+///
 /// [currentId] is the number of the symbol that is on the screen at the moment.
+///
 /// [isTrial] is a boolean that is true if the running test is the trial.
+///
 /// [counter] counts the number of symbols that have been displayed in the middle
 /// since the start of the test, only in the trial test.
+///
 /// [order] is a list of integers that determines the sequence of the first nine
 /// symbols that are to be displayed in the middle.
 ///
@@ -76,8 +79,11 @@ int newRandom(int currentId, bool isTrial, int counter, List<int> order) {
 /// it executes the corresponding instructions.
 ///
 /// Its arguments are:
+///
 /// [activeId], which is the integer of the symbol currently in the middle of the screen
+///
 /// [activeKey], which is the number of the last key pressed
+///
 /// [context] to access the providers
 ///
 /// First it checks the [KeyboardProvider.keyFlag] to see if a key has been pressed.
@@ -329,9 +335,13 @@ void finishTest(BuildContext context) async{
 
 /// This function receives the String [codeid] and sends it to the
 /// procesarSDMT service in the API to check if it is valid. It returns an integer:
+///
 /// -1 if there was a mistake connecting with the API
+///
 /// 1 if the code is valid and has never been used
+///
 /// 2 if the code is not valid
+///
 /// 3 if the code is valid but has already been used
 Future<int> checkCodeid ({required String codeid}) async {
   final url = Uri.parse('http://apii01.etsii.upm.es/AppCognit/procesarSDMT');
@@ -378,31 +388,53 @@ Future<int> checkCodeid ({required String codeid}) async {
 
 /// This function is called to send the test and profile data to the server
 /// through the reportarSDMT service.
-/// Its arguments are all the strings sent through the API
+/// Its arguments are all the strings sent through the API:
 /// [codeid] the reference code
+///
 /// [fNacimiento] birth date
+///
 /// [sexo] sex
+///
 /// [nivelEduc] level of finsihed studies
+///
 /// [mano] hand used to attempt the test
+///
 /// [numSim] total number of symbols displayed
+///
 /// [tiempo] duration of the test
+///
 /// [score] total number of symbols guessed correctly
+///
 /// [number_Errors] total number of mistakes
+///
 /// [num_Dig_1] symbols displayed in the first third (1 to 30 seconds)
+///
 /// [num_Dig_2] symbols displayed in the second third (31 to 60 seconds)
+///
 /// [num_Dig_3] symbols displayed in the last third (61 to 90 seconds)
+///
 /// [number_Errors_1] mistakes in the first third (1 to 30 seconds)
+///
 /// [number_Errors_2] mistakes in the second third (31 to 60 seconds)
+///
 /// [number_Errors_3] mistakes in the last third (61 to 90 seconds)
+///
 /// [averaged_duration] average time taken to press a number in the keyboard
+///
 /// [sdev_duration] standard deviation of the times taken to press a number
+///
 /// [symbol_set] 1 or 2 depending on the set of symbols displayed
+///
 /// [device] model of the device used for the test
+///
 /// [diagInch] diagonal of the device measured in inches
 ///
 /// The function returns an integer:
+///
 /// -1 if it was not able to connect the server
+///
 /// 1 if the data was sent correctly
+///
 /// 2 if it connected the server but there was a mistake in the data sending
 Future<int> enviarDatosSDMT({
   required String codeid,
