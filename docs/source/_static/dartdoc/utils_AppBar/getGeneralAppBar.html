@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the getGeneralAppBar function from the AppBar library, for the Dart programming language.">
+  <title>getGeneralAppBar function - AppBar library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">symbols</a></li>
+    <li><a href="../utils_AppBar/">utils\AppBar.dart</a></li>
+    <li class="self-crumb">getGeneralAppBar function</li>
+  </ol>
+  <div class="self-name">getGeneralAppBar</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="utils_AppBar&#47;utils_AppBar-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">getGeneralAppBar</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/material/AppBar-class.html">AppBar</a></span>
+<span class="name ">getGeneralAppBar</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="getGeneralAppBar-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span></li>
+<li><span class="parameter" id="getGeneralAppBar-param-localeProvider"><span class="type-annotation"><a href="../state_management_locale_provider/LocaleProvider-class.html">LocaleProvider</a></span> <span class="parameter-name">localeProvider</span>, </span></li>
+<li><span class="parameter" id="getGeneralAppBar-param-goBack"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">goBack</span></span></li>
+</ol>)
+
+        
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Returns an AppBar receiving as an argument the <code>context</code> to access the providers, the <code>localeProvider</code> to implement the language button,
+and a boolean <code>goBack</code> that indicates if the AppBar should include the arrow icon to go to the previous page.</p>
+<p>The AppBar includes a dropdown menu with English and Spanish language:
+when one is selected, it calls <a href="../state_management_locale_provider/LocaleProvider/setLocale.html">LocaleProvider.setLocale</a> passing the selected language as argument.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">AppBar getGeneralAppBar(BuildContext context, LocaleProvider localeProvider, bool goBack){
+  return AppBar(
+    automaticallyImplyLeading: goBack,
+    &#47;&#47;&#47; The height depends on the constant defined in the constants file
+    toolbarHeight: MediaQuery.of(context).size.height &#47; GeneralConstants.toolbarHeightRatio,
+    backgroundColor: Colors.white,
+    actions:[ Expanded(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          &#47;&#47;&#47; Comunidad de Madrid Salud logo
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: Image.asset(&#39;assets&#47;images&#47;saludMadridPng.png&#39;),
+            ),
+          ),
+          &#47;&#47;&#47; Universidad Politecnica de Madrid logo
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: Image.asset(&#39;assets&#47;images&#47;upm.png&#39;),
+            ),
+          ),
+          &#47;&#47;&#47; Dropdown button to select the language
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: Colors.red,
+                child: DropdownButton&lt;Locale&gt;(
+                  value: localeProvider.locale,
+                  icon: const Padding(
+                    padding:  EdgeInsets.all(8.0),
+                    child:  Icon(Icons.language, color: Colors.white),
+                  ),
+                  dropdownColor: Colors.red,
+                  &#47;&#47;&#47; Assigning language to the localeProvider
+                  onChanged: (Locale? newLocale) {
+                    if (newLocale != null) {
+                      localeProvider.setLocale(newLocale);
+                    }
+                  },
+                  items: const [
+                    &#47;&#47;&#47; The English language is represented with a USA flag
+                    DropdownMenuItem(
+                      value: Locale(&#39;en&#39;),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(&#39;🇺🇸&#39;,
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                    &#47;&#47;&#47; The Spanish language is represented with a Spanish flag
+                    DropdownMenuItem(
+                      value: Locale(&#39;es&#39;),
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(&#39;🇪🇸&#39;,
+                            style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+    ],
+  );
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">symbols</a></li>
+    <li><a href="../utils_AppBar/">AppBar</a></li>
+    <li class="self-crumb">getGeneralAppBar function</li>
+</ol>
+
+    <h5>AppBar library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    symbols
+      1.1.2+3
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

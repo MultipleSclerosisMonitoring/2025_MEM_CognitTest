@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the newRandom function from the testFunctions library, for the Dart programming language.">
+  <title>newRandom function - testFunctions library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">symbols</a></li>
+    <li><a href="../utils_testFunctions/">utils\testFunctions.dart</a></li>
+    <li class="self-crumb">newRandom function</li>
+  </ol>
+  <div class="self-name">newRandom</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="utils_testFunctions&#47;utils_testFunctions-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">newRandom</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>
+<span class="name ">newRandom</span>(<wbr><ol class="parameter-list"> <li><span class="parameter" id="newRandom-param-currentId"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">currentId</span>, </span></li>
+<li><span class="parameter" id="newRandom-param-isTrial"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">isTrial</span>, </span></li>
+<li><span class="parameter" id="newRandom-param-counter"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">counter</span>, </span></li>
+<li><span class="parameter" id="newRandom-param-order"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">order</span>, </span></li>
+</ol>)
+
+        
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Generates a new random number from 0 to 8, to determine which of the
+symbols in the symbol list is going to display in the middle of the screen.</p>
+<p>In the trial test, first all the nine symbols are displayed once each,
+and then switches to complete random mode.</p>
+<p>The arguments are:</p>
+<p><code>currentId</code> is the number of the symbol that is on the screen at the moment.</p>
+<p><code>isTrial</code> is a boolean that is true if the running test is the trial.</p>
+<p><code>counter</code> counts the number of symbols that have been displayed in the middle
+since the start of the test, only in the trial test.</p>
+<p><code>order</code> is a list of integers that determines the sequence of the first nine
+symbols that are to be displayed in the middle.</p>
+<p>First the code checks if it is trial test and not less than nine symbols have
+been displayed. If so, it shows the corresponding symbol in the sequence.
+IF it is not trial or the nine symbols have already been showed, it generates
+a new random symbol with the only condition of being different from the current one.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">int newRandom(int currentId, bool isTrial, int counter, List&lt;int&gt; order) {
+  if(isTrial &amp;&amp; counter &lt; 9){
+    return order[counter];
+  }
+  else {
+    final random = Random();
+    int randomNumber;
+    do {
+      randomNumber = random.nextInt(9);
+    } while (randomNumber ==
+        currentId); &#47;&#47;Nos aseguramos de que cambie el simbolo
+    return randomNumber;
+  }
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">symbols</a></li>
+    <li><a href="../utils_testFunctions/">testFunctions</a></li>
+    <li class="self-crumb">newRandom function</li>
+</ol>
+
+    <h5>testFunctions library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    symbols
+      1.1.2+3
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

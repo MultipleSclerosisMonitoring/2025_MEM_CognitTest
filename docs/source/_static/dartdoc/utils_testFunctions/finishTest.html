@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the finishTest function from the testFunctions library, for the Dart programming language.">
+  <title>finishTest function - testFunctions library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">symbols</a></li>
+    <li><a href="../utils_testFunctions/">utils\testFunctions.dart</a></li>
+    <li class="self-crumb">finishTest function</li>
+  </ol>
+  <div class="self-name">finishTest</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
+</header>
+<main>
+  <div
+      id="dartdoc-main-content"
+      class="main-content"
+      data-above-sidebar="utils_testFunctions&#47;utils_testFunctions-library-sidebar.html"
+      data-below-sidebar="">
+      <div>
+<h1><span class="kind-function">finishTest</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+<span class="returntype">void</span>
+<span class="name ">finishTest</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="finishTest-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span></span></li>
+</ol>)
+
+        
+
+    </section>
+    
+<section class="desc markdown">
+  <p>This function is called when the official test is finished.</p>
+<p>First it calls <a href="../state_management_providers/TimeProvider/getAveragedDuration.html">TimeProvider.getAveragedDuration</a> and <a href="../state_management_providers/TimeProvider/getStdDeviation.html">TimeProvider.getStdDeviation</a>
+to calculate the average and standard deviation of all the partial times.
+Then it calls <a href="../utils_profile/Profile/addTest.html">Profile.addTest</a> to add the completed test to the active
+user's test list.</p>
+<p>After that it sends the information to the backend by calling
+<a href="../utils_testFunctions/enviarDatosSDMT.html">enviarDatosSDMT</a>. Based on the API feedback, it sets the value
+of <a href="../state_management_providers/ParametersProvider/dataSentCorrectly.html">ParametersProvider.dataSentCorrectly</a> to true or false.</p>
+<p>To finish, it resets all the control variables involved in the test
+and some of the home screen too, like the text controllers.
+Waits half a second and pushes to the <a href="../screens_resultsScreen/ResultsScreen-class.html">ResultsScreen</a></p>
+<p>The only argument is the <code>context</code> to access the providers.
+The providers are instanced with listen:false because the function is outside the widget tree
+and it does not need to react to changes in the providers.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">void finishTest(BuildContext context) async{
+  context.read&lt;TimeProvider&gt;().setEndTime();
+  final progressProvider = Provider.of&lt;ProgressProvider&gt;(context, listen:false);
+  final parametersProvider = Provider.of&lt;ParametersProvider&gt;(context, listen:false);
+  final personalDataProvider = Provider.of&lt;PersonalDataProvider&gt;(context, listen:false);
+  final deviceProvider = Provider.of&lt;DeviceProvider&gt;(context, listen:false);
+  final buttonsProvider = Provider.of&lt;ButtonsProvider&gt;(context, listen: false);
+  final timeProvider = Provider.of&lt;TimeProvider&gt;(context, listen: false);
+
+  parametersProvider.setDataSent(true);
+  final double averagedDuration= timeProvider.getAveragedDuration();
+  final double sdev_duration = timeProvider.getStdDeviation();
+  personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].addTest(Test(date: DateTime.now(), hand: parametersProvider.hand, displayed: progressProvider.totalDisplayed, mistakes: progressProvider.totalMistakes));
+  final sset = (personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].isSymbols1 == true) ? &quot;set1&quot; : &quot;set2&quot;;
+  final int answer = await enviarDatosSDMT(
+    codeid: parametersProvider.codeid ?? &quot;&quot;,
+    fNacimiento: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].dateOfBirth?.toIso8601String().substring(0,10) ?? &quot;&quot;,
+    sexo: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].sex ?? &quot;&quot;,
+    nivelEduc: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].sex ?? &quot;&quot;,
+    mano: parametersProvider.hand ?? &quot;&quot;,
+    numSim: progressProvider.totalDisplayed.toString(),
+    tiempo: &quot;90&quot;,
+    errores: progressProvider.totalMistakes.toString(),
+    score: progressProvider.progressCounter.toString(),
+    num_Dig_1: progressProvider.symbolsDisplayed[0].toString(),
+    num_Dig_2: progressProvider.symbolsDisplayed[1].toString(),
+    num_Dig_3: progressProvider.symbolsDisplayed[2].toString(),
+    number_Errors: progressProvider.totalMistakes.toString(),
+    number_Errors_1: progressProvider.mistakesCounter[0].toString(),
+    number_Errors_2: progressProvider.mistakesCounter[1].toString(),
+    number_Errors_3: progressProvider.mistakesCounter[2].toString(),
+    averaged_duration: averagedDuration.toString(),
+    sdev_duration: sdev_duration.toString(),
+    symbol_set:sset,
+    device: deviceProvider.deviceModel ?? &#39;unknownDevice&#39;,
+    diagInch: deviceProvider.diagonalInches.toString(),
+  );
+  debugPrint(&#39;sending info&#39;);
+  if(answer == -1){
+    parametersProvider.setDataSentCorrectly(false);
+  } else{
+    parametersProvider.setDataSentCorrectly(true);
+  }
+  progressProvider.resetThirdsCounter();
+  progressProvider.resetMistakesCounter();
+  progressProvider.resetProgressCounter();
+  progressProvider.resetSymbolsDisplayed();
+  parametersProvider.setDataSent(false);
+  personalDataProvider.saveProfiles();
+  parametersProvider.resetCodeidController1();
+  parametersProvider.resetCodeidController2();
+  parametersProvider.setIsTrialTest(true);
+  timeProvider.resetPartialTimes();
+  buttonsProvider.setIsCodeValidated(false);
+  buttonsProvider.setIsReadOnly(false);
+
+  Future.delayed(const Duration(milliseconds: 500),(){
+    Navigator.pushNamed(context, &#39;&#47;resultsScreen&#39;);
+  });
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../index.html">symbols</a></li>
+    <li><a href="../utils_testFunctions/">testFunctions</a></li>
+    <li class="self-crumb">finishTest function</li>
+</ol>
+
+    <h5>testFunctions library</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-left-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    symbols
+      1.1.2+3
+  </span>
+  
+</footer>
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
