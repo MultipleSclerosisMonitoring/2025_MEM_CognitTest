@@ -8,9 +8,3 @@ build:
   tools:
     python: "3.10"
 
-  jobs:
-    pre_build:
-      - dart pub get
-      - dart doc
-      - mkdir -p docs/source/_static/dartdoc
-      - cp -r doc/api/* docs/source/_static/dartdoc/
