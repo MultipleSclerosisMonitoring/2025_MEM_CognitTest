@@ -124,8 +124,7 @@ In the Personal Data Provider, there is a function to save the profiles in Share
 ## Documentation
 
 ## API Endpoints
-The general endpoint to which the data is sent is http://apii01.etsii.upm.es/AppCognit/, and it implements two services that are used in the app:
-
+The data is sent to a backend service endpoint where two main services are provided:
 
 1. **`/procesarSDMT`** - Validate reference codes
     - **Method:** POST

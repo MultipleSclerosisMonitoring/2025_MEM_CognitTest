@@ -46,7 +46,7 @@
   <h1 id="sdmt---symbol-digit-modalities-test">SDMT - Symbol Digit Modalities Test</h1>
 <h2 id="what-is-the-symbol-digit-modalities-test-sdmt">What is the Symbol Digit Modalities Test (SDMT)?</h2>
 <p>The Symbol Digit Modalities Test (SDMT) is a standarized and widely used cognitive assesment, which primarily measures information processing speed but also involves other cognitive function. The test consists on a simple substitution task, based on a reference key like the one shown below:</p>
-<p><img src="/symbols_key.png" alt="Reference key"></p>
+<p><img src="symbols_key.png" alt="Reference key"></p>
 <p>There are two sets of symbols available: the user can select either of them when creating a profile, based on the instructions from its neurologist.</p>
 <p>During the test, a symbol appears in the middle of the screen. The user has to find that symbol in the reference key, and press the number corresponding to that symbol. Once the user selects a number, regardless if it is the correct one or not, a new symbol appears. This goes on until the time is consumed. The test measures the symbols displayed, number of errors, average time to select a number, and other metrics that help assess cognitive function.</p>
 <p>This test is used for different applications, like measuring cognitive deterioration in patients with degenerative diseases such as multiple sclerosis, identifying early signs of dementia and Huntington's disease or differentiating brain-damaged from psychotic patients.</p>
@@ -85,7 +85,7 @@
 <li>Most of the numeric variables, especially the ones repeated throughout the code, are parametrized in constants to ease the UI modification.</li>
 </ul>
 <h3 id="features-overview">Features Overview</h3>
-<p><img src="/code_organization.png" alt="Features organization"></p>
+<p><img src="code_organization.png" alt="Features organization"></p>
 <h4 id="1-l10n">1. l10n</h4>
 <p>Handles the implementation of multilenguage (English/Spanish) in the app</p>
 <ul>
@@ -138,7 +138,7 @@
 <p>Handles boolean variables that determine if certain requirements are satisfied in order to manage the sequence of unlocking buttons: the "view my profile" or "view my tests" buttons must stay inactive until a user is selected; the "start test" button must be locked until a valid reference code is introduced; reference code must not be editable until the edit nutton is pressed.</p>
 <h4 id="8-device-provider">8. Device Provider</h4>
 <p>Manages the two variables that relate to the device the app is being launched on: the device model and the diagonal of the device screen measured in inches.</p>
-<p><img src="/providers_info_flow.png" alt="Information flow through providers"></p>
+<p><img src="providers_info_flow.png" alt="Information flow through providers"></p>
 <p>In the picture above, the flow of data through the personal data provider is displayed. The home screen receives from the provider the list of nicknames of all the profiles created, and when the user selects one, it sends that information to the provider. When "view my profile" is clicked, the new profile screen receives from the provider all the information of the active profile so it can display it. When a profile is either created, edited or deleted, that information is sent to the provider. In the test scree, the test receives from the provider the set of symbols associated with the active profile to show them on the screen. Once the test is finished, a new instance of the test class is created and sent to the provider. The provider sends the information of the active profile in order to be sent through the API with the rest of the results of the test.</p>
 <h3 id="device-storage">Device storage</h3>
 <p>The idea of creating a profile that contains the information of every use does not make sense if that information is lost every time the app is closed. This creates the need of storaging data locally in the device, since the providers are reset every time the app closes and opens. The selected solution is Shared Preferences. The data is load and saved through the SharedPreferences API, and the format consists on mapping the information with a key and value for every field. For this purpose, the class profile implements a function that converts all of its fields to JSON, and another one that assigns the JSON data received to all of its fields. Since the class Profile contains a list of Tests, the class Test also implements the functions toJson and from Json, both called from the homonime functions in Profile.
@@ -146,7 +146,7 @@ In the Personal Data Provider, there is a function to save the profiles in Share
 <h2 id="generating-documentacion-with-sphinx">Generating Documentacion with Sphinx</h2>
 <h2 id="documentation">Documentation</h2>
 <h2 id="api-endpoints">API Endpoints</h2>
-<p>The general endpoint to which the data is sent is <a href="http://apii01.etsii.upm.es/AppCognit/">http://apii01.etsii.upm.es/AppCognit/</a>, and it implements two services that are used in the app:</p>
+<p>The data is sent to a backend service endpoint where two main services are provided:</p>
 <ol>
 <li>
 <p><strong><code>/procesarSDMT</code></strong> - Validate reference codes</p>

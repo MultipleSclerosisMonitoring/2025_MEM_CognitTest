@@ -4,7 +4,7 @@
 
 The Symbol Digit Modalities Test (SDMT) is a standarized and widely used cognitive assesment, which primarily measures information processing speed but also involves other cognitive function. The test consists on a simple substitution task, based on a reference key like the one shown below:
 
-![Reference key](./_static/symbols_key.png)
+![Reference key](_static/symbols_key.png)
 
 There are two sets of symbols available: the user can select either of them when creating a profile, based on the instructions from its neurologist.
 
@@ -51,7 +51,7 @@ The main aspects of the organization of the code are the following:
 
 ### Features Overview
 
-![Features organization](./_static/code_organization.png)
+![Features organization](_static/code_organization.png)
 
 #### 1. l10n
 Handles the implementation of multilenguage (English/Spanish) in the app
@@ -110,7 +110,7 @@ Handles boolean variables that determine if certain requirements are satisfied i
 #### 8. Device Provider
 Manages the two variables that relate to the device the app is being launched on: the device model and the diagonal of the device screen measured in inches.
 
-![Information flow through providers](./_static/providers_info_flow.png)
+![Information flow through providers](_static/providers_info_flow.png)
 
 In the picture above, the flow of data through the personal data provider is displayed. The home screen receives from the provider the list of nicknames of all the profiles created, and when the user selects one, it sends that information to the provider. When "view my profile" is clicked, the new profile screen receives from the provider all the information of the active profile so it can display it. When a profile is either created, edited or deleted, that information is sent to the provider. In the test scree, the test receives from the provider the set of symbols associated with the active profile to show them on the screen. Once the test is finished, a new instance of the test class is created and sent to the provider. The provider sends the information of the active profile in order to be sent through the API with the rest of the results of the test.
 
@@ -124,7 +124,7 @@ In the Personal Data Provider, there is a function to save the profiles in Share
 ## Documentation
 
 ## API Endpoints
-The general endpoint to which the data is sent is http://apii01.etsii.upm.es/AppCognit/, and it implements two services that are used in the app:
+The data is sent to a backend service endpoint where two main services are provided:
 
 
 1. **`/procesarSDMT`** - Validate reference codes
