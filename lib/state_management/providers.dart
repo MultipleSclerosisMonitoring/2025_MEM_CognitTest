@@ -142,7 +142,6 @@ class KeyboardProvider extends ChangeNotifier{
 ///
 /// [limitMilliseconds] duration of the test in milliseconds
 ///
-/// [isTestRunning] boolean variable that determines if the test is being taken at the moment
 ///
 /// [startTime] time and date the test was started. It is used for the timer
 /// and not for saving test data as [start]
@@ -156,7 +155,6 @@ class TimeProvider extends ChangeNotifier{
   DateTime end = DateTime.now();
   Timer? testTimer;
   int limitMilliseconds = 0;
-  bool isTestRunning = false;
   late DateTime startTime;
   List <int> partialTimes = [];
   bool isTimeStarted = false;
@@ -195,7 +193,6 @@ class TimeProvider extends ChangeNotifier{
     testTimer?.cancel();
     startTime = DateTime.now();
     limitMilliseconds=  timeLimit;
-    isTestRunning = true;
 
     //Incrementando a mano los intervalos de tiempo cada 100 ms (elapsed += 100) iba muy lento. Mejor con DateTime.now
     /// Each 100 milliseconds the timer is updated
@@ -205,7 +202,6 @@ class TimeProvider extends ChangeNotifier{
 
       if(currentElapsed >= timeLimit){
         testTimer!.cancel();
-        isTestRunning = false;
         onFinish();
         notifyListeners();
         return;
@@ -356,8 +352,6 @@ class SymbolsProvider extends ChangeNotifier{
 /// [codeidController2] is the controller for the part of the reference code
 /// after the hyphen
 ///
-/// [dataSent] is a boolean that determines if the test data has been sent
-///
 /// [dataSentCorrectly] relates to if the test data has been sent successfully
 ///
 /// [isTrialTest] is true when the current test is a trial test
@@ -367,7 +361,6 @@ class ParametersProvider extends ChangeNotifier{
   String? codeid;
   TextEditingController codeidController1 = TextEditingController();
   TextEditingController codeidController2 = TextEditingController();
-  bool dataSent = false;
   bool dataSentCorrectly = false;
   bool isTrialTest = true;
 
@@ -388,11 +381,7 @@ class ParametersProvider extends ChangeNotifier{
 
 
 
-  /// Assigns the argument [d] to [dataSent] and calls [notifyListeners]
-  void setDataSent(bool d){
-    dataSent = d;
-    notifyListeners();
-  }
+
 
   /// Assigns the argument [d] to [dataSentCorrectly] and calls [notifyListeners]
   void setDataSentCorrectly(bool d){

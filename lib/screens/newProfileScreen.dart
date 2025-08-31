@@ -138,7 +138,9 @@ class NewProfileScreen extends StatelessWidget {
                                       style: TextStyle(color: AppColors.blueText),
                                       decoration: InputDecoration(
                                         hintText: personalDataProvider.editingMode ? "${tempUser.dateOfBirth!.day}/${tempUser.dateOfBirth!.month}/${tempUser.dateOfBirth!.year}" : "DD/MM/YYYY",
-                                        hintStyle: TextStyle(color: personalDataProvider.editingMode ? AppColors.blueText : (parametersProvider.saveButtonPressed ? Colors.red : Colors.black)),
+                                        hintStyle: TextStyle(color: personalDataProvider.editingMode ? AppColors.blueText : (parametersProvider.saveButtonPressed ? Colors.red : Colors.black),
+                                          fontWeight: personalDataProvider.editingMode ? null : (parametersProvider.saveButtonPressed ? FontWeight.bold : null)
+                                        ),
                                         labelStyle: TextStyle(color: (parametersProvider.saveButtonPressed && tempUser.dateOfBirth == null) ? Colors.red : Colors.black),
                                         suffixIcon: Icon(Icons.calendar_today),
                                      ),
@@ -490,6 +492,7 @@ class NewProfileScreen extends StatelessWidget {
                       style: TextStyle(
                         color: Colors.red,
                       ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                       ],

@@ -219,7 +219,6 @@ void finishTrialTest(BuildContext context){
                 progressProvider.resetProgressCounter();
                 progressProvider.resetSymbolsDisplayed();
                 timeProvider.resetPartialTimes();
-                parametersProvider.setDataSent(false);
                 Navigator.pushNamed(context, '/countdownScreen', arguments: (){
                   timeProvider.setIsTimeStarted(false);
                   parametersProvider.setIsTrialTest(false);
@@ -238,7 +237,6 @@ void finishTrialTest(BuildContext context){
                 progressProvider.resetProgressCounter();
                 progressProvider.resetSymbolsDisplayed();
                 timeProvider.resetPartialTimes();
-                parametersProvider.setDataSent(false);
                 Navigator.pushNamed(context, '/countdownScreen', arguments: (){
                   timeProvider.setIsTimeStarted(false);
                   parametersProvider.setIsTrialTest(false);
@@ -281,7 +279,6 @@ void finishTest(BuildContext context) async{
   final buttonsProvider = Provider.of<ButtonsProvider>(context, listen: false);
   final timeProvider = Provider.of<TimeProvider>(context, listen: false);
 
-  parametersProvider.setDataSent(true);
   final double averagedDuration= timeProvider.getAveragedDuration();
   final double sdev_duration = timeProvider.getStdDeviation();
   personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0].addTest(Test(date: DateTime.now(), hand: parametersProvider.hand, displayed: progressProvider.totalDisplayed, mistakes: progressProvider.totalMistakes));
@@ -319,7 +316,6 @@ void finishTest(BuildContext context) async{
   progressProvider.resetMistakesCounter();
   progressProvider.resetProgressCounter();
   progressProvider.resetSymbolsDisplayed();
-  parametersProvider.setDataSent(false);
   personalDataProvider.saveProfiles();
   parametersProvider.resetCodeidController1();
   parametersProvider.resetCodeidController2();

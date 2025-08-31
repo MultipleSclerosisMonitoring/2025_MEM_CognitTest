@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:symbols/screens/countdownScreen.dart';
 import 'package:symbols/state_management/providers.dart';
+import 'package:symbols/utils/test.dart';
 import 'package:symbols/utils/testFunctions.dart';
 
 import '../l10n/generated/l10n.dart';
@@ -64,12 +65,14 @@ void createProfile(BuildContext context){
 /// The function sets [PersonalDataProvider.editingMode] to true and assigns the active user to [PersonalDataProvider.tempUser]
 /// before navigating to the new profile screen
 void editProfile(BuildContext context){
+
   final personalDataProvider = Provider.of<PersonalDataProvider>(context, listen: false);
 
   personalDataProvider.tempUser = personalDataProvider.profilesList[personalDataProvider.activeUser ?? 0];
   personalDataProvider.setEditingMode(true);
   Navigator.pushNamed(context, '/newProfileScreen');
-}
+
+  }
 
 /// This function is triggered when the button next to the reference code text field is pressed
 /// This button is used to edit the code (when in read only mode)
@@ -79,6 +82,7 @@ void editProfile(BuildContext context){
 /// The only argument is [context] to access the providers
 ///
 void codeIdButton(context) async {
+
   final parametersProvider = Provider.of<ParametersProvider>(context, listen: false);
   final buttonsProvider = Provider.of<ButtonsProvider>(context, listen: false);
 
@@ -237,6 +241,8 @@ void saveProfile(BuildContext context) async {
     if (personalDataProvider.editingMode) {
       personalDataProvider.updateProfile(
           personalDataProvider.activeUser ?? 0, tempUser);
+      await personalDataProvider.saveProfiles();
+      Navigator.pushNamed(context, '/');
     }
     else {
       /// Loop to check if the nickname is already taken
@@ -276,10 +282,11 @@ void saveProfile(BuildContext context) async {
       } else {
         personalDataProvider.addNewProfile(tempUser);
         personalDataProvider.resetTempUser();
+        await personalDataProvider.saveProfiles();
+        Navigator.pushNamed(context, '/');
       }
     }
-    await personalDataProvider.saveProfiles();
-    Navigator.pushNamed(context, '/');
+
   } else {
     parametersProvider.setSaveButtonPressed(true);
   }
