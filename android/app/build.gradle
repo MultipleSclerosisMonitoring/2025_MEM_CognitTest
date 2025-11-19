@@ -44,7 +44,8 @@ android {
 
     signingConfigs{
         release{
-            if (keystoreProperties.containsKey('storeFile')) {
+            // [CORRECCIÓN] SOLO CONFIGURAMOS LOS ARCHIVOS DE FIRMA SI EL ARCHIVO 'key.properties' EXISTE.
+            if (keystorePropertiesFile.exists()) {
                 storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
                 keyAlias keystoreProperties['keyAlias']
@@ -55,9 +56,13 @@ android {
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.release
+            // Utilizamos el signingConfig 'release' SOLO si se pudo configurar.
+            // Si no se configuró, Gradle usará la configuración de 'debug' por defecto para el modo 'release' de desarrollo.
+            if (keystorePropertiesFile.exists()) {
+                signingConfig = signingConfigs.release
+            } else {
+                signingConfig = signingConfigs.debug // Fallback to debug signing if no release keys are present
+            }
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),  'proguard-rules.pro'
