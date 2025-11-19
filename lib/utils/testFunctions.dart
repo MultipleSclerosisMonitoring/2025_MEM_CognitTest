@@ -287,7 +287,7 @@ void finishTest(BuildContext context) async{
     codeid: parametersProvider.codeid ?? "",
     fNacimiento: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].dateOfBirth?.toIso8601String().substring(0,10) ?? "",
     sexo: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].sex ?? "",
-    nivelEduc: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].sex ?? "",
+    nivelEduc: personalDataProvider.profilesList[personalDataProvider.activeUser ?? -1].levelOfStudies ?? "",
     mano: parametersProvider.hand ?? "",
     numSim: progressProvider.totalDisplayed.toString(),
     tiempo: "90",
