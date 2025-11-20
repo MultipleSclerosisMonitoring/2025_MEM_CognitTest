@@ -1,3 +1,19 @@
+plugins {
+    // AGP actualizado a la versión recomendada (8.6.0)
+    id 'com.android.application' version '8.6.0' apply false
+    // id 'com.android.library' version '8.6.0' apply false
+    // id 'com.android.library'
+    // Kotlin actualizado a la versión recomendada (2.1.0)
+    id 'org.jetbrains.kotlin.android' version '2.1.0' apply false
+}
+
+ext {
+    // Define las variables aquí para que sean accesibles en el módulo 'app'
+    minSdkVersion = 21
+    compileSdkVersion = 36
+    targetSdkVersion = 34
+}
+
 allprojects {
     repositories {
         google()
@@ -13,6 +29,6 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
-tasks.register("clean", Delete) {
-    delete rootProject.buildDir
-}
+// tasks.register("clean", Delete) {
+//     delete rootProject.buildDir
+// }

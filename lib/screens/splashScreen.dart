@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> _loadVersion() async {
     final info = await PackageInfo.fromPlatform();
     setState(() {
-      _version = '1.3';
+      _version = '1.4';
     });
   }
 
